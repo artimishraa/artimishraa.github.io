@@ -1,12 +1,8 @@
-title: "My Jekyll Site"
-description: "A demo project hosted on GitHub Pages"
-author: "Artimishraa"
-
+title: "My Root Site"
+description: "Personal site"
 url: "https://artimishraa.github.io"
-baseurl: "/only"   # repo name
-
+baseurl: ""    # must be empty for root site
 theme: minima
-
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
