@@ -4,4 +4,4 @@ title: "About"
 permalink: /about/
 ---
 
-This is the about page for my GitHub Pages Jekyll site.
+This is the About page for my root GitHub Pages site.
