@@ -3,128 +3,99 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Only Apps – Simple, private Android tools</title>
+  <title>Only Apps – Simple Android Tools</title>
   <meta name="description" content="Only Apps by Ankush Mishra — simple, private, lightweight Android utilities." />
-  <meta name="theme-color" content="#0b0f19" />
+  <meta name="theme-color" content="#ffffff" />
   <link rel="icon" href="favicon.png" />
   <style>
-    /* ===== Theme (orange accents, dark base) ===== */
-    :root{
-      --bg-1:#0b0f19;      /* base dark */
-      --bg-2:#1a1f2e;      /* subtle gradient blend */
-      --text:#f9fafb;      /* near-white */
-      --muted:#a7b0bf;     /* soft text */
-      --card-bg:rgba(255,255,255,0.03);
-      --card-bd:rgba(255,255,255,0.08);
-      --shadow:0 14px 34px rgba(0,0,0,0.45);
-      --brand:#ff7a18;     /* primary orange */
-      --brand-2:#ffb03a;   /* secondary orange */
-      --brand-3:#ffd089;   /* light tint */
+    :root {
+      --bg: #f9f9f9;
+      --text: #202124;
+      --muted: #5f6368;
+      --card-bg: #fff;
+      --card-border: #e0e0e0;
+      --shadow: 0 2px 6px rgba(0,0,0,0.08);
+      --brand: #ff7a18;
+      --brand-2: #ffb03a;
     }
 
-    /* ===== Base ===== */
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji";
-      color:var(--text);
-      /* Smooth modern gradient background */
-      background: linear-gradient(135deg, var(--bg-1) 0%, var(--bg-2) 50%, var(--bg-1) 100%);
-    }
-    .container{max-width:1200px;margin:0 auto;padding:28px}
-
-    header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px}
-    .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text)}
-    .logo{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;font-weight:900}
-    .logo{background:linear-gradient(135deg,var(--brand),var(--brand-2));box-shadow:0 10px 22px rgba(255,122,24,0.35)}
-    .title{font-weight:900;font-size:1.25rem;letter-spacing:.2px}
-    nav a{color:var(--muted);text-decoration:none;font-size:.98rem;margin-left:14px}
-
-    .hero{padding:10px 0 14px}
-    .hero h1{margin:.2rem 0 .4rem 0;font-size:clamp(1.9rem,3.2vw,2.4rem)}
-    .hero p{margin:0;color:var(--muted);font-size:clamp(1rem,2.1vw,1.05rem)}
-
-    /* ===== Grid: 1 / 2 / 3 per row ===== */
-    .grid{display:grid;grid-template-columns:1fr;gap:24px;margin-top:28px}
-    @media (min-width:640px){ .grid{grid-template-columns:repeat(2,1fr)} }
-    @media (min-width:1024px){ .grid{grid-template-columns:repeat(3,1fr)} }
-
-    /* ===== Card ===== */
-    .card{
-      position:relative;overflow:hidden;
-      background:var(--card-bg);
-      border:1px solid var(--card-bd);
-      border-radius:22px;
-      padding:22px;
-      box-shadow:var(--shadow);
-      display:flex;flex-direction:column;align-items:center;text-align:center;
-      transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
-      min-height:280px;
-    }
-    .card::before{
-      content:"";position:absolute;inset:-1px;border-radius:inherit;padding:1px;
-      background:linear-gradient(135deg, rgba(255,122,24,.55), rgba(255,176,58,.25));
-      -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-      -webkit-mask-composite:xor; mask-composite:exclude; pointer-events:none; opacity:0; transition:opacity .18s ease;
-    }
-    .card:hover{transform:translateY(-5px);box-shadow:0 18px 40px rgba(0,0,0,.45);border-color:rgba(255,255,255,.12)}
-    .card:hover::before{opacity:1}
-
-    /* keep internal spacing equal; button sticks to bottom */
-    .app{display:flex;flex-direction:column;align-items:center;gap:8px;flex:1;width:100%}
-
-    /* Orange app icon tile */
-    .app-icon{
-      width:92px;height:92px;border-radius:22px;border:1px solid var(--card-bd);
-      display:grid;place-items:center;font-size:36px;color:#fff;
-      background:
-        radial-gradient(60% 60% at 30% 30%, rgba(255,255,255,.18), transparent 60%),
-        linear-gradient(135deg,var(--brand),var(--brand-2));
-      box-shadow:0 14px 30px rgba(255,122,24,.35), inset 0 0 0 6px rgba(255,255,255,.06);
-      margin-bottom:10px;
+    body {
+      margin: 0;
+      font-family: Roboto, system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
     }
 
-    .app h3{margin:2px 0 2px;font-size:1.08rem;font-weight:900;letter-spacing:.2px}
-    .app p{margin:6px 0 16px;color:var(--muted);font-size:.98rem;line-height:1.55rem;flex-grow:1}
+    .container { max-width: 1200px; margin: 0 auto; padding: 28px; }
 
-    .btn{
-      background:linear-gradient(135deg,var(--brand),var(--brand-2));
-      color:#0b0f19; /* dark text over orange */
-      padding:12px 18px;border-radius:9999px;font-weight:900;letter-spacing:.25px;
-      text-decoration:none;display:inline-flex;align-items:center;gap:8px;
-      box-shadow:0 12px 26px rgba(255,122,24,.35);
-      transition:transform .06s ease, box-shadow .2s ease;
-      margin-top:auto;
-      border:1px solid rgba(0,0,0,.12);
+    header { text-align: center; margin-bottom: 32px; }
+    header h1 { font-weight: 700; font-size: 1.8rem; margin: 0; }
+    header p { color: var(--muted); margin: 6px 0 0; }
+
+    /* Grid */
+    .grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
+    @media (min-width: 640px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+
+    /* Card */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      transition: transform .15s ease;
     }
-    .btn:hover{transform:translateY(-1px);box-shadow:0 16px 36px rgba(255,122,24,.45)}
-    .btn svg{width:18px;height:18px;fill:currentColor}
+    .card:hover { transform: translateY(-3px); }
 
-    footer{margin:36px 0 12px;color:var(--muted);font-size:.92rem}
-    .footer-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+    .app-icon {
+      width: 92px; height: 92px;
+      border-radius: 18px;
+      display: grid; place-items: center;
+      font-size: 34px; color: #fff;
+      background: linear-gradient(135deg, var(--brand), var(--brand-2));
+      margin-bottom: 14px;
+      font-weight: 900;
+    }
+
+    .app h3 { margin: 4px 0; font-size: 1.05rem; font-weight: 600; }
+    .app p { margin: 6px 0 16px; color: var(--muted); font-size: 0.95rem; line-height: 1.4rem; flex-grow: 1; }
+
+    .btn {
+      background: linear-gradient(135deg, var(--brand), var(--brand-2));
+      color: #fff;
+      padding: 10px 18px;
+      border-radius: 9999px;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background .2s ease, box-shadow .2s ease;
+    }
+    .btn:hover { box-shadow: 0 4px 12px rgba(255, 122, 24, 0.35); }
+    .btn svg { width: 18px; height: 18px; fill: currentColor; }
+
+    footer {
+      margin: 40px 0 20px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    footer a { color: var(--brand); text-decoration: none; }
   </style>
 </head>
 <body>
   <div class="container">
     <header>
-      <a class="brand" href="#">
-        <div class="logo">O</div>
-        <div class="title">Only Apps</div>
-      </a>
-      <nav>
-        <a href="#apps">Apps</a>
-        <a href="#about">About</a>
-        <a href="#contact">Contact</a>
-      </nav>
+      <h1>Only Apps</h1>
+      <p>Simple · Private · Lightweight</p>
     </header>
 
-    <section class="hero">
-      <h1>Simple, private, lightweight.</h1>
-      <p>Clean Android utilities focused on speed and privacy — nothing more.</p>
-    </section>
-
-    <!-- ==== APPS GRID (3 per row on desktop) ==== -->
     <section id="apps" class="grid">
 
       <!-- Only Gallery -->
@@ -132,10 +103,10 @@
         <div class="app-icon">🖼️</div>
         <div class="app">
           <h3>Only Gallery</h3>
-          <p>Powerful, private, distraction-free photo & video app. No ads. No intrusive permissions.</p>
+          <p>Powerful, private, distraction-free photo & video app. No ads.</p>
         </div>
         <a class="btn" href="https://play.google.com/store/apps/details?id=com.andmobi.gallery" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
           Get on Google Play
         </a>
       </article>
@@ -143,137 +114,70 @@
       <!-- Only Play -->
       <article class="card">
         <div class="app-icon">▶️</div>
-        <div class="app">
-          <h3>Only Play</h3>
-          <p>Fast, lightweight offline video player. No ads — just your videos.</p>
-        </div>
-        <a class="btn" href="https://play.google.com/store/apps/details?id=com.andmobi.onlyplay" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
-          Get on Google Play
-        </a>
+        <div class="app"><h3>Only Play</h3><p>Fast, lightweight offline video player. Just your videos.</p></div>
+        <a class="btn" href="https://play.google.com/store/apps/details?id=com.andmobi.onlyplay" target="_blank">Get on Google Play</a>
       </article>
 
       <!-- Only Music -->
       <article class="card">
         <div class="app-icon">🎵</div>
-        <div class="app">
-          <h3>Only Music</h3>
-          <p>Simple, powerful, ad-free offline music player. No tracking.</p>
-        </div>
-        <a class="btn" href="https://play.google.com/store/apps/details?id=com.andmobi.music" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
-          Get on Google Play
-        </a>
+        <div class="app"><h3>Only Music</h3><p>Simple, powerful, ad-free offline music player. No tracking.</p></div>
+        <a class="btn" href="https://play.google.com/store/apps/details?id=com.andmobi.music" target="_blank">Get on Google Play</a>
       </article>
 
       <!-- Only Keyboard -->
       <article class="card">
         <div class="app-icon">⌨️</div>
-        <div class="app">
-          <h3>Only Keyboard</h3>
-          <p>Fast, distraction-free keyboard with essentials only. Privacy by design.</p>
-        </div>
-        <a class="btn" href="https://play.google.com/store/apps/dev?id=6324446257194202838" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
-          Get on Google Play
-        </a>
+        <div class="app"><h3>Only Keyboard</h3><p>Fast, distraction-free keyboard with essentials only.</p></div>
+        <a class="btn" href="https://play.google.com/store/apps/dev?id=6324446257194202838" target="_blank">Get on Google Play</a>
       </article>
 
       <!-- Only Notes -->
       <article class="card">
         <div class="app-icon">📝</div>
-        <div class="app">
-          <h3>Only Notes</h3>
-          <p>Plain-text notes that stay local. No fluff, no ads.</p>
-        </div>
-        <a class="btn" href="https://play.google.com/store/apps/dev?id=6324446257194202838" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
-          Get on Google Play
-        </a>
+        <div class="app"><h3>Only Notes</h3><p>Plain-text notes that stay local. No fluff, no ads.</p></div>
+        <a class="btn" href="https://play.google.com/store/apps/dev?id=6324446257194202838" target="_blank">Get on Google Play</a>
       </article>
 
       <!-- Only Clock -->
       <article class="card">
         <div class="app-icon">⏰</div>
-        <div class="app">
-          <h3>Only Clock</h3>
-          <p>Clean, ad-free clock app with alarms, bedside mode, and a focus on simplicity.</p>
-        </div>
-        <a class="btn" href="https://play.google.com/store/apps/details?id=com.andmobi.clock" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
-          Get on Google Play
-        </a>
+        <div class="app"><h3>Only Clock</h3><p>Clean, ad-free clock app with alarms and bedside mode.</p></div>
+        <a class="btn" href="https://play.google.com/store/apps/details?id=com.andmobi.clock" target="_blank">Get on Google Play</a>
       </article>
 
       <!-- Only Files -->
       <article class="card">
         <div class="app-icon">📂</div>
-        <div class="app">
-          <h3>Only Files</h3>
-          <p>Powerful yet lightweight file manager to browse and organize your files.</p>
-        </div>
-        <a class="btn" href="https://play.google.com/store/apps/dev?id=6324446257194202838" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
-          Get on Google Play
-        </a>
+        <div class="app"><h3>Only Files</h3><p>Lightweight file manager to browse and organize your files.</p></div>
+        <a class="btn" href="https://play.google.com/store/apps/dev?id=6324446257194202838" target="_blank">Get on Google Play</a>
       </article>
 
       <!-- Only Calendar -->
       <article class="card">
         <div class="app-icon">📅</div>
-        <div class="app">
-          <h3>Only Calendar</h3>
-          <p>A minimal calendar designed to keep you organized without distractions.</p>
-        </div>
-        <a class="btn" href="https://play.google.com/store/apps/dev?id=6324446257194202838" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
-          Get on Google Play
-        </a>
+        <div class="app"><h3>Only Calendar</h3><p>A minimal calendar to stay organized without distractions.</p></div>
+        <a class="btn" href="https://play.google.com/store/apps/dev?id=6324446257194202838" target="_blank">Get on Google Play</a>
       </article>
 
       <!-- Only Launcher -->
       <article class="card">
         <div class="app-icon">🚀</div>
-        <div class="app">
-          <h3>Only Launcher</h3>
-          <p>A lightweight, fast Android launcher focused on simplicity and smooth performance.</p>
-        </div>
-        <a class="btn" href="https://play.google.com/store/apps/dev?id=6324446257194202838" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
-          Get on Google Play
-        </a>
+        <div class="app"><h3>Only Launcher</h3><p>Lightweight Android launcher focused on speed and simplicity.</p></div>
+        <a class="btn" href="https://play.google.com/store/apps/dev?id=6324446257194202838" target="_blank">Get on Google Play</a>
       </article>
 
       <!-- Only Camera -->
       <article class="card">
         <div class="app-icon">📷</div>
-        <div class="app">
-          <h3>Only Camera</h3>
-          <p>Lightweight camera that captures photos instantly with a clean interface and no clutter.</p>
-        </div>
-        <a class="btn" href="https://play.google.com/store/apps/dev?id=6324446257194202838" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
-          Get on Google Play
-        </a>
+        <div class="app"><h3>Only Camera</h3><p>Instant photo capture with a clean interface and no clutter.</p></div>
+        <a class="btn" href="https://play.google.com/store/apps/dev?id=6324446257194202838" target="_blank">Get on Google Play</a>
       </article>
 
     </section>
 
-    <section id="about" class="hero" style="margin-top: 28px;">
-      <h2>About</h2>
-      <p style="color:var(--muted);max-width:780px">Only Apps is a collection of simple Android utilities crafted by Ankush Mishra. Each app focuses on speed, privacy, and the essentials — nothing more.</p>
-    </section>
-
-    <section id="contact" class="hero" style="margin-top: 6px;">
-      <h2>Contact</h2>
-      <p style="color:var(--muted);">Feedback or feature requests? <a href="mailto:onlyapp.contact@gmail.com " style="color:var(--brand-3);text-decoration:none">onlyapp.contact@gmail.com </a></p>
-    </section>
-
     <footer>
-      <div class="footer-row">
-        <div>© <span id="y"></span> Only Apps</div>
-        <div><a href="https://play.google.com/store/apps" target="_blank" rel="noopener" style="color:var(--muted);text-decoration:none">Google Play</a></div>
-      </div>
+      <p>© <span id="y"></span> Only Apps · Contact: <a href="mailto:onlyapp.contact@gmail.com">onlyapp.contact@gmail.com</a></p>
     </footer>
   </div>
 
