@@ -38,14 +38,22 @@
     }
 
     * { box-sizing: border-box; }
-    html, body { height: 100%; }
+    html, body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background:
+        radial-gradient(1200px 600px at 10% -10%, rgba(79,140,255,0.10), transparent 60%),
+        radial-gradient(800px 400px at 100% 0%, rgba(122,166,255,0.08), transparent 60%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg) 40%, var(--bg-soft) 100%);
+      color: var(--text);
+    }
     body {
       margin: 0;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
       background: linear-gradient(180deg, var(--bg) 0%, var(--bg) 40%, var(--bg-soft) 100%);
       color: var(--text);
     }
-    .container { max-width: 1100px; margin: 0 auto; padding: 24px; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 28px; }
 
     header { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 24px 0; }
     .brand {
@@ -64,45 +72,72 @@
     .grid {
       display: grid;
       grid-template-columns: repeat(12, 1fr);
-      gap: 16px;
-      margin-top: 28px;
+      gap: 22px;
+      margin-top: 32px;
     }
     .card {
+      position: relative;
+      overflow: hidden;
       grid-column: span 12;
-      background: var(--card);
+      background: rgba(255,255,255,0.02);
       border: 1px solid var(--card-border);
-      border-radius: 16px;
-      padding: 18px;
+      border-radius: 24px;
+      padding: 24px;
       box-shadow: var(--shadow);
-      display: grid; grid-template-columns: 72px 1fr; gap: 16px; align-items: center;
+      display: flex; flex-direction: column; align-items: center; text-align: center;
+      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+      backdrop-filter: saturate(120%) blur(6px);
+      -webkit-backdrop-filter: saturate(120%) blur(6px);
     }
+    .card::before {
+      content: "";
+      position: absolute; inset: -1px;
+      border-radius: inherit;
+      padding: 1px; /* for the gradient border */
+      background: linear-gradient(135deg, rgba(79,140,255,0.5), rgba(122,166,255,0.2));
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor; mask-composite: exclude;
+      pointer-events: none;
+      opacity: 0.0; transition: opacity .2s ease;
+    }
+    .card:hover { transform: translateY(-6px); box-shadow: 0 22px 44px rgba(0,0,0,0.38); border-color: rgba(255,255,255,0.14); }
+    .card:hover::before { opacity: 1; }
     @media (min-width: 640px){ .card{ grid-column: span 6; }}
     @media (min-width: 1024px){ .card{ grid-column: span 4; }}
+    @media (min-width: 1280px){ .card{ grid-column: span 3; }}
+    .card:hover { transform: translateY(-4px); box-shadow: 0 18px 38px rgba(0,0,0,0.35); border-color: rgba(255,255,255,0.12); }
+    @media (min-width: 640px){ .card{ grid-column: span 6; }}
+    @media (min-width: 1024px){ .card{ grid-column: span 4; }}
+    @media (min-width: 1280px){ .card{ grid-column: span 3; }}
 
     .app-icon {
-      width: 72px; height: 72px; border-radius: 16px; background: #0e1220; border: 1px solid var(--card-border);
-      display: grid; place-items: center; font-weight: 900; font-size: 20px; color: #fff;
-      background-image: linear-gradient(135deg, rgba(79,140,255,0.5), rgba(122,166,255,0.15));
+      width: 88px; height: 88px;
+      border-radius: 22px;
+      border: 1px solid var(--card-border);
+      display: grid; place-items: center;
+      font-weight: 900; font-size: 34px; color: #fff;
+      background: radial-gradient(60% 60% at 30% 30%, rgba(255,255,255,0.2), rgba(255,255,255,0) 60%), linear-gradient(135deg, var(--brand), var(--brand-2));
+      box-shadow: 0 12px 28px rgba(79,140,255,0.35), inset 0 0 0 6px rgba(255,255,255,0.06);
+      margin-bottom: 14px;
     }
 
-    .app h3 { margin: 0; font-size: 1.05rem; }
-    .app p { margin: 6px 0 12px; color: var(--muted); font-size: 0.95rem; line-height: 1.35rem; }
+    .app h3 { margin: 8px 0 6px; font-size: 1.12rem; font-weight: 900; letter-spacing: .2px; }
+    .app p { margin: 8px 0 18px; color: var(--muted); font-size: 0.97rem; line-height: 1.55rem; min-height: 3.1em; }
 
     .btn {
       appearance: none; border: none; outline: none; cursor: pointer; text-decoration: none;
-      background: var(--brand); color: #fff; padding: 10px 14px; border-radius: 12px; font-weight: 700;
+      background: linear-gradient(135deg, var(--brand), var(--brand-2)); color: #fff;
+      padding: 12px 18px; border-radius: 14px; font-weight: 900; letter-spacing: .25px;
       transition: transform .06s ease, box-shadow .2s ease; display: inline-flex; align-items: center; gap: 8px;
-      box-shadow: 0 6px 16px rgba(79,140,255,0.35);
+      box-shadow: 0 12px 26px rgba(79,140,255,0.4);
     }
+    .btn:hover { transform: translateY(-1px); }
     .btn:hover { transform: translateY(-1px); }
     .btn svg { width: 18px; height: 18px; fill: currentColor; }
 
     footer { margin: 36px 0 24px; color: var(--muted); font-size: 0.9rem; }
     .footer-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; }
     .muted-link { color: var(--muted); text-decoration: none; }
-
-    /* Tiny utility for spacing */
-    .sr { position:absolute; left:-9999px; }
   </style>
 </head>
 <body>
@@ -127,15 +162,12 @@
     </section>
 
     <section id="apps" class="grid">
-      <!-- Duplicate a .card block for each app you ship. Replace hrefs with your Play Store links. -->
-      
       <article class="card">
-        <div class="app-icon" aria-hidden="true">G</div>
+        <div class="app-icon">🖼️</div>
         <div class="app">
           <h3>Only Gallery</h3>
-          <p>Private, minimal gallery for your photos & videos. Lightweight, fast, and ad‑free.</p>
+          <p>Powerful, private, distraction‑free photo & video app. No ads. No intrusive permissions.</p>
           <a class="btn" href="https://play.google.com/store/apps/details?id=com.andmobi.gallery" target="_blank" rel="noopener">
-            <!-- Play icon -->
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
             Get on Google Play
           </a>
@@ -143,10 +175,10 @@
       </article>
 
       <article class="card">
-        <div class="app-icon" aria-hidden="true">▶</div>
+        <div class="app-icon">▶️</div>
         <div class="app">
           <h3>Only Play</h3>
-          <p>A clean, lightweight video player that focuses on what matters: your media.</p>
+          <p>Fast, lightweight offline video player. No ads — just your videos.</p>
           <a class="btn" href="https://play.google.com/store/apps/details?id=com.andmobi.onlyplay" target="_blank" rel="noopener">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
             Get on Google Play
@@ -155,11 +187,11 @@
       </article>
 
       <article class="card">
-        <div class="app-icon" aria-hidden="true">K</div>
+        <div class="app-icon">⌨️</div>
         <div class="app">
           <h3>Only Keyboard</h3>
           <p>Fast, distraction‑free keyboard with essentials only. Privacy by design.</p>
-          <a class="btn" href="#" target="_blank" rel="noopener">
+          <a class="btn" href="https://play.google.com/store/apps/dev?id=6324446257194202838" target="_blank" rel="noopener">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
             Get on Google Play
           </a>
@@ -167,11 +199,11 @@
       </article>
 
       <article class="card">
-        <div class="app-icon" aria-hidden="true">N</div>
+        <div class="app-icon">📝</div>
         <div class="app">
           <h3>Only Notes</h3>
           <p>Plain‑text notes that sync locally. No fluff, no ads.</p>
-          <a class="btn" href="#" target="_blank" rel="noopener">
+          <a class="btn" href="https://play.google.com/store/apps/dev?id=6324446257194202838" target="_blank" rel="noopener">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
             Get on Google Play
           </a>
@@ -179,11 +211,11 @@
       </article>
 
       <article class="card">
-        <div class="app-icon" aria-hidden="true">C</div>
+        <div class="app-icon">⏰</div>
         <div class="app">
           <h3>Only Clock</h3>
-          <p>Beautiful always‑on clock with alarms and bedside mode. Just the time, done right.</p>
-          <a class="btn" href="#" target="_blank" rel="noopener">
+          <p>Clean, ad‑free clock app with alarms, bedside mode, and a focus on simplicity.</p>
+          <a class="btn" href="https://play.google.com/store/apps/details?id=com.andmobi.clock" target="_blank" rel="noopener">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
             Get on Google Play
           </a>
@@ -191,18 +223,64 @@
       </article>
 
       <article class="card">
-        <div class="app-icon" aria-hidden="true">M</div>
+        <div class="app-icon">🎵</div>
         <div class="app">
           <h3>Only Music</h3>
-          <p>Local music player with a crisp UI. No tracking, no accounts.</p>
-          <a class="btn" href="#" target="_blank" rel="noopener">
+          <p>Simple, powerful, ad‑free offline music player. No tracking.</p>
+          <a class="btn" href="https://play.google.com/store/apps/details?id=com.andmobi.music" target="_blank" rel="noopener">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
             Get on Google Play
           </a>
         </div>
       </article>
 
-      <!-- Add more cards as you release more Only apps -->
+      <article class="card">
+        <div class="app-icon">📂</div>
+        <div class="app">
+          <h3>Only Files</h3>
+          <p>Powerful yet lightweight file manager to browse and organize your files.</p>
+          <a class="btn" href="https://play.google.com/store/apps/dev?id=6324446257194202838" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+            Get on Google Play
+          </a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="app-icon">📅</div>
+        <div class="app">
+          <h3>Only Calendar</h3>
+          <p>A minimal calendar designed to keep you organized without distractions. Simple, fast, and private.</p>
+          <a class="btn" href="https://play.google.com/store/apps/dev?id=6324446257194202838" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+            Get on Google Play
+          </a>
+        </div>
+      </article>
+
+      <article class=\"card\">
+        <div class=\"app-icon\">🚀</div>
+        <div class=\"app\">
+          <h3>Only Launcher</h3>
+          <p>A lightweight, fast Android launcher focused on simplicity and smooth performance.</p>
+          <a class=\"btn\" href=\"https://play.google.com/store/apps/dev?id=6324446257194202838\" target=\"_blank\" rel=\"noopener\">
+            <svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M8 5v14l11-7z\"/></svg>
+            Get on Google Play
+          </a>
+        </div>
+      </article>
+
+      <article class=\"card\">
+        <div class=\"app-icon\">📷</div>
+        <div class="app">
+          <h3>Only Camera</h3>
+          <p>Lightweight camera app that lets you capture photos instantly with a clean interface and no clutter.</p>
+          <a class="btn" href="https://play.google.com/store/apps/dev?id=6324446257194202838" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+            Get on Google Play
+          </a>
+        </div>
+      </article>
 
     </section>
 
@@ -225,7 +303,6 @@
   </div>
 
   <script>
-    // Set current year
     document.getElementById('y').textContent = new Date().getFullYear();
   </script>
 </body>
