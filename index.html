@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Only Apps – Simple, focused Android tools</title>
+  <meta name="description" content="A clean list of Ankush Mishra's Only apps – Only Gallery, Only Play, Only Notes, and more." />
+  <meta property="og:title" content="Only Apps" />
+  <meta property="og:description" content="Simple, focused Android tools by Ankush Mishra." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="/og-image.png" />
+  <meta name="theme-color" content="#101114" />
+  <link rel="icon" href="/favicon.png" />
+  <style>
+    :root {
+      --bg: #0f1115;
+      --bg-soft: #141821;
+      --text: #e8ecf1;
+      --muted: #aab3c5;
+      --brand: #4f8cff;
+      --brand-2: #7aa6ff;
+      --card: #12151C;
+      --card-border: rgba(255,255,255,0.06);
+      --shadow: 0 10px 24px rgba(0,0,0,0.35);
+    }
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #f6f8fb;
+        --bg-soft: #ffffff;
+        --text: #0e1116;
+        --muted: #465166;
+        --brand: #2f6bff;
+        --brand-2: #7aa6ff;
+        --card: #ffffff;
+        --card-border: rgba(0,0,0,0.08);
+        --shadow: 0 10px 24px rgba(0,0,0,0.08);
+      }
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background: linear-gradient(180deg, var(--bg) 0%, var(--bg) 40%, var(--bg-soft) 100%);
+      color: var(--text);
+    }
+    .container { max-width: 1100px; margin: 0 auto; padding: 24px; }
+
+    header { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 24px 0; }
+    .brand {
+      display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--text);
+    }
+    .logo {
+      width: 40px; height: 40px; border-radius: 12px; background: linear-gradient(135deg, var(--brand), var(--brand-2));
+      display: grid; place-items: center; color: white; font-weight: 800; box-shadow: var(--shadow);
+    }
+    .title { font-weight: 800; font-size: 1.25rem; letter-spacing: 0.2px; }
+
+    .hero { padding: 8px 0 24px; }
+    .hero h1 { font-size: clamp(2rem, 3.5vw, 3rem); margin: 0 0 10px 0; }
+    .hero p { margin: 0; color: var(--muted); font-size: clamp(1rem, 2vw, 1.125rem); }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 16px;
+      margin-top: 28px;
+    }
+    .card {
+      grid-column: span 12;
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+      display: grid; grid-template-columns: 72px 1fr; gap: 16px; align-items: center;
+    }
+    @media (min-width: 640px){ .card{ grid-column: span 6; }}
+    @media (min-width: 1024px){ .card{ grid-column: span 4; }}
+
+    .app-icon {
+      width: 72px; height: 72px; border-radius: 16px; background: #0e1220; border: 1px solid var(--card-border);
+      display: grid; place-items: center; font-weight: 900; font-size: 20px; color: #fff;
+      background-image: linear-gradient(135deg, rgba(79,140,255,0.5), rgba(122,166,255,0.15));
+    }
+
+    .app h3 { margin: 0; font-size: 1.05rem; }
+    .app p { margin: 6px 0 12px; color: var(--muted); font-size: 0.95rem; line-height: 1.35rem; }
+
+    .btn {
+      appearance: none; border: none; outline: none; cursor: pointer; text-decoration: none;
+      background: var(--brand); color: #fff; padding: 10px 14px; border-radius: 12px; font-weight: 700;
+      transition: transform .06s ease, box-shadow .2s ease; display: inline-flex; align-items: center; gap: 8px;
+      box-shadow: 0 6px 16px rgba(79,140,255,0.35);
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn svg { width: 18px; height: 18px; fill: currentColor; }
+
+    footer { margin: 36px 0 24px; color: var(--muted); font-size: 0.9rem; }
+    .footer-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; }
+    .muted-link { color: var(--muted); text-decoration: none; }
+
+    /* Tiny utility for spacing */
+    .sr { position:absolute; left:-9999px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a class="brand" href="#">
+        <div class="logo">O</div>
+        <div class="title">Only Apps</div>
+      </a>
+      <nav>
+        <a class="muted-link" href="#apps">Apps</a>
+        &nbsp;&nbsp;&middot;&nbsp;&nbsp;
+        <a class="muted-link" href="#about">About</a>
+        &nbsp;&nbsp;&middot;&nbsp;&nbsp;
+        <a class="muted-link" href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <h1>Simple, focused Android tools.</h1>
+      <p>Clean, no‑nonsense apps built for speed and privacy. Explore the Only suite below.</p>
+    </section>
+
+    <section id="apps" class="grid">
+      <!-- Duplicate a .card block for each app you ship. Replace hrefs with your Play Store links. -->
+      
+      <article class="card">
+        <div class="app-icon" aria-hidden="true">G</div>
+        <div class="app">
+          <h3>Only Gallery</h3>
+          <p>Private, minimal gallery for your photos & videos. Lightweight, fast, and ad‑free.</p>
+          <a class="btn" href="https://play.google.com/store/apps/details?id=com.andmobi.gallery" target="_blank" rel="noopener">
+            <!-- Play icon -->
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+            Get on Google Play
+          </a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="app-icon" aria-hidden="true">▶</div>
+        <div class="app">
+          <h3>Only Play</h3>
+          <p>A clean, lightweight video player that focuses on what matters: your media.</p>
+          <a class="btn" href="https://play.google.com/store/apps/details?id=com.andmobi.onlyplay" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+            Get on Google Play
+          </a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="app-icon" aria-hidden="true">K</div>
+        <div class="app">
+          <h3>Only Keyboard</h3>
+          <p>Fast, distraction‑free keyboard with essentials only. Privacy by design.</p>
+          <a class="btn" href="#" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+            Get on Google Play
+          </a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="app-icon" aria-hidden="true">N</div>
+        <div class="app">
+          <h3>Only Notes</h3>
+          <p>Plain‑text notes that sync locally. No fluff, no ads.</p>
+          <a class="btn" href="#" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+            Get on Google Play
+          </a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="app-icon" aria-hidden="true">C</div>
+        <div class="app">
+          <h3>Only Clock</h3>
+          <p>Beautiful always‑on clock with alarms and bedside mode. Just the time, done right.</p>
+          <a class="btn" href="#" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+            Get on Google Play
+          </a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="app-icon" aria-hidden="true">M</div>
+        <div class="app">
+          <h3>Only Music</h3>
+          <p>Local music player with a crisp UI. No tracking, no accounts.</p>
+          <a class="btn" href="#" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+            Get on Google Play
+          </a>
+        </div>
+      </article>
+
+      <!-- Add more cards as you release more Only apps -->
+
+    </section>
+
+    <section id="about" class="hero" style="margin-top: 24px;">
+      <h2>About</h2>
+      <p>Only Apps is a collection of simple Android utilities crafted by Ankush Mishra. Each app focuses on speed, privacy, and the essentials—nothing more.</p>
+    </section>
+
+    <section id="contact" class="hero" style="margin-top: 4px;">
+      <h2>Contact</h2>
+      <p>Have feedback or feature requests? Say hi at <a class="muted-link" href="mailto:hello@example.com">hello@example.com</a>.</p>
+    </section>
+
+    <footer>
+      <div class="footer-row">
+        <div>© <span id="y"></span> Only Apps</div>
+        <div><a class="muted-link" href="https://play.google.com/store/apps" target="_blank" rel="noopener">Google Play</a></div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // Set current year
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
