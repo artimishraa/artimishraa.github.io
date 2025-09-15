@@ -3,4 +3,6 @@ layout: home
 title: "Home"
 ---
 
-Welcome to my Jekyll site! 🎉
+# Welcome 🎉
+
+This is my root GitHub Pages site, live at [https://artimishraa.github.io](https://artimishraa.github.io).
