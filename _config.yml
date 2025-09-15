@@ -1,0 +1,12 @@
+title: "My Jekyll Site"
+description: "A demo project hosted on GitHub Pages"
+author: "Artimishraa"
+
+url: "https://artimishraa.github.io"
+baseurl: "/only"   # repo name
+
+theme: minima
+
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
