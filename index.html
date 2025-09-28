@@ -9,6 +9,7 @@
   <link rel="icon" href="favicon.png" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+
   <style>
     :root {
       --bg: #0b0b10;
@@ -19,11 +20,9 @@
       --muted: #b0b4ba;
       --brand: #ff7a18;
       --brand-2: #ffb03a;
-      --success: #22c55e;
       --radius: 16px;
       --shadow: 0 10px 30px rgba(0,0,0,.35);
     }
-
     @media (prefers-color-scheme: light) {
       :root {
         --bg: #f7f7fb;
@@ -34,7 +33,6 @@
         --muted: #5f6368;
       }
     }
-
     * { box-sizing: border-box; }
     html, body { height: 100%; }
     body {
@@ -46,18 +44,11 @@
                   linear-gradient(180deg, var(--bg), var(--bg-2));
       background-attachment: fixed;
     }
-
     .container { max-width: 1100px; margin: 0 auto; padding: 24px; }
 
     /* Header */
-    header {
-      position: sticky; top: 0; z-index: 10;
-      backdrop-filter: saturate(140%) blur(10px);
-      background: linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,0));
-    }
-    .hero {
-      display: grid; gap: 14px; justify-items: center; text-align: center; padding: 44px 0 28px;
-    }
+    header { position: sticky; top: 0; z-index: 10; backdrop-filter: saturate(140%) blur(10px); background: linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,0)); }
+    .hero { display: grid; gap: 14px; justify-items: center; text-align: center; padding: 44px 0 28px; }
     .brand {
       display: inline-flex; align-items: center; gap: 12px;
       font-weight: 800; letter-spacing: -0.02em; font-size: clamp(28px, 3.4vw, 42px);
@@ -75,10 +66,7 @@
       backdrop-filter: blur(10px);
     }
     .search::placeholder { color: var(--muted); }
-    .search-icon {
-      position: relative; left: 14px; top: 36px; width: 0; height: 0;
-      pointer-events: none;
-    }
+    .search-icon { position: relative; left: 14px; top: 36px; width: 0; height: 0; pointer-events: none; }
     .search-icon svg { position: absolute; transform: translateY(-42px); width: 18px; height: 18px; opacity: .7; }
 
     /* Grid */
@@ -91,12 +79,10 @@
       transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
     }
     .card::before {
-      content: ""; position: absolute; inset: -1px; border-radius: inherit;
-      padding: 1px;
+      content: ""; position: absolute; inset: -1px; border-radius: inherit; padding: 1px;
       background: linear-gradient(135deg, rgba(255,122,24,.45), rgba(255,176,58,.35), transparent 70%);
       -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-      -webkit-mask-composite: xor; mask-composite: exclude;
-      pointer-events: none;
+      -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none;
     }
     .card:hover { transform: translateY(-3px); border-color: rgba(255,176,58,.55); box-shadow: 0 16px 40px rgba(0,0,0,.45); }
 
@@ -121,14 +107,10 @@
       transition: transform .15s ease, box-shadow .2s ease;
     }
     .btn:hover { transform: translateY(-1px); box-shadow: 0 10px 24px rgba(0,0,0,.25); }
-    .btn:active { transform: translateY(0); }
     .btn svg { width: 16px; height: 16px; }
 
     footer { text-align: center; color: var(--muted); padding: 36px 0 24px; font-size: .98rem; }
     footer a { color: var(--brand-2); text-decoration: none; }
-
-    /* Small helper */
-    .hidden { display: none !important; }
   </style>
 </head>
 <body>
@@ -146,16 +128,22 @@
   </header>
 
   <main class="container">
-    <section id=\"apps\" aria-live=\"polite\"></section>
+    <section id="apps" aria-live="polite"></section>
 
-    <section id=\"about\" style=\"margin-top:40px\">
-      <h2 style=\"margin:0 0 8px;font-size:1.25rem\">About</h2>
-      <p class=\"desc\" style=\"margin:0\">OnlyEssential – Ad‑free, privacy‑first apps designed with clarity and simplicity, bringing essential tools for everyday life.</p>
+    <section id="about" style="margin-top:40px">
+      <h2 style="margin:0 0 8px;font-size:1.25rem">About</h2>
+      <p class="desc" style="margin:0">
+        OnlyEssential – Ad-free, privacy-first apps designed with clarity and simplicity, bringing essential tools for everyday life.
+      </p>
     </section>
 
-    <section id=\"contact\" style=\"margin-top:28px\">
-      <h2 style=\"margin:0 0 8px;font-size:1.25rem\">Contact</h2>
-      <p class=\"desc\" style=\"margin:0\">Email: <a href=\"mailto:onlyapp.contact@gmail.com\">onlyapp.contact@gmail.com</a> · Website: <a href=\"https://onlyessential.github.io\" target=\"_blank\" rel=\"noopener\">onlyessential.github.io</a> · Privacy Policy: <a href=\"https://artimishraa.github.io\" target=\"_blank\" rel=\"noopener\">artimishraa.github.io</a></p>
+    <section id="contact" style="margin-top:28px">
+      <h2 style="margin:0 0 8px;font-size:1.25rem">Contact</h2>
+      <p class="desc" style="margin:0">
+        Email: <a href="mailto:onlyapp.contact@gmail.com">onlyapp.contact@gmail.com</a>
+        · Website: <a href="https://onlyessential.github.io" target="_blank" rel="noopener">onlyessential.github.io</a>
+        · Privacy Policy: <a href="https://artimishraa.github.io" target="_blank" rel="noopener">artimishraa.github.io</a>
+      </p>
     </section>
   </main>
 
@@ -168,54 +156,43 @@
     const DEV_ID = '6324446257194202838';
     const DEV_URL = `https://play.google.com/store/apps/dev?id=${DEV_ID}`;
 
-    /**
-     * Add/adjust items here. If you have 17 apps, list them all below.
-     * icon can be an emoji or a single letter like 'G'.
-     */
+    // 17 apps — confirmed links where possible; others point to the developer page until exact package links/icons are provided.
     const APPS = [
       { name: 'Only Gallery',   icon: '🖼️', iconUrl: 'https://play-lh.googleusercontent.com/r0Y5mvzS0_FFppsz8knAv3j7GfJNieCV2yCKcmtUNZURVMSW-r_tMU_S9yujiP9lvlKhFSnYc432WY00CeiS=w240-h480', desc: 'Powerful, private, distraction-free photo & video app. No ads.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.gallery' },
       { name: 'Only Play',      icon: '▶️',  iconUrl: '', desc: 'Fast, lightweight offline video player. Just your videos.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.onlyplay' },
       { name: 'Only Music',     icon: '🎵',  iconUrl: 'https://play-lh.googleusercontent.com/gbBlOU6QuDFeQJNygW6gnSHNDMZ2S9CjYPq1Kc3vijhEtD9U3v-2Tlo1d2kEGoVkjhL2rkbn5cfXMlATczkOyg=w240-h480', desc: 'Simple, powerful, ad-free offline music player. No tracking.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.music' },
       { name: 'Only Keyboard',  icon: '⌨️',  iconUrl: 'https://play-lh.googleusercontent.com/KF9fU6UXofoGpU-J9Uw4rgR7sWorBwCvXjOc3XsfmEwE7CZ8O9q4RyS2tKoUVyA_-I_9jKrOBr5B6HTTGdsUDg=w240-h480', desc: 'Fast, distraction-free keyboard with essentials only.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.keyboard' },
-      { name: 'Only Notes',     icon: '📝',  iconUrl: 'https://play-lh.googleusercontent.com/BGJcMxF5hLVRAysg_DrYO61UTyaBCRL4KPyaEsJ9rhY_kZKauNCS83VpAUUziz9fx6waJHntFEWJ_sZUWjWKNw=w240-h480', desc: 'Plain‑text notes that stay local. No fluff, no ads.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.notes' },
+      { name: 'Only Notes',     icon: '📝',  iconUrl: 'https://play-lh.googleusercontent.com/BGJcMxF5hLVRAysg_DrYO61UTyaBCRL4KPyaEsJ9rhY_kZKauNCS83VpAUUziz9fx6waJHntFEWJ_sZUWjWKNw=w240-h480', desc: 'Plain-text notes that stay local. No fluff, no ads.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.notes' },
       { name: 'Only Clock',     icon: '⏰',  iconUrl: 'https://play-lh.googleusercontent.com/c-mUjSGiPI0THetffaRbJ-S4ybWE5z28SJyr3e1T63HVgXzBVnQe5K4K2sfxIRDqjEUpPieDai6h9CnZKfkCg2A=w240-h480', desc: 'Clean, ad-free clock app with alarms and bedside mode.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.clock' },
-      { name: 'Only Files',     icon: '📂',  iconUrl: '', desc: 'Lightweight file manager to browse and organize your files.', href: 'https://play.google.com/store/apps/dev?id=6324446257194202838' },
+      { name: 'Only Files',     icon: '📂',  iconUrl: '', desc: 'Lightweight file manager to browse and organize your files.', href: DEV_URL },
       { name: 'Only Calendar',  icon: '📅',  iconUrl: 'https://play-lh.googleusercontent.com/Wy7_ug7bQVxsKuG_yVOQe-K5FBIV4-T2rHd9q2QmLK_-K1jaO8b9Ww1AR9th7ItAL_0ihBz1uzT0eSUw_SlkrQ=w240-h480', desc: 'A minimal calendar to stay organized without distractions.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.calendar' },
-      { name: 'Only Launcher',  icon: '🚀',  iconUrl: '', desc: 'Lightweight Android launcher focused on speed and simplicity.', href: 'https://play.google.com/store/apps/dev?id=6324446257194202838' },
-      { name: 'Only Camera',    icon: '📷',  iconUrl: '', desc: 'Instant photo capture with a clean, uncluttered interface.', href: 'https://play.google.com/store/apps/dev?id=6324446257194202838' },
+      { name: 'Only Launcher',  icon: '🚀',  iconUrl: '', desc: 'Lightweight Android launcher focused on speed and simplicity.', href: DEV_URL },
+      { name: 'Only Camera',    icon: '📷',  iconUrl: '', desc: 'Instant photo capture with a clean, uncluttered interface.', href: DEV_URL },
       { name: 'Only Calculator',icon: '🧮',  iconUrl: 'https://play-lh.googleusercontent.com/9E7D3Ijctr44Tfd0akLcELdLgPTEzMJKt9aTYVbrFDJUqRzxIiHdmr08VaQoUXHwqe-Rio6_wYFY81kaK50Gzw=w240-h480', desc: 'Accurate calculator with a crisp, distraction-free design.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.math' },
       { name: 'Only Contacts',  icon: '👥',  iconUrl: 'https://play-lh.googleusercontent.com/evneDxrQxuyFBuayY4ZxBjHlZ1xWOCzK7mkPRHz_ApJBPzAVSxGI2AuHv1nrQw5VH8olDioq9FI5itAFEbp-=w240-h480', desc: 'Simple contacts app — private and fast.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.contacts' },
       { name: 'Only Messages',  icon: '💬',  iconUrl: 'https://play-lh.googleusercontent.com/FMfVYb1DoIjhqNa9rJEZqqo6Yb3H-UfhJzbHuaHmoSZGsvcMvu8ejT_iDtYq7KD5h-49IOoGYLvgJ4IW8cV03A=w240-h480', desc: 'Focused SMS/MMS with essentials only. No bloat.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.messages' },
       { name: 'Only Phone',     icon: '📞',  iconUrl: 'https://play-lh.googleusercontent.com/0s4tQv51BtwzXCOTujAKNY3mTx-xE2TfbWmjY9p5nDWcO1XCMNvdLR_7UhZkWERQ0oVRX-Yz7BIK_v5H9kFYLFs=w240-h480', desc: 'Dialer that does just what you need — fast and private.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.phone' },
       { name: 'Only Voice Recorder', icon: '🎙️', iconUrl: 'https://play-lh.googleusercontent.com/CpeXdE5zBQ83HVEsfW5gjoZTrXLP5DL3ProDR_DnfqKuSw_iP5SHb2wO_AJVy8MpXCcPPrREyTL-LEboVZc6=w240-h480', desc: 'Clear, reliable voice recorder with local storage.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.voicerecorder' },
-      { name: 'Only Paint',     icon: '🎨',  iconUrl: 'https://play-lh.googleusercontent.com/hTbZyMIoBlCyw49PrzhplRt7NEMHpP6q7ED9zSaHNq8cxgTwkH1eqfhHzTV9I73ohAdjdDzwPVG40cnTTjlEiQ=w240-h480', desc: 'A tiny canvas for quick doodles and notes.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.paint' }
+      { name: 'Only Paint',     icon: '🎨',  iconUrl: 'https://play-lh.googleusercontent.com/hTbZyMIoBlCyw49PrzhplRt7NEMHpP6q7ED9zSaHNq8cxgTwkH1eqfhHzTV9I73ohAdjdDzwPVG40cnTTjlEiQ=w240-h480', desc: 'A tiny canvas for quick doodles and notes.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.paint' },
+      { name: 'Only Browser',   icon: '🌐',  iconUrl: '', desc: 'Minimal, private web browser with speed and no ads.', href: DEV_URL }
     ];
 
     // --- Render ------------------------------------------------------------
     const grid = document.getElementById('apps');
-    function createCard({ name, icon, iconUrl, desc, href }) {
-      const a11y = name + ' — ' + desc;
-      const iconContent = iconUrl ? `<img src=\"${iconUrl}\" alt=\"${name} icon\" loading=\"lazy\" width=\"64\" height=\"64\">` : (icon || name[0]);
+
+    // Works with emoji icon OR iconUrl (Play icon).
+    function createCard(app) {
+      const { name, icon, desc, href } = app;
+      const iconHtml = app.iconUrl
+        ? `<img src="${app.iconUrl}" alt="${name} icon" loading="lazy" width="64" height="64">`
+        : (icon || name?.[0] || '•');
+
+      const a11y = `${name} — ${desc}`;
       return `
-        <article class=\"card\" aria-label=\"${a11y}\">
-          <div class=\"inner\">
-            <div class=\"top\">
-              <div class=\"icon\" aria-hidden=\"true\">${iconContent}</div>
-              <h3 class=\"name\">${name}</h3>
-            </div>
-            <p class=\"desc\">${desc}</p>
-            <div class=\"actions\">
-              <a class=\"btn\" href=\"${href}\" target=\"_blank\" rel=\"noopener\">
-                <svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M8 5v14l11-7z\"/></svg>
-                Get on Google Play
-              </a>
-            </div>
-          </div>
-        </article>`;
-    }">
+        <article class="card" aria-label="${a11y}">
           <div class="inner">
             <div class="top">
-              <div class="icon" aria-hidden="true">${icon || name[0]}</div>
+              <div class="icon" aria-hidden="true">${iconHtml}</div>
               <h3 class="name">${name}</h3>
             </div>
             <p class="desc">${desc}</p>
@@ -229,23 +206,23 @@
         </article>`;
     }
 
-    function render(list) {
-      grid.innerHTML = list.map(createCard).join('');
-    }
+    function render(list) { grid.innerHTML = list.map(createCard).join(''); }
 
     // --- Search ------------------------------------------------------------
     const q = document.getElementById('q');
     q.addEventListener('input', (e) => {
       const term = e.target.value.trim().toLowerCase();
       const filtered = !term ? APPS : APPS.filter(app =>
-        app.name.toLowerCase().includes(term) ||
-        app.desc.toLowerCase().includes(term)
+        (app.name || '').toLowerCase().includes(term) ||
+        (app.desc || '').toLowerCase().includes(term)
       );
       render(filtered);
     });
 
     // --- Init --------------------------------------------------------------
-    render(APPS);
+    try { render(APPS); }
+    catch (e) { console.error(e); grid.innerHTML = "<p class='desc'>Couldn’t load app cards. Please reload.</p>"; }
+
     document.getElementById('y').textContent = new Date().getFullYear();
   </script>
 </body>
