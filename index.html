@@ -4,12 +4,11 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Only Apps – Simple Android Tools</title>
-  <meta name="description" content="Only Apps by Ankush Mishra — simple, private, lightweight Android utilities." />
+  <meta name="description" content="Only Apps by Arti Mishra — simple, private, lightweight Android utilities." />
   <meta name="theme-color" content="#0b0b0f" />
   <link rel="icon" href="favicon.png" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-
   <style>
     :root {
       --bg: #0b0b10;
@@ -46,7 +45,6 @@
     }
     .container { max-width: 1100px; margin: 0 auto; padding: 24px; }
 
-    /* Header */
     header { position: sticky; top: 0; z-index: 10; backdrop-filter: saturate(140%) blur(10px); background: linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,0)); }
     .hero { display: grid; gap: 14px; justify-items: center; text-align: center; padding: 44px 0 28px; }
     .brand {
@@ -57,7 +55,6 @@
     }
     .tagline { margin: 0; color: var(--muted); font-size: 1.05rem; }
 
-    /* Search */
     .search-wrap { width: 100%; max-width: 560px; }
     .search {
       width: 100%; border-radius: 9999px; padding: 12px 16px 12px 44px;
@@ -69,10 +66,8 @@
     .search-icon { position: relative; left: 14px; top: 36px; width: 0; height: 0; pointer-events: none; }
     .search-icon svg { position: absolute; transform: translateY(-42px); width: 18px; height: 18px; opacity: .7; }
 
-    /* Grid */
     #apps { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
 
-    /* Card */
     .card {
       position: relative; overflow: hidden; border-radius: var(--radius);
       background: var(--card); border: 1px solid var(--card-border); box-shadow: var(--shadow);
@@ -156,31 +151,35 @@
     const DEV_ID = '6324446257194202838';
     const DEV_URL = `https://play.google.com/store/apps/dev?id=${DEV_ID}`;
 
-    // 17 apps — confirmed links where possible; others point to the developer page until exact package links/icons are provided.
+    // 17 apps – Only Browser removed, Only Applock added.
     const APPS = [
-      { name: 'Only Gallery',   icon: '🖼️', iconUrl: 'https://play-lh.googleusercontent.com/r0Y5mvzS0_FFppsz8knAv3j7GfJNieCV2yCKcmtUNZURVMSW-r_tMU_S9yujiP9lvlKhFSnYc432WY00CeiS=w240-h480', desc: 'Powerful, private, distraction-free photo & video app. No ads.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.gallery' },
-      { name: 'Only Play',      icon: '▶️',  iconUrl: '', desc: 'Fast, lightweight offline video player. Just your videos.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.onlyplay' },
-      { name: 'Only Music',     icon: '🎵',  iconUrl: 'https://play-lh.googleusercontent.com/gbBlOU6QuDFeQJNygW6gnSHNDMZ2S9CjYPq1Kc3vijhEtD9U3v-2Tlo1d2kEGoVkjhL2rkbn5cfXMlATczkOyg=w240-h480', desc: 'Simple, powerful, ad-free offline music player. No tracking.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.music' },
-      { name: 'Only Keyboard',  icon: '⌨️',  iconUrl: 'https://play-lh.googleusercontent.com/KF9fU6UXofoGpU-J9Uw4rgR7sWorBwCvXjOc3XsfmEwE7CZ8O9q4RyS2tKoUVyA_-I_9jKrOBr5B6HTTGdsUDg=w240-h480', desc: 'Fast, distraction-free keyboard with essentials only.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.keyboard' },
-      { name: 'Only Notes',     icon: '📝',  iconUrl: 'https://play-lh.googleusercontent.com/BGJcMxF5hLVRAysg_DrYO61UTyaBCRL4KPyaEsJ9rhY_kZKauNCS83VpAUUziz9fx6waJHntFEWJ_sZUWjWKNw=w240-h480', desc: 'Plain-text notes that stay local. No fluff, no ads.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.notes' },
-      { name: 'Only Clock',     icon: '⏰',  iconUrl: 'https://play-lh.googleusercontent.com/c-mUjSGiPI0THetffaRbJ-S4ybWE5z28SJyr3e1T63HVgXzBVnQe5K4K2sfxIRDqjEUpPieDai6h9CnZKfkCg2A=w240-h480', desc: 'Clean, ad-free clock app with alarms and bedside mode.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.clock' },
-      { name: 'Only Files',     icon: '📂',  iconUrl: '', desc: 'Lightweight file manager to browse and organize your files.', href: DEV_URL },
-      { name: 'Only Calendar',  icon: '📅',  iconUrl: 'https://play-lh.googleusercontent.com/Wy7_ug7bQVxsKuG_yVOQe-K5FBIV4-T2rHd9q2QmLK_-K1jaO8b9Ww1AR9th7ItAL_0ihBz1uzT0eSUw_SlkrQ=w240-h480', desc: 'A minimal calendar to stay organized without distractions.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.calendar' },
-      { name: 'Only Launcher',  icon: '🚀',  iconUrl: '', desc: 'Lightweight Android launcher focused on speed and simplicity.', href: DEV_URL },
-      { name: 'Only Camera',    icon: '📷',  iconUrl: '', desc: 'Instant photo capture with a clean, uncluttered interface.', href: DEV_URL },
-      { name: 'Only Calculator',icon: '🧮',  iconUrl: 'https://play-lh.googleusercontent.com/9E7D3Ijctr44Tfd0akLcELdLgPTEzMJKt9aTYVbrFDJUqRzxIiHdmr08VaQoUXHwqe-Rio6_wYFY81kaK50Gzw=w240-h480', desc: 'Accurate calculator with a crisp, distraction-free design.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.math' },
-      { name: 'Only Contacts',  icon: '👥',  iconUrl: 'https://play-lh.googleusercontent.com/evneDxrQxuyFBuayY4ZxBjHlZ1xWOCzK7mkPRHz_ApJBPzAVSxGI2AuHv1nrQw5VH8olDioq9FI5itAFEbp-=w240-h480', desc: 'Simple contacts app — private and fast.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.contacts' },
-      { name: 'Only Messages',  icon: '💬',  iconUrl: 'https://play-lh.googleusercontent.com/FMfVYb1DoIjhqNa9rJEZqqo6Yb3H-UfhJzbHuaHmoSZGsvcMvu8ejT_iDtYq7KD5h-49IOoGYLvgJ4IW8cV03A=w240-h480', desc: 'Focused SMS/MMS with essentials only. No bloat.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.messages' },
-      { name: 'Only Phone',     icon: '📞',  iconUrl: 'https://play-lh.googleusercontent.com/0s4tQv51BtwzXCOTujAKNY3mTx-xE2TfbWmjY9p5nDWcO1XCMNvdLR_7UhZkWERQ0oVRX-Yz7BIK_v5H9kFYLFs=w240-h480', desc: 'Dialer that does just what you need — fast and private.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.phone' },
-      { name: 'Only Voice Recorder', icon: '🎙️', iconUrl: 'https://play-lh.googleusercontent.com/CpeXdE5zBQ83HVEsfW5gjoZTrXLP5DL3ProDR_DnfqKuSw_iP5SHb2wO_AJVy8MpXCcPPrREyTL-LEboVZc6=w240-h480', desc: 'Clear, reliable voice recorder with local storage.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.voicerecorder' },
-      { name: 'Only Paint',     icon: '🎨',  iconUrl: 'https://play-lh.googleusercontent.com/hTbZyMIoBlCyw49PrzhplRt7NEMHpP6q7ED9zSaHNq8cxgTwkH1eqfhHzTV9I73ohAdjdDzwPVG40cnTTjlEiQ=w240-h480', desc: 'A tiny canvas for quick doodles and notes.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.paint' },
-      { name: 'Only Browser',   icon: '🌐',  iconUrl: '', desc: 'Minimal, private web browser with speed and no ads.', href: DEV_URL }
+      // Row 1 (as in your screenshot order)
+      { name: 'Only Applock',   icon: '🔒', iconUrl: 'https://play-lh.googleusercontent.com/wewWweEHo0pWqS5h0BEbREd73QNM6zoWzFtVxaIq1GHrXrsMfPY_oXCxk4Qul3bQx1JgOZBRGmRBnkTpbc21=w240-h480', desc: 'Lock apps with PIN, pattern, or fingerprint.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.applocker' },
+      { name: 'Only Files',     icon: '📂', iconUrl: 'https://play-lh.googleusercontent.com/1CwN7DPl2LtM0eVHxex80giNxKXX-TLw-yNTiwmeGVAPOObyMcRro-Jw2RaNi3MokV-ji38NwPKCKop3WJlXEA=w240-h480', desc: 'Lightweight, clean file manager.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.filemanager' },
+      { name: 'Only Phone',     icon: '📞', iconUrl: 'https://play-lh.googleusercontent.com/0s4tQv51BtwzXCOTujAKNY3mTx-xE2TfbWmjY9p5nDWcO1XCMNvdLR_7UhZkWERQ0oVRX-Yz7BIK_v5H9kFYLFs=w240-h480', desc: 'Fast, private dialer.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.phone' },
+      { name: 'Only Launcher',  icon: '🚀', iconUrl: 'https://play-lh.googleusercontent.com/O_8Wx5LeKlAuo5t513zCyQpA_hNkUSBK3V7G4uoa1K-aDailx0tRS4NnpRdIOKdD6ZVI2UJCBXMeI19VTzPvfw=w240-h480', desc: 'Lightweight Android launcher.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.home' },
+      { name: 'Only Play',      icon: '▶️', iconUrl: 'https://play-lh.googleusercontent.com/CWiXjqHcX5Q_E77gQt4Xtn0NCijk-n_NpJrF-GYb69D8ELzYPy9JRcbOyeILnwbuUVSfi7tNiR3Mltis6fU3Ww=w240-h480', desc: 'Offline video player. No ads.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.onlyplay' },
+      { name: 'Only Gallery',   icon: '🖼️', iconUrl: 'https://play-lh.googleusercontent.com/r0Y5mvzS0_FFppsz8knAv3j7GfJNieCV2yCKcmtUNZURVMSW-r_tMU_S9yujiP9lvlKhFSnYc432WY00CeiS=w240-h480', desc: 'Private photo & video browsing.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.gallery' },
+      { name: 'Only Keyboard',  icon: '⌨️', iconUrl: 'https://play-lh.googleusercontent.com/KF9fU6UXofoGpU-J9Uw4rgR7sWorBwCvXjOc3XsfmEwE7CZ8O9q4RyS2tKoUVyA_-I_9jKrOBr5B6HTTGdsUDg=w240-h480', desc: 'Fast, distraction-free keyboard.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.keyboard' },
+      { name: 'Only Music',     icon: '🎵', iconUrl: 'https://play-lh.googleusercontent.com/gbBlOU6QuDFeQJNygW6gnSHNDMZ2S9CjYPq1Kc3vijhEtD9U3v-2Tlo1d2kEGoVkjhL2rkbn5cfXMlATczkOyg=w240-h480', desc: 'Simple offline music player.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.music' },
+
+      // Row 2
+      { name: 'Only Voice Recorder', icon: '🎙️', iconUrl: 'https://play-lh.googleusercontent.com/CpeXdE5zBQ83HVEsfW5gjoZTrXLP5DL3ProDR_DnfqKuSw_iP5SHb2wO_AJVy8MpXCcPPrREyTL-LEboVZc6=w240-h480', desc: 'Clear, reliable recordings.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.voicerecorder' },
+      { name: 'Only Calculator', icon: '🧮', iconUrl: 'https://play-lh.googleusercontent.com/9E7D3Ijctr44Tfd0akLcELdLgPTEzMJKt9aTYVbrFDJUqRzxIiHdmr08VaQoUXHwqe-Rio6_wYFY81kaK50Gzw=w240-h480', desc: 'Accurate & clean calculator.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.math' },
+      { name: 'Only Paint',     icon: '🎨', iconUrl: 'https://play-lh.googleusercontent.com/hTbZyMIoBlCyw49PrzhplRt7NEMHpP6q7ED9zSaHNq8cxgTwkH1eqfhHzTV9I73ohAdjdDzwPVG40cnTTjlEiQ=w240-h480', desc: 'Tiny canvas for doodles.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.paint' },
+      { name: 'Only contacts',  icon: '👥', iconUrl: 'https://play-lh.googleusercontent.com/evneDxrQxuyFBuayY4ZxBjHlZ1xWOCzK7mkPRHz_ApJBPzAVSxGI2AuHv1nrQw5VH8olDioq9FI5itAFEbp-=w240-h480', desc: 'Private, fast contacts app.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.contacts' },
+      { name: 'Only Messages',  icon: '💬', iconUrl: 'https://play-lh.googleusercontent.com/FMfVYb1DoIjhqNa9rJEZqqo6Yb3H-UfhJzbHuaHmoSZGsvcMvu8ejT_iDtYq7KD5h-49IOoGYLvgJ4IW8cV03A=w240-h480', desc: 'Focused SMS/MMS.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.messages' },
+      { name: 'Only Clock',     icon: '⏰', iconUrl: 'https://play-lh.googleusercontent.com/c-mUjSGiPI0THetffaRbJ-S4ybWE5z28SJyr3e1T63HVgXzBVnQe5K4K2sfxIRDqjEUpPieDai6h9CnZKfkCg2A=w240-h480', desc: 'Alarms & bedside mode.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.clock' },
+      { name: 'Only Notes',     icon: '📝', iconUrl: 'https://play-lh.googleusercontent.com/BGJcMxF5hLVRAysg_DrYO61UTyaBCRL4KPyaEsJ9rhY_kZKauNCS83VpAUUziz9fx6waJHntFEWJ_sZUWjWKNw=w240-h480', desc: 'Plain-text, local notes.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.notes' },
+      { name: 'Only Calendar',  icon: '📅', iconUrl: 'https://play-lh.googleusercontent.com/Wy7_ug7bQVxsKuG_yVOQe-K5FBIV4-T2rHd9q2QmLK_-K1jaO8b9Ww1AR9th7ItAL_0ihBz1uzT0eSUw_SlkrQ=w240-h480', desc: 'Minimal calendar.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.calendar' },
+
+      // Last item shown on your screenshot row
+      { name: 'Only Camera',    icon: '📷', iconUrl: 'https://play-lh.googleusercontent.com/sUGpcHThl70KDWDKI91D0knw7w2Z2--iz5kkQUIsK-sHJDJlkmhRbXYsepTTgqEPpyqwFgTtiN7rI-eKGe-U=w240-h480', desc: 'Instant photo capture.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.camera' }
     ];
 
     // --- Render ------------------------------------------------------------
     const grid = document.getElementById('apps');
 
-    // Works with emoji icon OR iconUrl (Play icon).
     function createCard(app) {
       const { name, icon, desc, href } = app;
       const iconHtml = app.iconUrl
