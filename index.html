@@ -4,24 +4,24 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Only Apps – Simple Android Tools</title>
-  <meta name="description" content="Only Apps by Arti Mishra — simple, private, lightweight Android utilities.">
-  <meta name="theme-color" content="#0b0b0f" />
+  <meta name="description" content="Only Apps by Arti Mishra — simple, private, lightweight Android utilities." />
   <link rel="icon" href="favicon.png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
   <style>
     :root{
-      --bg:#fafafa; --bg-2:#ffffff; --surface:#ffffff; --surface-variant:#f2f4f7;
+      --bg:#fafafa; --surface:#ffffff; --surface-variant:#f2f4f7;
       --border:rgba(0,0,0,.08); --text:#1f1f1f; --muted:#5f6368;
-      --brand:#34A853; --accent:#4285F4;
+      --accent:#4285F4; --brand:#34A853;
       --elev-1:0 1px 2px rgba(0,0,0,.06),0 1px 3px rgba(0,0,0,.08);
       --elev-2:0 8px 18px rgba(0,0,0,.12);
       --max:1120px; --ring:0 0 0 3px rgba(66,133,244,.28)
     }
     @media (prefers-color-scheme: dark){
       :root{
-        --bg:#0b0b10; --bg-2:#0e1017; --surface:#12151c; --surface-variant:#171b24;
+        --bg:#0b0b10; --surface:#12151c; --surface-variant:#171b24;
         --border:rgba(255,255,255,.10); --text:#e8eaed; --muted:#b0b4ba;
         --elev-1:0 1px 2px rgba(0,0,0,.3),0 2px 8px rgba(0,0,0,.35);
         --elev-2:0 10px 24px rgba(0,0,0,.5)
@@ -30,113 +30,318 @@
 
     *,*::before,*::after{box-sizing:border-box}
     html,body{height:100%}
-    body{
-      margin:0;
-      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
-      background:var(--bg); color:var(--text);
-      -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
-    }
+    body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--text)}
     a{color:inherit;text-decoration:none}
+    a:focus-visible,button:focus-visible,input:focus-visible{outline:none;box-shadow:var(--ring)}
     img{display:block;max-width:100%}
-    button,input{font:inherit;color:inherit}
+    [hidden]{display:none !important}
 
     .container{max-width:var(--max);margin:0 auto;padding:24px}
     .section{margin-top:56px}
 
-    /* Header */
     header{
-      position:sticky;top:0;z-index:20;
-      backdrop-filter:blur(10px);
-      background:color-mix(in lab,var(--surface) 85%,transparent);
-      border-bottom:1px solid var(--border)
+      position:sticky;top:0;z-index:20;backdrop-filter:blur(10px);
+      background:rgba(255,255,255,.75);border-bottom:1px solid var(--border)
     }
+    @media (prefers-color-scheme: dark){header{background:rgba(18,21,28,.7)}}
     .header-inner{display:grid;gap:12px;align-items:center;text-align:center;padding:16px 24px}
     .brand{font-size:28px;font-weight:800;letter-spacing:-.02em}
     .tagline{margin:0;font-size:.95rem;color:var(--muted)}
     .controls{display:grid;gap:12px;justify-items:center;margin-top:6px}
 
-    /* Search + Filters */
-    .search-wrap{width:min(780px,100%);display:grid;grid-template-columns:1fr auto;gap:10px}
-    .search{
-      border-radius:9999px;padding:12px 18px;height:48px;
-      border:1px solid var(--border);background:var(--surface-variant);outline:none;box-shadow:var(--elev-1)
-    }
-    .search:focus{box-shadow:var(--elev-1),var(--ring);background:var(--surface)}
-    .clear-btn{
-      cursor:pointer;background:var(--surface);border:1px solid var(--border);
-      border-radius:9999px;padding:0 16px;height:48px;line-height:48px;opacity:.9;box-shadow:var(--elev-1)
-    }
-    .clear-btn:hover{transform:translateY(-1px);opacity:1}
-    .clear-btn:focus-visible{outline:none;box-shadow:var(--ring)}
+    .search-wrap{width:min(780px,100%);display:grid;grid-template-columns:1fr auto auto;gap:10px}
+    .search{border-radius:9999px;padding:12px 18px;height:48px;border:1px solid var(--border);background:var(--surface-variant);box-shadow:var(--elev-1)}
+    .clear-btn,.reset-btn{cursor:pointer;background:var(--surface);border:1px solid var(--border);border-radius:9999px;padding:0 16px;height:48px;line-height:48px;box-shadow:var(--elev-1)}
+    .clear-btn:hover,.reset-btn:hover{transform:translateY(-1px)}
 
     .filters{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
-    .filter-btn{
-      border-radius:9999px;padding:8px 14px;height:40px;background:var(--surface-variant);
-      border:1px solid var(--border);cursor:pointer;font-weight:600;color:var(--text);
-      transition:transform .15s ease,box-shadow .15s ease;box-shadow:var(--elev-1)
-    }
+    .filter-btn{border-radius:9999px;padding:8px 14px;height:40px;background:var(--surface-variant);border:1px solid var(--border);cursor:pointer;font-weight:700;box-shadow:var(--elev-1)}
     .filter-btn:hover{transform:translateY(-1px)}
-    .filter-btn:focus-visible{outline:none;box-shadow:var(--ring)}
-    .filter-btn.active{
-      background:color-mix(in lab,var(--brand) 18%,var(--surface));
-      border-color:color-mix(in lab,var(--brand) 30%,var(--border))
-    }
+    .filter-btn.active{background:rgba(52,168,83,.14);border-color:rgba(52,168,83,.28)}
 
-    /* Grid */
-    #apps{display:grid;grid-template-columns:1fr;gap:12px;margin-top:18px}
+    #apps{display:grid;grid-template-columns:1fr;gap:16px;margin-top:20px}
     @media (min-width:720px){#apps{grid-template-columns:1fr 1fr}}
     @media (min-width:1040px){#apps{grid-template-columns:1fr 1fr 1fr}}
 
     .card{
-      display:grid;grid-template-columns:72px 1fr auto;align-items:center;gap:14px;
-      border-radius:16px;background:var(--surface);border:1px solid var(--border);
-      box-shadow:var(--elev-1);padding:12px 14px;min-height:88px;
-      transition:box-shadow .2s ease,transform .2s ease
+      position:relative;display:grid;grid-template-columns:88px 1fr;gap:18px;
+      padding:20px 20px 72px 20px; /* extra bottom for badge */
+      min-height:132px;border-radius:18px;background:var(--surface);border:1px solid var(--border);box-shadow:var(--elev-1);
+      transition:box-shadow .2s,transform .2s,border-color .2s
     }
-    .card:hover{transform:translateY(-2px);box-shadow:var(--elev-2)}
-    .icon{width:64px;height:64px;border-radius:18px;overflow:hidden;background:var(--surface-variant)}
+    .card:hover{transform:translateY(-2px);box-shadow:var(--elev-2);border-color:rgba(66,133,244,.14)}
+
+    @media (max-width:640px){
+      .card{grid-template-columns:1fr;padding-bottom:82px}
+      .icon{margin:0 auto 6px auto}
+    }
+    .icon{width:72px;height:72px;border-radius:20px;overflow:hidden;background:var(--surface-variant)}
     .icon img{width:100%;height:100%;object-fit:cover}
-    .content{display:grid;gap:6px;align-self:stretch}
-    .name{margin:0;font-weight:700;font-size:1.02rem;letter-spacing:-.01em}
-    .dev{font-size:.88rem;color:var(--muted)}
-    .meta{display:flex;gap:10px;align-items:center;color:var(--muted);font-size:.86rem}
-    .pill{font-size:.72rem;font-weight:700;letter-spacing:.02em;text-transform:uppercase;padding:4px 8px;border-radius:9999px;border:1px solid var(--border);background:var(--surface-variant)}
 
-    .btn-row{display:grid;gap:8px}
-    .btn.store{display:inline-flex;align-items:center;justify-content:center;border-radius:8px;padding:0}
-    .btn.store svg{height:48px;width:auto;display:block}
-    @media (max-width: 640px){ .btn.store svg{ height:44px } }
-    @media (max-width: 420px){ .btn.store svg{ height:40px } }
+    .content{display:grid;gap:8px}
+    .name{margin:0;font-weight:800;font-size:1.12rem;letter-spacing:-.01em}
+    .dev{font-size:.9rem;color:var(--muted)}
+    .desc{margin:0;color:rgba(0,0,0,.72);font-size:.95rem;line-height:1.45;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+    @media (prefers-color-scheme: dark){.desc{color:rgba(232,234,237,.82)}}
+    .meta{display:flex;gap:8px;color:var(--muted);font-size:.86rem}
+    .chip{font-size:.72rem;font-weight:700;letter-spacing:.02em;text-transform:uppercase;padding:4px 8px;border-radius:9999px;border:1px solid var(--border);background:var(--surface-variant)}
 
-    /* Tooltip + Footer */
-    .tooltip{position:fixed;z-index:9999;pointer-events:none;background:var(--text);color:#fff;font-size:.75rem;padding:6px 10px;border-radius:8px;font-weight:700;transform:translate(-50%,calc(-100% - 10px)) scale(.96);opacity:0;transition:opacity .2s ease,transform .2s ease;white-space:nowrap;box-shadow:var(--elev-2)}
-    .tooltip.show{opacity:1;transform:translate(-50%,calc(-100% - 10px)) scale(1)}
+    .corner-badge{
+      position:absolute;right:16px;bottom:16px;display:inline-flex;align-items:center;
+      padding:6px 8px;border-radius:12px;background:var(--surface-variant);border:1px solid var(--border);box-shadow:var(--elev-1)
+    }
+    .corner-badge img{width:120px;height:auto;display:block}
+
+    .status{margin-top:8px;color:var(--muted);font-size:.9rem}
     footer{text-align:center;font-size:.9rem;color:var(--muted);margin:40px 0 24px}
-    @media (prefers-reduced-motion: reduce){*{transition:none !important;animation:none !important}}
   </style>
 </head>
 <body>
-  <header>
+  <header role="banner">
     <div class="header-inner">
       <div class="brand">Only Apps</div>
       <p class="tagline">Simple • Private • Lightweight</p>
-      <div class="controls">
+      <div class="controls" role="search">
         <div class="search-wrap">
-          <input id="q" class="search" type="search" placeholder="Search apps… (music, gallery, notes)" aria-label="Search apps">
+          <input id="q" class="search" type="search" placeholder="Search apps… (music, gallery, notes)" aria-label="Search apps" autocomplete="off" />
           <button id="clear" class="clear-btn" type="button" aria-label="Clear search">×</button>
+          <button id="reset" class="reset-btn" type="button" aria-label="Reset filters and search">Reset</button>
         </div>
         <div class="filters" role="tablist" aria-label="Filter apps by category">
-          <button class="filter-btn active" role="tab" aria-selected="true" data-filter="all" data-tooltip="Show all apps">All</button>
-          <button class="filter-btn" role="tab" data-filter="media" data-tooltip="Music, Gallery, Play">Media</button>
-          <button class="filter-btn" role="tab" data-filter="tools" data-tooltip="Files, Calculator, Notes">Tools</button>
-          <button class="filter-btn" role="tab" data-filter="communication" data-tooltip="Phone, Messages, Contacts">Communication</button>
+          <button class="filter-btn active" role="tab" aria-selected="true" data-filter="all">All</button>
+          <button class="filter-btn" role="tab" data-filter="media">Media</button>
+          <button class="filter-btn" role="tab" data-filter="tools">Tools</button>
+          <button class="filter-btn" role="tab" data-filter="communication">Communication</button>
         </div>
+        <div id="result-count" class="status" role="status" aria-live="polite"></div>
       </div>
     </div>
   </header>
 
-  <main class="container">
-    <section id="apps" class="section" aria-live="polite"></section>
+  <main class="container" id="main" role="main">
+    <!-- STATIC, PRE-RENDERED CARDS (always visible) -->
+    <section id="apps" class="section" aria-live="polite">
+      <article class="card" data-name="Only Applock" data-category="tools">
+        <div class="icon"><img loading="lazy" src="https://play-lh.googleusercontent.com/wewWweEHo0pWqS5h0BEbREd73QNM6zoWzFtVxaIq1GHrXrsMfPY_oXCxk4Qul3bQx1JgOZBRGmRBnkTpbc21=w240-h480" alt="Only Applock icon"></div>
+        <div class="content">
+          <h3 class="name">Only Applock</h3>
+          <div class="dev">Only Apps • <span class="chip">tools</span></div>
+          <p class="desc">Lock apps with fingerprint, PIN or pattern. Works offline. No ads.</p>
+          <div class="meta" aria-hidden="true"><span>No ads</span> · <span>Offline</span></div>
+        </div>
+        <a class="corner-badge" href="https://play.google.com/store/apps?id=com.andmobi.applocker" target="_blank" rel="noopener" aria-label="Open Only Applock on Google Play">
+          <img src="google-play-badge.svg" alt="Get it on Google Play" onerror="this.onerror=null;this.src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'">
+        </a>
+      </article>
+
+      <article class="card" data-name="Only Files" data-category="tools">
+        <div class="icon"><img loading="lazy" src="https://play-lh.googleusercontent.com/1CwN7DPl2LtM0eVHxex80giNxKXX-TLw-yNTiwmeGVAPOObyMcRro-Jw2RaNi3MokV-ji38NwPKCKop3WJlXEA=w240-h480" alt="Only Files icon"></div>
+        <div class="content">
+          <h3 class="name">Only Files</h3>
+          <div class="dev">Only Apps • <span class="chip">tools</span></div>
+          <p class="desc">Fast file manager with a clean UI. Private by design.</p>
+          <div class="meta" aria-hidden="true"><span>No ads</span> · <span>Offline</span></div>
+        </div>
+        <a class="corner-badge" href="https://play.google.com/store/apps?id=com.andmobi.filemanager" target="_blank" rel="noopener" aria-label="Open Only Files on Google Play">
+          <img src="google-play-badge.svg" alt="Get it on Google Play" onerror="this.onerror=null;this.src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'">
+        </a>
+      </article>
+
+      <article class="card" data-name="Only Phone" data-category="communication">
+        <div class="icon"><img loading="lazy" src="https://play-lh.googleusercontent.com/0s4tQv51BtwzXCOTujAKNY3mTx-xE2TfbWmjY9p5nDWcO1XCMNvdLR_7UhZkWERQ0oVRX-Yz7BIK_v5H9kFYLFs=w240-h480" alt="Only Phone icon"></div>
+        <div class="content">
+          <h3 class="name">Only Phone</h3>
+          <div class="dev">Only Apps • <span class="chip">communication</span></div>
+          <p class="desc">A lightning-fast dialer with favorites and recent calls. Ad-free.</p>
+          <div class="meta" aria-hidden="true"><span>No ads</span> · <span>Offline</span></div>
+        </div>
+        <a class="corner-badge" href="https://play.google.com/store/apps?id=com.andmobi.phone" target="_blank" rel="noopener" aria-label="Open Only Phone on Google Play">
+          <img src="google-play-badge.svg" alt="Get it on Google Play" onerror="this.onerror=null;this.src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'">
+        </a>
+      </article>
+
+      <article class="card" data-name="Only Launcher" data-category="tools">
+        <div class="icon"><img loading="lazy" src="https://play-lh.googleusercontent.com/O_8Wx5LeKlAuo5t513zCyQpA_hNkUSBK3V7G4uoa1K-aDailx0tRS4NnpRdIOKdD6ZVI2UJCBXMeI19VTzPvfw=w240-h480" alt="Only Launcher icon"></div>
+        <div class="content">
+          <h3 class="name">Only Launcher</h3>
+          <div class="dev">Only Apps • <span class="chip">tools</span></div>
+          <p class="desc">Zero-bloat home screen. Super fast with a focus on essentials.</p>
+          <div class="meta" aria-hidden="true"><span>No ads</span> · <span>Offline</span></div>
+        </div>
+        <a class="corner-badge" href="https://play.google.com/store/apps?id=com.andmobi.home" target="_blank" rel="noopener" aria-label="Open Only Launcher on Google Play">
+          <img src="google-play-badge.svg" alt="Get it on Google Play" onerror="this.onerror=null;this.src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'">
+        </a>
+      </article>
+
+      <article class="card" data-name="Only Play" data-category="media">
+        <div class="icon"><img loading="lazy" src="https://play-lh.googleusercontent.com/CWiXjqHcX5Q_E77gQt4Xtn0NCijk-n_NpJrF-GYb69D8ELzYPy9JRcbOyeILnwbuUVSfi7tNiR3Mltis6fU3Ww=w240-h480" alt="Only Play icon"></div>
+        <div class="content">
+          <h3 class="name">Only Play</h3>
+          <div class="dev">Only Apps • <span class="chip">media</span></div>
+          <p class="desc">Smooth offline video player with folders and quick controls.</p>
+          <div class="meta" aria-hidden="true"><span>No ads</span> · <span>Offline</span></div>
+        </div>
+        <a class="corner-badge" href="https://play.google.com/store/apps/details?id=com.andmobi.onlyplay" target="_blank" rel="noopener" aria-label="Open Only Play on Google Play">
+          <img src="google-play-badge.svg" alt="Get it on Google Play" onerror="this.onerror=null;this.src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'">
+        </a>
+      </article>
+
+      <article class="card" data-name="Only Gallery" data-category="media">
+        <div class="icon"><img loading="lazy" src="https://play-lh.googleusercontent.com/r0Y5mvzS0_FFppsz8knAv3j7GfJNieCV2yCKcmtUNZURVMSW-r_tMU_S9yujiP9lvlKhFSnYc432WY00CeiS=w240-h480" alt="Only Gallery icon"></div>
+        <div class="content">
+          <h3 class="name">Only Gallery</h3>
+          <div class="dev">Only Apps • <span class="chip">media</span></div>
+          <p class="desc">Beautiful, private gallery for photos and videos. 100% offline.</p>
+          <div class="meta" aria-hidden="true"><span>No ads</span> · <span>Offline</span></div>
+        </div>
+        <a class="corner-badge" href="https://play.google.com/store/apps/details?id=com.andmobi.gallery" target="_blank" rel="noopener" aria-label="Open Only Gallery on Google Play">
+          <img src="google-play-badge.svg" alt="Get it on Google Play" onerror="this.onerror=null;this.src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'">
+        </a>
+      </article>
+
+      <article class="card" data-name="Only Keyboard" data-category="tools">
+        <div class="icon"><img loading="lazy" src="https://play-lh.googleusercontent.com/KF9fU6UXofoGpU-J9Uw4rgR7sWorBwCvXjOc3XsfmEwE7CZ8O9q4RyS2tKoUVyA_-I_9jKrOBr5B6HTTGdsUDg=w240-h480" alt="Only Keyboard icon"></div>
+        <div class="content">
+          <h3 class="name">Only Keyboard</h3>
+          <div class="dev">Only Apps • <span class="chip">tools</span></div>
+          <p class="desc">Fast, distraction-free typing. No network access, no tracking.</p>
+          <div class="meta" aria-hidden="true"><span>No ads</span> · <span>Offline</span></div>
+        </div>
+        <a class="corner-badge" href="https://play.google.com/store/apps/details?id=com.andmobi.keyboard" target="_blank" rel="noopener" aria-label="Open Only Keyboard on Google Play">
+          <img src="google-play-badge.svg" alt="Get it on Google Play" onerror="this.onerror=null;this.src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'">
+        </a>
+      </article>
+
+      <article class="card" data-name="Only Music" data-category="media">
+        <div class="icon"><img loading="lazy" src="https://play-lh.googleusercontent.com/gbBlOU6QuDFeQJNygW6gnSHNDMZ2S9CjYPq1Kc3vijhEtD9U3v-2Tlo1d2kEGoVkjhL2rkbn5cfXMlATczkOyg=w240-h480" alt="Only Music icon"></div>
+        <div class="content">
+          <h3 class="name">Only Music</h3>
+          <div class="dev">Only Apps • <span class="chip">media</span></div>
+          <p class="desc">Offline music player with folders and quick playlists. No ads.</p>
+          <div class="meta" aria-hidden="true"><span>No ads</span> · <span>Offline</span></div>
+        </div>
+        <a class="corner-badge" href="https://play.google.com/store/apps/details?id=com.andmobi.music" target="_blank" rel="noopener" aria-label="Open Only Music on Google Play">
+          <img src="google-play-badge.svg" alt="Get it on Google Play" onerror="this.onerror=null;this.src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'">
+        </a>
+      </article>
+
+      <article class="card" data-name="Only Voice Recorder" data-category="tools">
+        <div class="icon"><img loading="lazy" src="https://play-lh.googleusercontent.com/CpeXdE5zBQ83HVEsfW5gjoZTrXLP5DL3ProDR_DnfqKuSw_iP5SHb2wO_AJVy8MpXCcPPrREyTL-LEboVZc6=w240-h480" alt="Only Voice Recorder icon"></div>
+        <div class="content">
+          <h3 class="name">Only Voice Recorder</h3>
+          <div class="dev">Only Apps • <span class="chip">tools</span></div>
+          <p class="desc">One-tap high-quality recordings that stay local on your device.</p>
+          <div class="meta" aria-hidden="true"><span>No ads</span> · <span>Offline</span></div>
+        </div>
+        <a class="corner-badge" href="https://play.google.com/store/apps/details?id=com.andmobi.voicerecorder" target="_blank" rel="noopener" aria-label="Open Only Voice Recorder on Google Play">
+          <img src="google-play-badge.svg" alt="Get it on Google Play" onerror="this.onerror=null;this.src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'">
+        </a>
+      </article>
+
+      <article class="card" data-name="Only Calculator" data-category="tools">
+        <div class="icon"><img loading="lazy" src="https://play-lh.googleusercontent.com/9E7D3Ijctr44Tfd0akLcELdLgPTEzMJKt9aTYVbrFDJUqRzxIiHdmr08VaQoUXHwqe-Rio6_wYFY81kaK50Gzw=w240-h480" alt="Only Calculator icon"></div>
+        <div class="content">
+          <h3 class="name">Only Calculator</h3>
+          <div class="dev">Only Apps • <span class="chip">tools</span></div>
+          <p class="desc">Clean, reliable calculator with large buttons. Ad-free.</p>
+          <div class="meta" aria-hidden="true"><span>No ads</span> · <span>Offline</span></div>
+        </div>
+        <a class="corner-badge" href="https://play.google.com/store/apps/details?id=com.andmobi.math" target="_blank" rel="noopener" aria-label="Open Only Calculator on Google Play">
+          <img src="google-play-badge.svg" alt="Get it on Google Play" onerror="this.onerror=null;this.src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'">
+        </a>
+      </article>
+
+      <article class="card" data-name="Only Paint" data-category="tools">
+        <div class="icon"><img loading="lazy" src="https://play-lh.googleusercontent.com/hTbZyMIoBlCyw49PrzhplRt7NEMHpP6q7ED9zSaHNq8cxgTwkH1eqfhHzTV9I73ohAdjdDzwPVG40cnTTjlEiQ=w240-h480" alt="Only Paint icon"></div>
+        <div class="content">
+          <h3 class="name">Only Paint</h3>
+          <div class="dev">Only Apps • <span class="chip">tools</span></div>
+          <p class="desc">Lightweight sketchpad for quick doodles. Save to gallery.</p>
+          <div class="meta" aria-hidden="true"><span>No ads</span> · <span>Offline</span></div>
+        </div>
+        <a class="corner-badge" href="https://play.google.com/store/apps/details?id=com.andmobi.paint" target="_blank" rel="noopener" aria-label="Open Only Paint on Google Play">
+          <img src="google-play-badge.svg" alt="Get it on Google Play" onerror="this.onerror=null;this.src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'">
+        </a>
+      </article>
+
+      <article class="card" data-name="Only Contacts" data-category="communication">
+        <div class="icon"><img loading="lazy" src="https://play-lh.googleusercontent.com/evneDxrQxuyFBuayY4ZxBjHlZ1xWOCzK7mkPRHz_ApJBPzAVSxGI2AuHv1nrQw5VH8olDioq9FI5itAFEbp-=w240-h480" alt="Only Contacts icon"></div>
+        <div class="content">
+          <h3 class="name">Only Contacts</h3>
+          <div class="dev">Only Apps • <span class="chip">communication</span></div>
+          <p class="desc">Simple contacts manager—fast, local, and private.</p>
+          <div class="meta" aria-hidden="true"><span>No ads</span> · <span>Offline</span></div>
+        </div>
+        <a class="corner-badge" href="https://play.google.com/store/apps/details?id=com.andmobi.contacts" target="_blank" rel="noopener" aria-label="Open Only Contacts on Google Play">
+          <img src="google-play-badge.svg" alt="Get it on Google Play" onerror="this.onerror=null;this.src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'">
+        </a>
+      </article>
+
+      <article class="card" data-name="Only Messages" data-category="communication">
+        <div class="icon"><img loading="lazy" src="https://play-lh.googleusercontent.com/FMfVYb1DoIjhqNa9rJEZqqo6Yb3H-UfhJzbHuaHmoSZGsvcMvu8ejT_iDtYq7KD5h-49IOoGYLvgJ4IW8cV03A=w240-h480" alt="Only Messages icon"></div>
+        <div class="content">
+          <h3 class="name">Only Messages</h3>
+          <div class="dev">Only Apps • <span class="chip">communication</span></div>
+          <p class="desc">Focused SMS/MMS with just the essentials. No bloat.</p>
+          <div class="meta" aria-hidden="true"><span>No ads</span> · <span>Offline</span></div>
+        </div>
+        <a class="corner-badge" href="https://play.google.com/store/apps/details?id=com.andmobi.messages" target="_blank" rel="noopener" aria-label="Open Only Messages on Google Play">
+          <img src="google-play-badge.svg" alt="Get it on Google Play" onerror="this.onerror=null;this.src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'">
+        </a>
+      </article>
+
+      <article class="card" data-name="Only Clock" data-category="tools">
+        <div class="icon"><img loading="lazy" src="https://play-lh.googleusercontent.com/c-mUjSGiPI0THetffaRbJ-S4ybWE5z28SJyr3e1T63HVgXzBVnQe5K4K2sfxIRDqjEUpPieDai6h9CnZKfkCg2A=w240-h480" alt="Only Clock icon"></div>
+        <div class="content">
+          <h3 class="name">Only Clock</h3>
+          <div class="dev">Only Apps • <span class="chip">tools</span></div>
+          <p class="desc">Alarms, timers and a calm bedside mode. Ad-free.</p>
+          <div class="meta" aria-hidden="true"><span>No ads</span> · <span>Offline</span></div>
+        </div>
+        <a class="corner-badge" href="https://play.google.com/store/apps/details?id=com.andmobi.clock" target="_blank" rel="noopener" aria-label="Open Only Clock on Google Play">
+          <img src="google-play-badge.svg" alt="Get it on Google Play" onerror="this.onerror=null;this.src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'">
+        </a>
+      </article>
+
+      <article class="card" data-name="Only Notes" data-category="tools">
+        <div class="icon"><img loading="lazy" src="https://play-lh.googleusercontent.com/BGJcMxF5hLVRAysg_DrYO61UTyaBCRL4KPyaEsJ9rhY_kZKauNCS83VpAUUziz9fx6waJHntFEWJ_sZUWjWKNw=w240-h480" alt="Only Notes icon"></div>
+        <div class="content">
+          <h3 class="name">Only Notes</h3>
+          <div class="dev">Only Apps • <span class="chip">tools</span></div>
+          <p class="desc">Plain-text notes that sync to your brain—not the cloud.</p>
+          <div class="meta" aria-hidden="true"><span>No ads</span> · <span>Offline</span></div>
+        </div>
+        <a class="corner-badge" href="https://play.google.com/store/apps/details?id=com.andmobi.notes" target="_blank" rel="noopener" aria-label="Open Only Notes on Google Play">
+          <img src="google-play-badge.svg" alt="Get it on Google Play" onerror="this.onerror=null;this.src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'">
+        </a>
+      </article>
+
+      <article class="card" data-name="Only Calendar" data-category="tools">
+        <div class="icon"><img loading="lazy" src="https://play-lh.googleusercontent.com/Wy7_ug7bQVxsKuG_yVOQe-K5FBIV4-T2rHd9q2QmLK_-K1jaO8b9Ww1AR9th7ItAL_0ihBz1uzT0eSUw_SlkrQ=w240-h480" alt="Only Calendar icon"></div>
+        <div class="content">
+          <h3 class="name">Only Calendar</h3>
+          <div class="dev">Only Apps • <span class="chip">tools</span></div>
+          <p class="desc">Clean calendar with a simple month & agenda view. Private.</p>
+          <div class="meta" aria-hidden="true"><span>No ads</span> · <span>Offline</span></div>
+        </div>
+        <a class="corner-badge" href="https://play.google.com/store/apps/details?id=com.andmobi.calendar" target="_blank" rel="noopener" aria-label="Open Only Calendar on Google Play">
+          <img src="google-play-badge.svg" alt="Get it on Google Play" onerror="this.onerror=null;this.src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'">
+        </a>
+      </article>
+
+      <article class="card" data-name="Only Camera" data-category="media">
+        <div class="icon"><img loading="lazy" src="https://play-lh.googleusercontent.com/sUGpcHThl70KDWDKI91D0knw7w2Z2--iz5kkQUIsK-sHJDJlkmhRbXYsepTTgqEPpyqwFgTtiN7rI-eKGe-Uw=w240-h480" alt="Only Camera icon"></div>
+        <div class="content">
+          <h3 class="name">Only Camera</h3>
+          <div class="dev">Only Apps • <span class="chip">media</span></div>
+          <p class="desc">Opens fast, captures instantly. No clutter, no ads.</p>
+          <div class="meta" aria-hidden="true"><span>No ads</span> · <span>Offline</span></div>
+        </div>
+        <a class="corner-badge" href="https://play.google.com/store/apps/details?id=com.andmobi.camera" target="_blank" rel="noopener" aria-label="Open Only Camera on Google Play">
+          <img src="google-play-badge.svg" alt="Get it on Google Play" onerror="this.onerror=null;this.src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'">
+        </a>
+      </article>
+    </section>
 
     <section id="about" class="section">
       <h2>About</h2>
@@ -148,125 +353,71 @@
       <p class="desc">
         Email: <a href="mailto:onlyapp.contact@gmail.com">onlyapp.contact@gmail.com</a> ·
         Website: <a href="https://onlyessential.github.io" target="_blank" rel="noopener">onlyessential.github.io</a> ·
-        Privacy Policy: <a href="privacy.html" target="_blank" rel="noopener">privacy.html</a>
+        Privacy Policy: <a href="privacy.html" rel="noopener">privacy.html</a>
       </p>
     </section>
   </main>
 
-  <footer>
+  <footer role="contentinfo">
     <p>© <span id="y"></span> Only Apps · Contact: <a href="mailto:onlyapp.contact@gmail.com">onlyapp.contact@gmail.com</a></p>
   </footer>
 
-  <div id="tooltip" class="tooltip" role="status" aria-live="polite"></div>
-
   <script>
-    // ========= Data =========
-    const APPS = [
-      { name: 'Only Applock', category: 'tools', desc: 'Lock apps with fingerprint, PIN or pattern. Works offline. No ads.', iconUrl: 'https://play-lh.googleusercontent.com/wewWweEHo0pWqS5h0BEbREd73QNM6zoWzFtVxaIq1GHrXrsMfPY_oXCxk4Qul3bQx1JgOZBRGmRBnkTpbc21=w240-h480', href: 'https://play.google.com/store/apps?id=com.andmobi.applocker' },
-      { name: 'Only Files', category: 'tools', desc: 'Fast file manager with a clean UI. Private by design.', iconUrl: 'https://play-lh.googleusercontent.com/1CwN7DPl2LtM0eVHxex80giNxKXX-TLw-yNTiwmeGVAPOObyMcRro-Jw2RaNi3MokV-ji38NwPKCKop3WJlXEA=w240-h480', href: 'https://play.google.com/store/apps/details?id=com.andmobi.filemanager' },
-      { name: 'Only Phone', category: 'communication', desc: 'A lightning-fast dialer with favorites and recent calls. Ad-free.', iconUrl: 'https://play-lh.googleusercontent.com/0s4tQv51BtwzXCOTujAKNY3mTx-xE2TfbWmjY9p5nDWcO1XCMNvdLR_7UhZkWERQ0oVRX-Yz7BIK_v5H9kFYLFs=w240-h480', href: 'https://play.google.com/store/apps/details?id=com.andmobi.phone' },
-      { name: 'Only Launcher', category: 'tools', desc: 'Zero-bloat home screen. Super fast with a focus on essentials.', iconUrl: 'https://play-lh.googleusercontent.com/O_8Wx5LeKlAuo5t513zCyQpA_hNkUSBK3V7G4uoa1K-aDailx0tRS4NnpRdIOKdD6ZVI2UJCBXMeI19VTzPvfw=w240-h480', href: 'https://play.google.com/store/apps/details?id=com.andmobi.home' },
-      { name: 'Only Play', category: 'media', desc: 'Smooth offline video player with folders and quick controls.', iconUrl: 'https://play-lh.googleusercontent.com/CWiXjqHcX5Q_E77gQt4Xtn0NCijk-n_NpJrF-GYb69D8ELzYPy9JRcbOyeILnwbuUVSfi7tNiR3Mltis6fU3Ww=w240-h480', href: 'https://play.google.com/store/apps/details?id=com.andmobi.onlyplay' },
-      { name: 'Only Gallery', category: 'media', desc: 'Beautiful, private gallery for photos and videos. 100% offline.', iconUrl: 'https://play-lh.googleusercontent.com/r0Y5mvzS0_FFppsz8knAv3j7GfJNieCV2yCKcmtUNZURVMSW-r_tMU_S9yujiP9lvlKhFSnYc432WY00CeiS=w240-h480', href: 'https://play.google.com/store/apps/details?id=com.andmobi.gallery' },
-      { name: 'Only Keyboard', category: 'tools', desc: 'Fast, distraction-free typing. No network access, no tracking.', iconUrl: 'https://play-lh.googleusercontent.com/KF9fU6UXofoGpU-J9Uw4rgR7sWorBwCvXjOc3XsfmEwE7CZ8O9q4RyS2tKoUVyA_-I_9jKrOBr5B6HTTGdsUDg=w240-h480', href: 'https://play.google.com/store/apps/details?id=com.andmobi.keyboard' },
-      { name: 'Only Music', category: 'media', desc: 'Offline music player with folders and quick playlists. No ads.', iconUrl: 'https://play-lh.googleusercontent.com/gbBlOU6QuDFeQJNygW6gnSHNDMZ2S9CjYPq1Kc3vijhEtD9U3v-2Tlo1d2kEGoVkjhL2rkbn5cfXMlATczkOyg=w240-h480', href: 'https://play.google.com/store/apps/details?id=com.andmobi.music' },
-      { name: 'Only Voice Recorder', category: 'tools', desc: 'One-tap high-quality recordings that stay local on your device.', iconUrl: 'https://play-lh.googleusercontent.com/CpeXdE5zBQ83HVEsfW5gjoZTrXLP5DL3ProDR_DnfqKuSw_iP5SHb2wO_AJVy8MpXCcPPrREyTL-LEboVZc6=w240-h480', href: 'https://play.google.com/store/apps/details?id=com.andmobi.voicerecorder' },
-      { name: 'Only Calculator', category: 'tools', desc: 'Clean, reliable calculator with large buttons. Ad-free.', iconUrl: 'https://play-lh.googleusercontent.com/9E7D3Ijctr44Tfd0akLcELdLgPTEzMJKt9aTYVbrFDJUqRzxIiHdmr08VaQoUXHwqe-Rio6_wYFY81kaK50Gzw=w240-h480', href: 'https://play.google.com/store/apps/details?id=com.andmobi.math' },
-      { name: 'Only Paint', category: 'tools', desc: 'Lightweight sketchpad for quick doodles. Save to gallery.', iconUrl: 'https://play-lh.googleusercontent.com/hTbZyMIoBlCyw49PrzhplRt7NEMHpP6q7ED9zSaHNq8cxgTwkH1eqfhHzTV9I73ohAdjdDzwPVG40cnTTjlEiQ=w240-h480', href: 'https://play.google.com/store/apps/details?id=com.andmobi.paint' },
-      { name: 'Only Contacts', category: 'communication', desc: 'Simple contacts manager—fast, local, and private.', iconUrl: 'https://play-lh.googleusercontent.com/evneDxrQxuyFBuayY4ZxBjHlZ1xWOCzK7mkPRHz_ApJBPzAVSxGI2AuHv1nrQw5VH8olDioq9FI5itAFEbp-=w240-h480', href: 'https://play.google.com/store/apps/details?id=com.andmobi.contacts' },
-      { name: 'Only Messages', category: 'communication', desc: 'Focused SMS/MMS with just the essentials. No bloat.', iconUrl: 'https://play-lh.googleusercontent.com/FMfVYb1DoIjhqNa9rJEZqqo6Yb3H-UfhJzbHuaHmoSZGsvcMvu8ejT_iDtYq7KD5h-49IOoGYLvgJ4IW8cV03A=w240-h480', href: 'https://play.google.com/store/apps/details?id=com.andmobi.messages' },
-      { name: 'Only Clock', category: 'tools', desc: 'Alarms, timers and a calm bedside mode. Ad-free.', iconUrl: 'https://play-lh.googleusercontent.com/c-mUjSGiPI0THetffaRbJ-S4ybWE5z28SJyr3e1T63HVgXzBVnQe5K4K2sfxIRDqjEUpPieDai6h9CnZKfkCg2A=w240-h480', href: 'https://play.google.com/store/apps/details?id=com.andmobi.clock' },
-      { name: 'Only Notes', category: 'tools', desc: 'Plain-text notes that sync to your brain—not the cloud.', iconUrl: 'https://play-lh.googleusercontent.com/BGJcMxF5hLVRAysg_DrYO61UTyaBCRL4KPyaEsJ9rhY_kZKauNCS83VpAUUziz9fx6waJHntFEWJ_sZUWjWKNw=w240-h480', href: 'https://play.google.com/store/apps/details?id=com.andmobi.notes' },
-      { name: 'Only Calendar', category: 'tools', desc: 'Clean calendar with a simple month & agenda view. Private.', iconUrl: 'https://play-lh.googleusercontent.com/Wy7_ug7bQVxsKuG_yVOQe-K5FBIV4-T2rHd9q2QmLK_-K1jaO8b9Ww1AR9th7ItAL_0ihBz1uzT0eSUw_SlkrQ=w240-h480', href: 'https://play.google.com/store/apps/details?id=com.andmobi.calendar' },
-      { name: 'Only Camera', category: 'media', desc: 'Opens fast, captures instantly. No clutter, no ads.', iconUrl: 'https://play-lh.googleusercontent.com/sUGpcHThl70KDWDKI91D0knw7w2Z2--iz5kkQUIsK-sHJDJlkmhRbXYsepTTgqEPpyqwFgTtiN7rI-eKGe-U=w240-h480', href: 'https://play.google.com/store/apps/details?id=com.andmobi.camera' }
-    ];
+    // Simple, defensive JS: hides/shows already-rendered cards.
+    (function(){
+      var q = document.getElementById('q');
+      var clearBtn = document.getElementById('clear');
+      var resetBtn = document.getElementById('reset');
+      var count = document.getElementById('result-count');
+      var filterBtns = Array.prototype.slice.call(document.querySelectorAll('.filter-btn'));
+      var cards = Array.prototype.slice.call(document.querySelectorAll('#apps .card'));
 
-    // ========= DOM =========
-    const grid = document.getElementById('apps');
-    const q = document.getElementById('q');
-    const clearBtn = document.getElementById('clear');
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    const tooltip = document.getElementById('tooltip');
+      function getActiveFilter(){
+        var active = filterBtns.find(function(b){ return b.classList.contains('active'); });
+        return active ? active.getAttribute('data-filter') : 'all';
+      }
+      function setActiveFilter(val){
+        filterBtns.forEach(function(b){
+          var is = b.getAttribute('data-filter') === val;
+          b.classList.toggle('active', is);
+          b.setAttribute('aria-selected', String(is));
+        });
+      }
+      function matches(card, term, cat){
+        var name = (card.getAttribute('data-name') || '').toLowerCase();
+        var category = (card.getAttribute('data-category') || '').toLowerCase();
+        var descEl = card.querySelector('.desc');
+        var desc = descEl ? (descEl.textContent || '').toLowerCase() : '';
+        var okCat = (cat === 'all') || (category === cat);
+        var okText = !term || name.indexOf(term) > -1 || desc.indexOf(term) > -1;
+        return okCat && okText;
+      }
+      function applyFilters(){
+        var term = (q.value || '').trim().toLowerCase();
+        var cat = getActiveFilter();
+        var shown = 0;
+        cards.forEach(function(card){
+          var show = matches(card, term, cat);
+          if(show){ shown++; card.removeAttribute('hidden'); }
+          else{ card.setAttribute('hidden', ''); }
+        });
+        count.textContent = shown + ' app' + (shown===1?'':'s') + ' shown';
+      }
 
-    // ========= Utils =========
-    const h = (strings, ...values) => strings.map((s,i)=>s+(values[i]??'')).join('');
-
-    function showTooltip(message, targetEl){
-      tooltip.textContent = message;
-      const rect = targetEl.getBoundingClientRect();
-      const x = rect.left + rect.width/2;
-      const y = rect.top + window.scrollY;
-      tooltip.style.left = x + 'px';
-      tooltip.style.top = (y - 8) + 'px';
-      tooltip.classList.add('show');
-      clearTimeout(showTooltip._t);
-      showTooltip._t = setTimeout(()=>tooltip.classList.remove('show'), 1200);
-    }
-
-    // Self-hosted inline Google Play badge (multicolor triangle)
-    function playBadgeSVG(label = "Get it on Google Play"){
-      return `
-        <svg viewBox="0 0 646 250" role="img" aria-label="${label}" xmlns="http://www.w3.org/2000/svg">
-          <rect x="2" y="2" width="642" height="246" rx="28" fill="#000"/>
-          <rect x="2" y="2" width="642" height="246" rx="28" fill="none" stroke="#3c4043" stroke-width="4"/>
-          <g transform="translate(40,45) scale(1.2)">
-            <path d="M0 0 L100 60 L0 120Z" fill="#34A853"/>
-            <path d="M0 0 L50 30 L100 60 L50 90Z" fill="#4285F4"/>
-            <path d="M0 0 L50 30 L50 90 L0 120Z" fill="#FBBC05"/>
-            <path d="M50 30 L100 60 L50 90Z" fill="#EA4335"/>
-          </g>
-          <g fill="#fff" font-family="Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif">
-            <text x="200" y="95" font-size="42" font-weight="600" opacity=".85">GET IT ON</text>
-            <text x="200" y="172" font-size="92" font-weight="800" letter-spacing="-1">Google Play</text>
-          </g>
-        </svg>`;
-    }
-
-    function createCard(app){
-      return h`
-        <article class="card" data-name="${app.name}" data-category="${app.category}">
-          <div class="icon"><img loading="lazy" src="${app.iconUrl}" alt="${app.name} icon"></div>
-          <div class="content">
-            <h3 class="name">${app.name}</h3>
-            <div class="dev">Only Apps • <span class="pill">${app.category}</span></div>
-            <div class="meta">No ads · Offline</div>
-          </div>
-          <div class="btn-row">
-            <a class="btn store" href="${app.href}" target="_blank" rel="noopener" aria-label="Get ${app.name} on Google Play">
-              ${playBadgeSVG()}
-            </a>
-          </div>
-        </article>`;
-    }
-
-    function render(list){ grid.innerHTML = list.map(createCard).join(''); }
-
-    function filterApps(){
-      const term = q.value.trim().toLowerCase();
-      const activeFilter = document.querySelector('.filter-btn.active')?.dataset.filter || 'all';
-      return APPS.filter(app =>
-        (activeFilter === 'all' || app.category === activeFilter) &&
-        (!term || app.name.toLowerCase().includes(term) || app.desc.toLowerCase().includes(term))
-      );
-    }
-
-    // ========= Events =========
-    q.addEventListener('input', () => render(filterApps()));
-    q.addEventListener('keydown', (e)=>{ if(e.key==='Escape'){ q.value=''; render(filterApps()); }});
-    clearBtn.addEventListener('click', () => { q.value=''; q.focus(); render(filterApps()); });
-
-    filterBtns.forEach(btn=>{
-      btn.addEventListener('click', ()=>{
-        filterBtns.forEach(b=>{ b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
-        btn.classList.add('active'); btn.setAttribute('aria-selected','true');
-        render(filterApps());
-        if(btn.dataset.tooltip) showTooltip(btn.dataset.tooltip, btn);
+      // Events
+      q.addEventListener('input', applyFilters);
+      q.addEventListener('keydown', function(e){ if(e.key==='Escape'){ q.value=''; applyFilters(); }});
+      clearBtn.addEventListener('click', function(){ q.value=''; q.focus(); applyFilters(); });
+      resetBtn.addEventListener('click', function(){ q.value=''; setActiveFilter('all'); applyFilters(); });
+      filterBtns.forEach(function(btn){
+        btn.addEventListener('click', function(){ setActiveFilter(btn.getAttribute('data-filter')); applyFilters(); });
+        btn.addEventListener('keydown', function(e){ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); btn.click(); }});
       });
-    });
 
-    // Initial render & year
-    render(APPS);
-    document.getElementById('y').textContent = new Date().getFullYear();
+      // Initial render + year
+      applyFilters();
+      document.getElementById('y').textContent = new Date().getFullYear();
+    })();
   </script>
 </body>
 </html>
