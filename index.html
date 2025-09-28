@@ -7,150 +7,225 @@
   <meta name="description" content="Only Apps by Arti Mishra — simple, private, lightweight Android utilities.">
   <meta name="theme-color" content="#0b0b0f" />
   <link rel="icon" href="favicon.png" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --bg: #f7f7fb;
-      --bg-2: #ffffff;
-      --card: rgba(255,255,255,0.75);
-      --card-border: rgba(10,10,20,0.08);
-      --text: #1f2328;
-      --muted: #5f6368;
-      --brand: #ff7a18;
-      --brand-2: #ffb03a;
-      --radius: 16px;
-      --shadow: 0 10px 30px rgba(0,0,0,.15);
+    /* ========= Play Store–inspired Design Tokens ========= */
+    :root{
+      --bg:#fafafa;
+      --bg-2:#ffffff;
+      --surface:#ffffff;
+      --surface-variant:#f2f4f7;
+      --border:rgba(0,0,0,.08);
+      --text:#1f1f1f;
+      --muted:#5f6368;
+      --brand:#34A853;   /* Play green */
+      --brand-2:#1e8e3e; /* darker green */
+      --accent:#4285F4;  /* Play blue */
+      --radius:20px;
+      --radius-lg:24px;
+      --elev-1:0 1px 2px rgba(0,0,0,.06),0 1px 3px rgba(0,0,0,.08);
+      --elev-2:0 4px 10px rgba(0,0,0,.10);
+      --max:1120px;
+      --gap:16px;
+      --ring:0 0 0 3px rgba(66,133,244,.28);
+      --shadow-sm: var(--elev-1);
+      --shadow: var(--elev-2);
     }
-
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #0b0b10;
-        --bg-2: #0e1017;
-        --card: rgba(255,255,255,0.06);
-        --card-border: rgba(255,255,255,0.12);
-        --text: #e8eaed;
-        --muted: #b0b4ba;
-        --shadow: 0 10px 30px rgba(0,0,0,.35);
+    @media (prefers-color-scheme: dark){
+      :root{
+        --bg:#0b0b10;
+        --bg-2:#0e1017;
+        --surface:#12151c;
+        --surface-variant:#171b24;
+        --border:rgba(255,255,255,.10);
+        --text:#e8eaed;
+        --muted:#b0b4ba;
+        --elev-1:0 1px 2px rgba(0,0,0,.3),0 2px 8px rgba(0,0,0,.35);
+        --elev-2:0 8px 18px rgba(0,0,0,.45);
       }
     }
 
-    * { box-sizing: border-box; }
-    body {
-      margin: 0; font-family: Inter, system-ui, sans-serif;
-      background: linear-gradient(180deg, var(--bg), var(--bg-2));
-      color: var(--text);
+    /* ========= Base ========= */
+    *,*::before,*::after{box-sizing:border-box}
+    html,body{height:100%}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
+    }
+    a{color:inherit;text-decoration:none}
+    img{display:block;max-width:100%}
+    button,input{font:inherit;color:inherit}
+
+    .container{max-width:var(--max);margin:0 auto;padding:24px}
+    .section{margin-top:48px;scroll-margin-top:96px}
+
+    /* ========= Header (Play bar) ========= */
+    header{
+      position:sticky;top:0;z-index:10;
+      backdrop-filter:blur(10px);
+      background:color-mix(in lab,var(--surface) 85%,transparent);
+      border-bottom:1px solid var(--border);
+    }
+    .header-inner{display:grid;gap:12px;padding:16px 24px;align-items:center;text-align:center}
+    .brand{font-size:28px;font-weight:800;letter-spacing:-.02em}
+    .tagline{margin:0;font-size:.95rem;color:var(--muted)}
+    .controls{display:grid;gap:12px;justify-items:center;margin-top:6px}
+
+    .top-nav{display:flex;gap:14px;justify-content:center;align-items:center;flex-wrap:wrap;margin-top:6px}
+    .top-nav a{
+      display:inline-flex;align-items:center;gap:6px;padding:8px 12px;border-radius:9999px;
+      background:var(--surface);border:1px solid var(--border);box-shadow:var(--shadow-sm);font-weight:600
+    }
+    .top-nav a:hover{transform:translateY(-1px)}
+    .top-nav a:focus-visible{outline:none;box-shadow:var(--ring)}
+    .top-nav a.active{background:color-mix(in lab,var(--accent) 16%, var(--surface)); border-color:color-mix(in lab,var(--accent) 30%, var(--border))}
+
+    .search-wrap{width:min(780px,100%);display:grid;grid-template-columns:1fr auto;gap:10px}
+    .search{
+      border-radius:9999px;padding:12px 18px;height:48px;
+      border:1px solid var(--border);background:var(--surface-variant);
+      outline:none;box-shadow:var(--elev-1)
+    }
+    .search:focus{box-shadow:var(--elev-1),var(--ring);background:var(--surface)}
+    .clear-btn{
+      cursor:pointer;background:var(--surface);border:1px solid var(--border);
+      border-radius:9999px;padding:0 16px;height:48px;line-height:48px;
+      transition:transform .15s ease,opacity .15s ease,background .15s ease;opacity:.9;
+      box-shadow:var(--elev-1)
+    }
+    .clear-btn:hover{transform:translateY(-1px);opacity:1}
+    .clear-btn:focus-visible{outline:none;box-shadow:var(--ring)}
+
+    .filters{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+    .filter-btn{
+      border-radius:9999px;padding:8px 14px;height:40px;
+      background:var(--surface-variant);border:1px solid var(--border);
+      cursor:pointer;font-weight:600;color:var(--text);
+      transition:transform .15s ease,box-shadow .15s ease,background .15s ease;
+      box-shadow:var(--elev-1)
+    }
+    .filter-btn:hover{transform:translateY(-1px)}
+    .filter-btn:focus-visible{outline:none;box-shadow:var(--ring)}
+    .filter-btn.active{
+      background:color-mix(in lab,var(--brand) 18%,var(--surface));
+      border-color:color-mix(in lab,var(--brand) 30%,var(--border))
     }
 
-    .container { max-width: 1100px; margin: 0 auto; padding: 24px; }
+    /* ========= Grid -> Play list cards ========= */
+    #apps{display:grid;grid-template-columns:1fr;gap:12px;margin-top:16px}
+    @media (min-width:720px){#apps{grid-template-columns:1fr 1fr}}
+    @media (min-width:1040px){#apps{grid-template-columns:1fr 1fr 1fr}}
 
-    header { text-align: center; padding: 40px 0 20px; }
-    .brand {
-      font-size: clamp(28px, 3.2vw, 42px);
-      font-weight: 800;
-      background: linear-gradient(90deg, var(--brand), var(--brand-2));
-      -webkit-background-clip: text; background-clip: text; color: transparent;
+    .card{
+      display:grid;grid-template-columns:72px 1fr auto;align-items:center;gap:14px;
+      border-radius:16px;background:var(--surface);border:1px solid var(--border);
+      box-shadow:var(--elev-1);padding:12px 14px;min-height:88px;
+      transition:box-shadow .2s ease,transform .2s ease
     }
-    .tagline { margin: 6px 0; font-size: 1.05rem; color: var(--muted); }
+    .card:hover{transform:translateY(-2px);box-shadow:var(--elev-2)}
 
-    /* Search + Filters */
-    .search-wrap { display: flex; align-items: center; gap: 10px; justify-content: center; margin: 16px auto; max-width: 560px; }
-    .search {
-      flex: 1; border-radius: 9999px; padding: 10px 14px;
-      border: 1px solid var(--card-border); background: var(--card);
-      color: var(--text);
-    }
-    .clear-btn { cursor: pointer; background: none; border: none; font-size: 18px; opacity: 0.6; }
-    .filters { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin: 16px 0; }
-    .filter-btn {
-      border-radius: 9999px; padding: 6px 12px;
-      background: var(--card); border: 1px solid var(--card-border);
-      cursor: pointer; font-weight: 600; color: var(--text);
-    }
-    .filter-btn.active { background: linear-gradient(90deg, var(--brand), var(--brand-2)); color: #fff; }
+    .icon{width:64px;height:64px;border-radius:18px;overflow:hidden}
+    .icon img{width:100%;height:100%;object-fit:cover}
 
-    /* Grid */
-    #apps { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 18px; margin-top: 20px; }
+    .content{display:grid;gap:6px;align-self:stretch}
+    .name{margin:0;font-weight:700;font-size:1.02rem;letter-spacing:-.01em}
+    .dev{font-size:.88rem;color:var(--muted)}
+    .meta{display:flex;gap:10px;align-items:center;color:var(--muted);font-size:.86rem}
+    .pill{font-size:.72rem;font-weight:700;letter-spacing:.02em;text-transform:uppercase;padding:4px 8px;border-radius:9999px;border:1px solid var(--border);background:var(--surface-variant)}
 
-    .card {
-      border-radius: var(--radius); background: var(--card);
-      border: 1px solid var(--card-border); box-shadow: var(--shadow);
-      overflow: hidden; transition: transform .2s;
+    .btn-row{display:grid;gap:8px}
+    .btn.store{
+      display:inline-flex;align-items:center;gap:10px;height:40px;
+      padding:0 14px;border-radius:9999px;font-weight:700;letter-spacing:.01em;
+      background:linear-gradient(180deg,var(--brand),var(--brand-2));color:#fff;
+      border:1px solid color-mix(in lab,var(--brand-2) 80%, black);
+      box-shadow:var(--elev-1);text-decoration:none;justify-content:center;
+      transition:transform .15s ease,box-shadow .15s ease,opacity .15s ease
     }
-    .card:hover { transform: translateY(-3px); }
+    .btn.store:hover{transform:translateY(-1px);box-shadow:var(--elev-2);opacity:.95}
+    .btn.store:focus-visible{outline:none;box-shadow:var(--ring)}
+    .btn.store svg{width:18px;height:18px;flex:0 0 18px}
 
-    .inner { padding: 18px; display: grid; gap: 10px; }
-    .top { display: flex; gap: 12px; align-items: center; }
-    .icon { width: 64px; height: 64px; border-radius: 14px; overflow: hidden; }
-    .icon img { width: 100%; height: 100%; object-fit: cover; }
-    .name { margin: 0; font-weight: 700; }
-    .desc { margin: 0; font-size: .9rem; color: var(--muted); }
+    /* ========= Section Cards & Sticky CTA ========= */
+    .card-section{
+      background:var(--surface);border:1px solid var(--border);box-shadow:var(--shadow);
+      border-radius:var(--radius-lg);padding:20px
+    }
+    .card-section h2{margin-top:0}
 
-    .btn {
-      margin-top: 8px;
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 8px 12px; border-radius: 9999px; font-weight: 600;
-      background: linear-gradient(90deg, #fff, #f3f3f7); color: #0b0b10;
-      border: 1px solid rgba(0,0,0,.08);
+    .sticky-cta{
+      position:fixed;right:18px;bottom:18px;z-index:20;padding:12px 16px;border-radius:9999px;
+      background:linear-gradient(180deg,var(--brand),var(--brand-2));color:#fff;
+      border:1px solid rgba(0,0,0,.08);box-shadow:var(--shadow);font-weight:800;letter-spacing:.01em
     }
+    .sticky-cta:focus-visible{outline:none;box-shadow:var(--ring)}
 
-    /* Tooltip (shared) */
-    .tooltip {
-      position: absolute; z-index: 9999;
-      background: linear-gradient(90deg, var(--brand), var(--brand-2));
-      color: #fff; font-size: 0.75rem; padding: 4px 10px;
-      border-radius: 6px; opacity: 0;
-      transform: translateY(-6px) scale(0.95);
-      transition: opacity .4s ease, transform .4s ease;
-      pointer-events: none; white-space: nowrap; font-weight: 600;
-      box-shadow: 0 4px 10px rgba(0,0,0,.25);
+    /* ========= Tooltip ========= */
+    .tooltip{
+      position:fixed;z-index:9999;pointer-events:none;background:var(--text);color:#fff;
+      font-size:.75rem;padding:6px 10px;border-radius:8px;font-weight:700;
+      transform:translate(-50%,calc(-100% - 10px)) scale(.96);opacity:0;
+      transition:opacity .2s ease,transform .2s ease;white-space:nowrap;box-shadow:var(--elev-2)
     }
-    .tooltip::after {
-      content: ""; position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%);
-      border-width: 6px 6px 0 6px; border-style: solid; border-color: transparent;
-      border-top: 6px solid; border-image: linear-gradient(90deg, var(--brand), var(--brand-2)) 1;
-    }
-    .tooltip.show {
-      opacity: 1; transform: translateY(0) scale(1.05);
-      animation: bounceIn .4s ease forwards;
-    }
-    @keyframes bounceIn {
-      0% { transform: translateY(-6px) scale(0.9); opacity: 0; }
-      60% { transform: translateY(0) scale(1.05); opacity: 1; }
-      100% { transform: translateY(0) scale(1); }
-    }
+    .tooltip.show{opacity:1;transform:translate(-50%,calc(-100% - 10px)) scale(1)}
 
-    footer { text-align: center; font-size: .9rem; color: var(--muted); margin: 40px 0 20px; }
+    /* ========= Footer ========= */
+    footer{text-align:center;font-size:.9rem;color:var(--muted);margin:40px 0 24px}
+
+    @media (prefers-reduced-motion: reduce){*{transition:none !important;animation:none !important}}
   </style>
 </head>
 <body>
   <header>
-    <div class="brand">Only Apps</div>
-    <p class="tagline">Simple • Private • Lightweight</p>
-    <div class="search-wrap">
-      <input id="q" class="search" type="search" placeholder="Search apps… (music, gallery, notes)">
-      <button id="clear" class="clear-btn" aria-label="Clear search">×</button>
-    </div>
-    <div class="filters">
-      <button class="filter-btn" data-filter="all" data-tooltip="Show all apps">All</button>
-      <button class="filter-btn" data-filter="media" data-tooltip="Music, Gallery, Play">Media</button>
-      <button class="filter-btn" data-filter="tools" data-tooltip="Files, Calculator, Notes">Tools</button>
-      <button class="filter-btn" data-filter="communication" data-tooltip="Phone, Messages, Contacts">Communication</button>
+    <div class="header-inner">
+      <div class="brand">Only Apps</div>
+      <p class="tagline">Simple • Private • Lightweight</p>
+
+      <nav class="top-nav" aria-label="Primary">
+        <a href="#apps" data-nav="apps">Apps</a>
+        <a href="#about" data-nav="about">About</a>
+        <a href="#contact" data-nav="contact">Contact</a>
+      </nav>
+
+      <div class="controls">
+        <div class="search-wrap">
+          <input id="q" class="search" type="search" placeholder="Search apps… (music, gallery, notes)" aria-label="Search apps">
+          <button id="clear" class="clear-btn" type="button" aria-label="Clear search">×</button>
+        </div>
+        <div class="filters" role="tablist" aria-label="Filter apps by category">
+          <button class="filter-btn active" role="tab" aria-selected="true" data-filter="all" data-tooltip="Show all apps">All</button>
+          <button class="filter-btn" role="tab" data-filter="media" data-tooltip="Music, Gallery, Play">Media</button>
+          <button class="filter-btn" role="tab" data-filter="tools" data-tooltip="Files, Calculator, Notes">Tools</button>
+          <button class="filter-btn" role="tab" data-filter="communication" data-tooltip="Phone, Messages, Contacts">Communication</button>
+        </div>
+      </div>
     </div>
   </header>
 
   <main class="container">
-    <section id="apps"></section>
+    <section id="apps" class="section" aria-live="polite"></section>
 
-    <section id="about" style="margin-top:40px">
+    <section id="about" class="section card-section">
       <h2>About</h2>
-      <p class="desc">Ad-free, privacy-first apps designed with clarity and simplicity, bringing essential tools for everyday life.  
-      Built to be lightweight, offline, and respectful of your data.  
+      <p class="desc">Ad-free, privacy-first apps designed with clarity and simplicity, bringing essential tools for everyday life.
+      Built to be lightweight, offline, and respectful of your data.
       Whether it’s media, tools, or communication, Only Apps helps you stay productive without distraction.</p>
     </section>
 
-    <section id="contact" style="margin-top:28px">
+    <section id="contact" class="section card-section">
       <h2>Contact</h2>
-      <p class="desc">Email: <a href="mailto:onlyapp.contact@gmail.com">onlyapp.contact@gmail.com</a> · Website: <a href="https://onlyessential.github.io" target="_blank">onlyessential.github.io</a> · Privacy Policy: <a href="privacy.html" target="_blank">privacy.html</a></p>
+      <p class="desc">
+        Email: <a href="mailto:onlyapp.contact@gmail.com">onlyapp.contact@gmail.com</a> ·
+        Website: <a href="https://onlyessential.github.io" target="_blank" rel="noopener">onlyessential.github.io</a> ·
+        Privacy Policy: <a href="privacy.html" target="_blank" rel="noopener">privacy.html</a>
+      </p>
     </section>
   </main>
 
@@ -158,9 +233,12 @@
     <p>© <span id="y"></span> Only Apps · Contact: <a href="mailto:onlyapp.contact@gmail.com">onlyapp.contact@gmail.com</a></p>
   </footer>
 
-  <div id="tooltip" class="tooltip"></div>
+  <a href="mailto:onlyapp.contact@gmail.com" class="sticky-cta" aria-label="Contact Only Apps">Contact</a>
+
+  <div id="tooltip" class="tooltip" role="status" aria-live="polite"></div>
 
   <script>
+    // ========= Data =========
     const APPS = [
       { name: 'Only Applock', category: 'tools', desc: 'Lock apps with fingerprint, PIN or pattern. Works offline. No ads.', iconUrl: 'https://play-lh.googleusercontent.com/wewWweEHo0pWqS5h0BEbREd73QNM6zoWzFtVxaIq1GHrXrsMfPY_oXCxk4Qul3bQx1JgOZBRGmRBnkTpbc21=w240-h480', href: 'https://play.google.com/store/apps/details?id=com.andmobi.applocker' },
       { name: 'Only Files', category: 'tools', desc: 'Fast file manager with a clean UI. Private by design.', iconUrl: 'https://play-lh.googleusercontent.com/1CwN7DPl2LtM0eVHxex80giNxKXX-TLw-yNTiwmeGVAPOObyMcRro-Jw2RaNi3MokV-ji38NwPKCKop3WJlXEA=w240-h480', href: 'https://play.google.com/store/apps/details?id=com.andmobi.filemanager' },
@@ -181,60 +259,115 @@
       { name: 'Only Camera', category: 'media', desc: 'Opens fast, captures instantly. No clutter, no ads.', iconUrl: 'https://play-lh.googleusercontent.com/sUGpcHThl70KDWDKI91D0knw7w2Z2--iz5kkQUIsK-sHJDJlkmhRbXYsepTTgqEPpyqwFgTtiN7rI-eKGe-U=w240-h480', href: 'https://play.google.com/store/apps/details?id=com.andmobi.camera' }
     ];
 
+    // ========= DOM =========
     const grid = document.getElementById('apps');
     const q = document.getElementById('q');
     const clearBtn = document.getElementById('clear');
     const filterBtns = document.querySelectorAll('.filter-btn');
     const tooltip = document.getElementById('tooltip');
+    const navLinks = document.querySelectorAll('.top-nav a[data-nav]');
 
-    function showTooltip(message, targetEl) {
+    // ========= Utils =========
+    const h = (strings, ...values) => strings.map((s,i)=>s+(values[i]??'')).join('');
+
+    function showTooltip(message, targetEl){
       tooltip.textContent = message;
       const rect = targetEl.getBoundingClientRect();
-      tooltip.style.left = rect.left + window.scrollX + rect.width / 2 - tooltip.offsetWidth / 2 + 'px';
-      tooltip.style.top = rect.top + window.scrollY - 36 + 'px';
+      const x = rect.left + rect.width/2;
+      const y = rect.top + window.scrollY;
+      tooltip.style.left = x + 'px';
+      tooltip.style.top = (y - 8) + 'px';
       tooltip.classList.add('show');
-      setTimeout(() => tooltip.classList.remove('show'), 1500);
+      clearTimeout(showTooltip._t);
+      showTooltip._t = setTimeout(()=>tooltip.classList.remove('show'), 1200);
     }
 
-    function createCard(app) {
-      return `
-        <article class="card">
-          <div class="inner">
-            <div class="top">
-              <div class="icon"><img src="${app.iconUrl}" alt="${app.name} icon"></div>
-              <h3 class="name">${app.name}</h3>
-            </div>
-            <p class="desc">${app.desc}</p>
-            <a class="btn" href="${app.href}" target="_blank">Get on Google Play</a>
+    function createCard(app){
+      return h`
+        <article class="card" data-name="${app.name}" data-category="${app.category}">
+          <div class="icon"><img loading="lazy" src="${app.iconUrl}" alt="${app.name} icon"></div>
+          <div class="content">
+            <h3 class="name">${app.name}</h3>
+            <div class="dev">Only Apps • <span class="pill">${app.category}</span></div>
+            <div class="meta">No ads · Offline</div>
+          </div>
+          <div class="btn-row">
+            <a class="btn store" href="${app.href}" target="_blank" rel="noopener" aria-label="Open ${app.name} on Google Play">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <defs>
+                  <linearGradient id="gplay" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#34A853"/>
+                    <stop offset="50%" stop-color="#FBBC05"/>
+                    <stop offset="100%" stop-color="#4285F4"/>
+                  </linearGradient>
+                </defs>
+                <path fill="url(#gplay)" d="M3 2.5l12 9.5-12 9.5c-.6-.35-1-.99-1-1.73V4.23C2 3.49 2.4 2.85 3 2.5zm14.2 8.9l2.9-1.73c1.1-.66 1.1-2.28 0-2.94L17.2 5 13 9l4.2 2.4zm0 1.2L13 15l4.2 2.4 2.9-1.73c1.1-.66 1.1-2.28 0-2.94l-2.9-1.73z"/>
+              </svg>
+              Install
+            </a>
           </div>
         </article>`;
     }
 
-    function render(list) {
-      grid.innerHTML = list.map(createCard).join('');
-    }
+    function render(list){ grid.innerHTML = list.map(createCard).join(''); }
 
-    function filterApps() {
-      const term = q.value.toLowerCase();
+    function filterApps(){
+      const term = q.value.trim().toLowerCase();
       const activeFilter = document.querySelector('.filter-btn.active')?.dataset.filter || 'all';
       return APPS.filter(app =>
         (activeFilter === 'all' || app.category === activeFilter) &&
-        (app.name.toLowerCase().includes(term) || app.desc.toLowerCase().includes(term))
+        (!term || app.name.toLowerCase().includes(term) || app.desc.toLowerCase().includes(term))
       );
     }
 
+    // ========= Events =========
     q.addEventListener('input', () => render(filterApps()));
-    clearBtn.addEventListener('click', () => { q.value = ''; render(filterApps()); });
+    q.addEventListener('keydown', (e)=>{ if(e.key==='Escape'){ q.value=''; render(filterApps()); }});
+    clearBtn.addEventListener('click', () => { q.value=''; q.focus(); render(filterApps()); });
 
-    filterBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        filterBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
+    filterBtns.forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        filterBtns.forEach(b=>{ b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
+        btn.classList.add('active'); btn.setAttribute('aria-selected','true');
         render(filterApps());
-        showTooltip(btn.dataset.tooltip, btn);
+        if(btn.dataset.tooltip) showTooltip(btn.dataset.tooltip, btn);
       });
     });
 
+    // ========= Scrollspy: update hash + nav highlighting =========
+    const sections = ['apps', 'about', 'contact'].map(id => document.getElementById(id));
+    const linkFor = id => document.querySelector(`.top-nav a[data-nav="${id}"]`);
+
+    function setActive(id){
+      navLinks.forEach(a => {
+        const active = a.dataset.nav === id;
+        a.classList.toggle('active', active);
+        a.setAttribute('aria-current', active ? 'page' : 'false');
+      });
+    }
+
+    const io = new IntersectionObserver((entries) => {
+      // pick the most visible section
+      const visible = entries
+        .filter(e => e.isIntersecting)
+        .sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if(!visible) return;
+      const id = visible.target.id;
+      if(location.hash !== '#' + id){
+        history.replaceState(null, '', '#' + id);
+      }
+      setActive(id);
+    }, { threshold: [0.55, 0.75] });
+
+    sections.forEach(sec => sec && io.observe(sec));
+
+    // On load: if a hash exists, mark it active
+    window.addEventListener('load', () => {
+      const id = (location.hash || '#apps').slice(1);
+      setActive(id);
+    });
+
+    // Initial render & year
     render(APPS);
     document.getElementById('y').textContent = new Date().getFullYear();
   </script>
