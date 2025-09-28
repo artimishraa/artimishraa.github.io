@@ -39,7 +39,7 @@
     .section{margin-top:56px}
 
     header{
-      position:sticky;top:0;z-index:20;backdrop-filter:blur(10px);
+      position:sticky;top:0;z-index:30;backdrop-filter:blur(10px);
       background:rgba(255,255,255,.75);border-bottom:1px solid var(--border)
     }
     @media (prefers-color-scheme: dark){header{background:rgba(18,21,28,.7)}}
@@ -57,6 +57,45 @@
     .filter-btn{border-radius:9999px;padding:8px 14px;height:40px;background:var(--surface-variant);border:1px solid var(--border);cursor:pointer;font-weight:700;box-shadow:var(--elev-1)}
     .filter-btn:hover{transform:translateY(-1px)}
     .filter-btn.active{background:rgba(52,168,83,.14);border-color:rgba(52,168,83,.28)}
+
+    /* ------------------------- */
+    /* Play Store–style carousel */
+    /* ------------------------- */
+    .top-carousel-wrap{position:relative;z-index:10}
+    .top-carousel{max-width:var(--max);margin:12px auto 0;overflow:hidden;border-radius:20px}
+    .slides{display:flex;gap:16px;scroll-snap-type:x mandatory;overflow-x:auto;padding:0 24px 8px;scroll-behavior:smooth}
+    .slides::-webkit-scrollbar{height:10px}
+    .slides::-webkit-scrollbar-thumb{background:var(--border);border-radius:9999px}
+
+    .slide{
+      position:relative;flex:0 0 86%; /* large hero like Play */
+      max-width:860px;aspect-ratio:21/9;scroll-snap-align:start;overflow:hidden;
+      border:1px solid var(--border);border-radius:20px;background:var(--surface);box-shadow:var(--elev-1)
+    }
+    @media (min-width:1000px){.slide{flex-basis:66%}}
+    @media (max-width:520px){.slide{aspect-ratio:16/9}}
+
+    .slide-img{position:absolute;inset:0;object-fit:cover;width:100%;height:100%;filter:brightness(.92)}
+    .slide-overlay{position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.55),rgba(0,0,0,.05));}
+    .slide-body{position:absolute;left:24px;bottom:20px;right:24px;color:#fff;display:grid;gap:10px}
+    .slide-title{margin:0;font-weight:800;letter-spacing:-.01em;font-size:clamp(1rem,2.8vw,1.85rem)}
+    .slide-sub{margin:0;color:#e6e8ea;font-size:.95rem}
+
+    .cta-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    .cta{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 14px;border-radius:9999px;border:1px solid rgba(255,255,255,.3);background:rgba(0,0,0,.25);backdrop-filter:blur(6px);color:#fff}
+    .cta:hover{transform:translateY(-1px)}
+
+    .dots{display:flex;gap:6px;justify-content:center;margin-top:10px}
+    .dot{width:8px;height:8px;border-radius:9999px;background:var(--border)}
+    .dot.active{background:var(--accent)}
+
+    .nav-btn{position:absolute;top:50%;transform:translateY(-50%);z-index:20;border:none;background:rgba(0,0,0,.35);color:#fff;width:40px;height:40px;border-radius:9999px;display:grid;place-items:center;cursor:pointer;backdrop-filter:blur(4px)}
+    .nav-btn:hover{background:rgba(0,0,0,.5)}
+    .nav-prev{left:18px}
+    .nav-next{right:18px}
+    .nav-btn svg{width:18px;height:18px}
+
+    /* ------------------------- */
 
     #apps{display:grid;grid-template-columns:1fr;gap:16px;margin-top:20px}
     @media (min-width:720px){#apps{grid-template-columns:1fr 1fr}}
@@ -117,6 +156,60 @@
       </div>
     </div>
   </header>
+
+  <!-- Play Store–style Top Carousel -->
+  <section class="top-carousel-wrap" aria-label="Featured apps">
+    <div class="top-carousel">
+      <button class="nav-btn nav-prev" type="button" aria-label="Previous slide" title="Previous">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 6L9 12L15 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div id="slides" class="slides" tabindex="0" role="region" aria-roledescription="carousel" aria-label="Featured">
+        <!-- Slide 1 -->
+        <article class="slide" aria-label="Only Gallery – Featured">
+          <img class="slide-img" loading="eager" src="https://images.unsplash.com/photo-1526772662000-3f88f10405ff?q=80&w=1600&auto=format&fit=crop" alt="Photos grid background"/>
+          <div class="slide-overlay" aria-hidden="true"></div>
+          <div class="slide-body">
+            <h3 class="slide-title">Only Gallery</h3>
+            <p class="slide-sub">Beautiful, private gallery for photos & videos. 100% offline.</p>
+            <div class="cta-row">
+              <a class="cta" href="https://play.google.com/store/apps/details?id=com.andmobi.gallery" target="_blank" rel="noopener" aria-label="Install Only Gallery on Google Play">Install</a>
+              <a class="cta" href="#apps" aria-label="See all apps">See all</a>
+            </div>
+          </div>
+        </article>
+        <!-- Slide 2 -->
+        <article class="slide" aria-label="Only Music – Featured">
+          <img class="slide-img" loading="lazy" src="https://images.unsplash.com/photo-1493238792000-8113da705763?q=80&w=1600&auto=format&fit=crop" alt="Headphones on desk"/>
+          <div class="slide-overlay" aria-hidden="true"></div>
+          <div class="slide-body">
+            <h3 class="slide-title">Only Music</h3>
+            <p class="slide-sub">Offline music player with folders and quick playlists. No ads.</p>
+            <div class="cta-row">
+              <a class="cta" href="https://play.google.com/store/apps/details?id=com.andmobi.music" target="_blank" rel="noopener" aria-label="Install Only Music on Google Play">Install</a>
+              <a class="cta" href="#apps" aria-label="Explore apps">Explore apps</a>
+            </div>
+          </div>
+        </article>
+        <!-- Slide 3 -->
+        <article class="slide" aria-label="Only Applock – Featured">
+          <img class="slide-img" loading="lazy" src="https://images.unsplash.com/photo-1556745757-8d76bdb6984b?q=80&w=1600&auto=format&fit=crop" alt="Lock and phone"/>
+          <div class="slide-overlay" aria-hidden="true"></div>
+          <div class="slide-body">
+            <h3 class="slide-title">Only Applock</h3>
+            <p class="slide-sub">Lock apps with fingerprint, PIN or pattern. Works offline. No ads.</p>
+            <div class="cta-row">
+              <a class="cta" href="https://play.google.com/store/apps?id=com.andmobi.applocker" target="_blank" rel="noopener" aria-label="Install Only Applock on Google Play">Install</a>
+              <a class="cta" href="#apps" aria-label="Browse apps">Browse apps</a>
+            </div>
+          </div>
+        </article>
+      </div>
+      <button class="nav-btn nav-next" type="button" aria-label="Next slide" title="Next">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div id="dots" class="dots" aria-hidden="true"></div>
+    </div>
+  </section>
 
   <main class="container" id="main" role="main">
     <!-- STATIC, PRE-RENDERED CARDS (always visible) -->
@@ -421,6 +514,82 @@
       // Initial render + year
       applyFilters();
       document.getElementById('y').textContent = new Date().getFullYear();
+    })();
+
+    // -------------------------------
+    // Top carousel: autoplay & nav
+    // -------------------------------
+    (function(){
+      var slides = document.getElementById('slides');
+      var dotsWrap = document.getElementById('dots');
+      if(!slides) return;
+
+      var slideEls = Array.prototype.slice.call(slides.querySelectorAll('.slide'));
+      var idx = 0; var timer = null; var INTERVAL = 5000; var isHover = false;
+
+      function go(i){
+        idx = (i + slideEls.length) % slideEls.length;
+        var el = slideEls[idx];
+        slides.scrollTo({left: el.offsetLeft - slides.offsetLeft, behavior: 'smooth'});
+        updateDots();
+      }
+      function next(){ go(idx+1); }
+      function prev(){ go(idx-1); }
+      function updateDots(){
+        var dots = dotsWrap.querySelectorAll('.dot');
+        dots.forEach(function(d, i){ d.classList.toggle('active', i===idx); });
+      }
+      function buildDots(){
+        dotsWrap.innerHTML = '';
+        slideEls.forEach(function(_, i){
+          var d = document.createElement('button');
+          d.className = 'dot'; d.type='button'; d.setAttribute('aria-label','Go to slide ' + (i+1));
+          d.addEventListener('click', function(){ go(i); });
+          dotsWrap.appendChild(d);
+        });
+        updateDots();
+      }
+      function start(){ stop(); timer = setInterval(function(){ if(!isHover) next(); }, INTERVAL); }
+      function stop(){ if(timer) clearInterval(timer); timer=null; }
+
+      // Hover to pause
+      slides.addEventListener('mouseenter', function(){ isHover = true; });
+      slides.addEventListener('mouseleave', function(){ isHover = false; });
+
+      // Keyboard nav
+      slides.addEventListener('keydown', function(e){
+        if(e.key==='ArrowRight') next();
+        if(e.key==='ArrowLeft') prev();
+      });
+
+      // Buttons
+      var prevBtn = document.querySelector('.nav-prev');
+      var nextBtn = document.querySelector('.nav-next');
+      if(prevBtn) prevBtn.addEventListener('click', prev);
+      if(nextBtn) nextBtn.addEventListener('click', next);
+
+      // Sync index on manual scroll
+      var ticking = false;
+      slides.addEventListener('scroll', function(){
+        if(!ticking){
+          window.requestAnimationFrame(function(){
+            var left = slides.scrollLeft;
+            var nearest = 0; var best = Infinity;
+            slideEls.forEach(function(el, i){
+              var dist = Math.abs(el.offsetLeft - slides.offsetLeft - left);
+              if(dist < best){ best = dist; nearest = i; }
+            });
+            idx = nearest; updateDots();
+            ticking = false;
+          });
+          ticking = true;
+        }
+      });
+
+      buildDots();
+      start();
+      window.addEventListener('visibilitychange', function(){ document.hidden ? stop() : start(); });
+      window.addEventListener('resize', function(){ go(idx); });
     })();
   </script>
 </body>
