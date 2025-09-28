@@ -7,139 +7,81 @@
   <meta name="description" content="Only Apps by Arti Mishra — simple, private, lightweight Android utilities.">
   <meta name="theme-color" content="#0b0b0f" />
   <link rel="icon" href="favicon.png" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --bg: #fafafa;
-      --bg-2: #ffffff;
-      --surface: #ffffff;
-      --surface-variant: #f2f4f7;
-      --border: rgba(0,0,0,.08);
-      --text: #1f1f1f;
-      --muted: #5f6368;
-      --brand: #34A853;
-      --brand-2: #1e8e3e;
-      --accent: #4285F4;
-      --radius: 20px;
-      --radius-lg: 24px;
-      --elev-1: 0 1px 2px rgba(0,0,0,.06), 0 1px 3px rgba(0,0,0,.08);
-      --elev-2: 0 4px 10px rgba(0,0,0,.10);
-      --max: 1120px;
-      --gap: 16px;
-      --ring: 0 0 0 3px rgba(66,133,244,.28);
+    :root{
+      --bg:#fafafa; --bg-2:#ffffff; --surface:#ffffff; --surface-variant:#f2f4f7;
+      --border:rgba(0,0,0,.08); --text:#1f1f1f; --muted:#5f6368;
+      --brand:#34A853; --brand-2:#1e8e3e; --accent:#4285F4;
+      --radius:20px; --radius-lg:24px; --elev-1:0 1px 2px rgba(0,0,0,.06),0 1px 3px rgba(0,0,0,.08);
+      --elev-2:0 4px 10px rgba(0,0,0,.10); --max:1120px; --gap:16px;
+      --ring:0 0 0 3px rgba(66,133,244,.28);
     }
-
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #0b0b10;
-        --bg-2: #0e1017;
-        --surface: #12151c;
-        --surface-variant: #171b24;
-        --border: rgba(255,255,255,.10);
-        --text: #e8eaed;
-        --muted: #b0b4ba;
-        --elev-1: 0 1px 2px rgba(0,0,0,.3), 0 2px 8px rgba(0,0,0,.35);
-        --elev-2: 0 8px 18px rgba(0,0,0,.45);
+    @media (prefers-color-scheme: dark){
+      :root{
+        --bg:#0b0b10; --bg-2:#0e1017; --surface:#12151c; --surface-variant:#171b24;
+        --border:rgba(255,255,255,.10); --text:#e8eaed; --muted:#b0b4ba;
+        --elev-1:0 1px 2px rgba(0,0,0,.3),0 2px 8px rgba(0,0,0,.35);
+        --elev-2:0 8px 18px rgba(0,0,0,.45);
       }
     }
-
-    *, *::before, *::after { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: Inter, system-ui, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-    }
-
-    .container { max-width: var(--max); margin: 0 auto; padding: 24px; }
-    .section { margin-top: 48px; }
-    html { scroll-behavior: smooth; }
-    .section { scroll-margin-top: 96px; }
+    *,*::before,*::after{box-sizing:border-box}
+    html,body{height:100%}
+    html{scroll-behavior:smooth}
+    body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--text)}
+    a{color:inherit;text-decoration:none}
+    img{display:block;max-width:100%}
+    button,input{font:inherit;color:inherit}
+    .container{max-width:var(--max);margin:0 auto;padding:24px}
+    .section{margin-top:48px;scroll-margin-top:96px}
 
     /* Header */
-    header {
-      position: sticky; top: 0; z-index: 10;
-      backdrop-filter: blur(10px);
-      background: color-mix(in lab, var(--surface) 85%, transparent);
-      border-bottom: 1px solid var(--border);
-    }
-    .header-inner { text-align: center; padding: 16px 24px; }
-    .brand { font-size: 28px; font-weight: 800; }
-    .tagline { margin: 4px 0; font-size: .95rem; color: var(--muted); }
-    .top-nav { display: flex; gap: 14px; justify-content: center; margin-top: 6px; }
-    .top-nav a {
-      padding: 8px 12px; border-radius: 9999px;
-      background: var(--surface); border: 1px solid var(--border);
-      font-weight: 600; text-decoration: none;
-      box-shadow: var(--elev-1);
-    }
-
-    .search-wrap { display: grid; grid-template-columns: 1fr auto; gap: 10px; max-width: 780px; margin: 12px auto; }
-    .search {
-      border-radius: 9999px; padding: 12px 18px; height: 48px;
-      border: 1px solid var(--border); background: var(--surface-variant);
-    }
-    .clear-btn {
-      border-radius: 9999px; width: 48px; height: 48px; border: 1px solid var(--border);
-      background: var(--surface); cursor: pointer; font-size: 22px;
-    }
-
-    .filters { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 10px; }
-    .filter-btn {
-      padding: 8px 14px; border-radius: 9999px;
-      background: var(--surface-variant); border: 1px solid var(--border);
-      cursor: pointer; font-weight: 600;
-    }
-    .filter-btn.active { background: color-mix(in lab, var(--brand) 20%, var(--surface)); }
+    header{position:sticky;top:0;z-index:10;backdrop-filter:blur(10px);background:#ffffffcc;border-bottom:1px solid var(--border)}
+    @media (prefers-color-scheme: dark){header{background:#0e1017cc}}
+    .header-inner{text-align:center;padding:16px 24px}
+    .brand{font-size:28px;font-weight:800}
+    .tagline{margin:4px 0;font-size:.95rem;color:var(--muted)}
+    .top-nav{display:flex;gap:14px;justify-content:center;margin-top:6px;flex-wrap:wrap}
+    .top-nav a{padding:8px 12px;border-radius:9999px;background:var(--surface);border:1px solid var(--border);font-weight:600;box-shadow:var(--elev-1)}
+    .top-nav a.active{background:#e8f0fe;border-color:#d2e3fc}
+    .search-wrap{display:grid;grid-template-columns:1fr auto;gap:10px;max-width:780px;margin:12px auto}
+    .search{border-radius:9999px;padding:12px 18px;height:48px;border:1px solid var(--border);background:var(--surface-variant);outline:none;box-shadow:var(--elev-1)}
+    .search:focus{box-shadow:var(--elev-1),var(--ring);background:var(--surface)}
+    .clear-btn{border-radius:9999px;width:48px;height:48px;border:1px solid var(--border);background:var(--surface);cursor:pointer;font-size:22px}
+    .filters{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:10px}
+    .filter-btn{padding:8px 14px;border-radius:9999px;background:var(--surface-variant);border:1px solid var(--border);cursor:pointer;font-weight:600}
+    .filter-btn.active{background:#e6f4ea;border-color:#cce6d6}
 
     /* Apps list */
-    #apps { display: grid; gap: 12px; margin-top: 20px; }
-    .card {
-      display: grid; grid-template-columns: 72px 1fr auto; gap: 14px; align-items: center;
-      border-radius: 16px; background: var(--surface); border: 1px solid var(--border);
-      box-shadow: var(--elev-1); padding: 12px 14px;
+    #apps{display:grid;gap:12px;margin-top:20px}
+    .card{
+      display:grid;grid-template-columns:72px 1fr auto;gap:14px;align-items:center;
+      border-radius:16px;background:var(--surface);border:1px solid var(--border);box-shadow:var(--elev-1);padding:12px 14px
     }
-    .icon { width: 64px; height: 64px; border-radius: 18px; overflow: hidden; }
-    .icon img { width: 100%; height: 100%; object-fit: cover; }
-    .content { display: grid; gap: 6px; }
-    .name { margin: 0; font-weight: 700; font-size: 1.02rem; }
-    .dev { font-size: .88rem; color: var(--muted); }
-    .pill { font-size: .72rem; padding: 3px 8px; border-radius: 9999px; border: 1px solid var(--border); }
+    .icon{width:64px;height:64px;border-radius:18px;overflow:hidden}
+    .icon img{width:100%;height:100%;object-fit:cover}
+    .content{display:grid;gap:6px}
+    .name{margin:0;font-weight:700;font-size:1.02rem}
+    .dev{font-size:.88rem;color:var(--muted)}
+    .pill{font-size:.72rem;padding:3px 8px;border-radius:9999px;border:1px solid var(--border)}
+    .btn.store{
+      display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;
+      border:1px solid var(--border);background:var(--surface-variant)
+    }
+    .btn.store svg{width:20px;height:20px}
 
-    .btn.store {
-      display: inline-flex; align-items: center; justify-content: center;
-      width: 40px; height: 40px; border-radius: 50%;
-      border: 1px solid var(--border); background: var(--surface-variant);
-      cursor: pointer;
-    }
-    .btn.store svg { width: 20px; height: 20px; }
-
-    /* Sections */
-    .card-section {
-      background: var(--surface); border: 1px solid var(--border);
-      box-shadow: var(--elev-1); border-radius: var(--radius-lg); padding: 20px;
-    }
+    /* Section cards & sticky CTA */
+    .card-section{background:var(--surface);border:1px solid var(--border);box-shadow:var(--elev-1);border-radius:var(--radius-lg);padding:20px}
+    .sticky-cta{position:fixed;right:18px;bottom:18px;z-index:20;padding:12px 16px;border-radius:9999px;background:linear-gradient(180deg,var(--brand),var(--brand-2));color:#fff;font-weight:800}
 
     /* Scroll to top */
-    .scroll-top {
-      position: fixed; right: 18px; bottom: 80px; z-index: 20;
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: 50%; width: 46px; height: 46px;
-      font-size: 22px; cursor: pointer; opacity: 0; pointer-events: none;
-      transition: opacity .2s ease;
+    .scroll-top{
+      position:fixed;right:18px;bottom:80px;z-index:20;background:var(--surface);border:1px solid var(--border);
+      border-radius:50%;width:46px;height:46px;font-size:22px;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .2s ease
     }
-    .scroll-top.show { opacity: 1; pointer-events: auto; }
+    .scroll-top.show{opacity:1;pointer-events:auto}
 
-    /* Sticky Contact */
-    .sticky-cta {
-      position: fixed; right: 18px; bottom: 18px; z-index: 20;
-      padding: 12px 16px; border-radius: 9999px;
-      background: linear-gradient(180deg, var(--brand), var(--brand-2)); color: #fff;
-      font-weight: 800; text-decoration: none;
-    }
-
-    footer { text-align: center; font-size: .9rem; color: var(--muted); margin: 40px 0 24px; }
+    footer{text-align:center;font-size:.9rem;color:var(--muted);margin:40px 0 24px}
   </style>
 </head>
 <body>
@@ -147,35 +89,41 @@
     <div class="header-inner">
       <div class="brand">Only Apps</div>
       <p class="tagline">Simple • Private • Lightweight</p>
-      <nav class="top-nav">
-        <a href="#apps">Apps</a>
-        <a href="#about">About</a>
-        <a href="#contact">Contact</a>
+      <nav class="top-nav" aria-label="Primary">
+        <a href="#apps" data-nav="apps" class="active">Apps</a>
+        <a href="#about" data-nav="about">About</a>
+        <a href="#contact" data-nav="contact">Contact</a>
       </nav>
       <div class="search-wrap">
-        <input id="q" class="search" type="search" placeholder="Search apps…">
-        <button id="clear" class="clear-btn" aria-label="Clear search">×</button>
+        <input id="q" class="search" type="search" placeholder="Search apps… (music, gallery, notes)" aria-label="Search apps">
+        <button id="clear" class="clear-btn" type="button" aria-label="Clear search">×</button>
       </div>
-      <div class="filters">
-        <button class="filter-btn" data-filter="all">All</button>
-        <button class="filter-btn" data-filter="media">Media</button>
-        <button class="filter-btn" data-filter="tools">Tools</button>
-        <button class="filter-btn" data-filter="communication">Communication</button>
+      <div class="filters" role="tablist" aria-label="Filter apps by category">
+        <button class="filter-btn active" role="tab" data-filter="all">All</button>
+        <button class="filter-btn" role="tab" data-filter="media">Media</button>
+        <button class="filter-btn" role="tab" data-filter="tools">Tools</button>
+        <button class="filter-btn" role="tab" data-filter="communication">Communication</button>
       </div>
     </div>
   </header>
 
   <main class="container">
-    <section id="apps"></section>
+    <section id="apps" aria-live="polite"></section>
 
     <section id="about" class="section card-section">
       <h2>About</h2>
-      <p>Ad-free, privacy-first apps designed with clarity and simplicity. Built to be lightweight, offline, and respectful of your data.</p>
+      <p>Ad-free, privacy-first apps designed with clarity and simplicity, bringing essential tools for everyday life.
+        Built to be lightweight, offline, and respectful of your data. Whether it’s media, tools, or communication,
+        Only Apps helps you stay productive without distraction.</p>
     </section>
 
     <section id="contact" class="section card-section">
       <h2>Contact</h2>
-      <p>Email: <a href="mailto:onlyapp.contact@gmail.com">onlyapp.contact@gmail.com</a> · Website: <a href="https://onlyessential.github.io" target="_blank">onlyessential.github.io</a></p>
+      <p>
+        Email: <a href="mailto:onlyapp.contact@gmail.com">onlyapp.contact@gmail.com</a> ·
+        Website: <a href="https://onlyessential.github.io" target="_blank" rel="noopener">onlyessential.github.io</a> ·
+        Privacy Policy: <a href="privacy.html" target="_blank" rel="noopener">privacy.html</a>
+      </p>
     </section>
   </main>
 
@@ -183,72 +131,150 @@
     <p>© <span id="y"></span> Only Apps</p>
   </footer>
 
-  <a href="mailto:onlyapp.contact@gmail.com" class="sticky-cta">Contact</a>
+  <a href="mailto:onlyapp.contact@gmail.com" class="sticky-cta" aria-label="Contact Only Apps">Contact</a>
   <button id="scrollTopBtn" class="scroll-top" aria-label="Scroll to top">↑</button>
 
   <script>
+    // Full APPS list
     const APPS = [
-      { name: 'Only Applock', category: 'tools', desc: 'Lock apps with fingerprint.', iconUrl: '...', href: 'https://play.google.com/store/apps/details?id=com.andmobi.applocker' },
-      { name: 'Only Files', category: 'tools', desc: 'Fast file manager.', iconUrl: '...', href: 'https://play.google.com/store/apps/details?id=com.andmobi.filemanager' }
-      // ... keep your full list
+      { name: 'Only Applock', category: 'tools', desc: 'Lock apps with fingerprint, PIN or pattern. Works offline. No ads.', iconUrl: 'https://play-lh.googleusercontent.com/wewWweEHo0pWqS5h0BEbREd73QNM6zoWzFtVxaIq1GHrXrsMfPY_oXCxk4Qul3bQx1JgOZBRGmRBnkTpbc21=w240-h480', href: 'https://play.google.com/store/apps/details?id=com.andmobi.applocker' },
+      { name: 'Only Files', category: 'tools', desc: 'Fast file manager with a clean UI. Private by design.', iconUrl: 'https://play-lh.googleusercontent.com/1CwN7DPl2LtM0eVHxex80giNxKXX-TLw-yNTiwmeGVAPOObyMcRro-Jw2RaNi3MokV-ji38NwPKCKop3WJlXEA=w240-h480', href: 'https://play.google.com/store/apps/details?id=com.andmobi.filemanager' },
+      { name: 'Only Phone', category: 'communication', desc: 'A lightning-fast dialer with favorites and recent calls. Ad-free.', iconUrl: 'https://play-lh.googleusercontent.com/0s4tQv51BtwzXCOTujAKNY3mTx-xE2TfbWmjY9p5nDWcO1XCMNvdLR_7UhZkWERQ0oVRX-Yz7BIK_v5H9kFYLFs=w240-h480', href: 'https://play.google.com/store/apps/details?id=com.andmobi.phone' },
+      { name: 'Only Launcher', category: 'tools', desc: 'Zero-bloat home screen. Super fast with a focus on essentials.', iconUrl: 'https://play-lh.googleusercontent.com/O_8Wx5LeKlAuo5t513zCyQpA_hNkUSBK3V7G4uoa1K-aDailx0tRS4NnpRdIOKdD6ZVI2UJCBXMeI19VTzPvfw=w240-h480', href: 'https://play.google.com/store/apps/details?id=com.andmobi.home' },
+      { name: 'Only Play', category: 'media', desc: 'Smooth offline video player with folders and quick controls.', iconUrl: 'https://play-lh.googleusercontent.com/CWiXjqHcX5Q_E77gQt4Xtn0NCijk-n_NpJrF-GYb69D8ELzYPy9JRcbOyeILnwbuUVSfi7tNiR3Mltis6fU3Ww=w240-h480', href: 'https://play.google.com/store/apps/details?id=com.andmobi.onlyplay' },
+      { name: 'Only Gallery', category: 'media', desc: 'Beautiful, private gallery for photos and videos. 100% offline.', iconUrl: 'https://play-lh.googleusercontent.com/r0Y5mvzS0_FFppsz8knAv3j7GfJNieCV2yCKcmtUNZURVMSW-r_tMU_S9yujiP9lvlKhFSnYc432WY00CeiS=w240-h480', href: 'https://play.google.com/store/apps/details?id=com.andmobi.gallery' },
+      { name: 'Only Keyboard', category: 'tools', desc: 'Fast, distraction-free typing. No network access, no tracking.', iconUrl: 'https://play-lh.googleusercontent.com/KF9fU6UXofoGpU-J9Uw4rgR7sWorBwCvXjOc3XsfmEwE7CZ8O9q4RyS2tKoUVyA_-I_9jKrOBr5B6HTTGdsUDg=w240-h480', href: 'https://play.google.com/store/apps/details?id=com.andmobi.keyboard' },
+      { name: 'Only Music', category: 'media', desc: 'Offline music player with folders and quick playlists. No ads.', iconUrl: 'https://play-lh.googleusercontent.com/gbBlOU6QuDFeQJNygW6gnSHNDMZ2S9CjYPq1Kc3vijhEtD9U3v-2Tlo1d2kEGoVkjhL2rkbn5cfXMlATczkOyg=w240-h480', href: 'https://play.google.com/store/apps/details?id=com.andmobi.music' },
+      { name: 'Only Voice Recorder', category: 'tools', desc: 'One-tap high-quality recordings that stay local on your device.', iconUrl: 'https://play-lh.googleusercontent.com/CpeXdE5zBQ83HVEsfW5gjoZTrXLP5DL3ProDR_DnfqKuSw_iP5SHb2wO_AJVy8MpXCcPPrREyTL-LEboVZc6=w240-h480', href: 'https://play.google.com/store/apps/details?id=com.andmobi.voicerecorder' },
+      { name: 'Only Calculator', category: 'tools', desc: 'Clean, reliable calculator with large buttons. Ad-free.', iconUrl: 'https://play-lh.googleusercontent.com/9E7D3Ijctr44Tfd0akLcELdLgPTEzMJKt9aTYVbrFDJUqRzxIiHdmr08VaQoUXHwqe-Rio6_wYFY81kaK50Gzw=w240-h480', href: 'https://play.google.com/store/apps/details?id=com.andmobi.math' },
+      { name: 'Only Paint', category: 'tools', desc: 'Lightweight sketchpad for quick doodles. Save to gallery.', iconUrl: 'https://play-lh.googleusercontent.com/hTbZyMIoBlCyw49PrzhplRt7NEMHpP6q7ED9zSaHNq8cxgTwkH1eqfhHzTV9I73ohAdjdDzwPVG40cnTTjlEiQ=w240-h480', href: 'https://play.google.com/store/apps/details?id=com.andmobi.paint' },
+      { name: 'Only Contacts', category: 'communication', desc: 'Simple contacts manager—fast, local, and private.', iconUrl: 'https://play-lh.googleusercontent.com/evneDxrQxuyFBuayY4ZxBjHlZ1xWOCzK7mkPRHz_ApJBPzAVSxGI2AuHv1nrQw5VH8olDioq9FI5itAFEbp-=w240-h480', href: 'https://play.google.com/store/apps/details?id=com.andmobi.contacts' },
+      { name: 'Only Messages', category: 'communication', desc: 'Focused SMS/MMS with just the essentials. No bloat.', iconUrl: 'https://play-lh.googleusercontent.com/FMfVYb1DoIjhqNa9rJEZqqo6Yb3H-UfhJzbHuaHmoSZGsvcMvu8ejT_iDtYq7KD5h-49IOoGYLvgJ4IW8cV03A=w240-h480', href: 'https://play.google.com/store/apps/details?id=com.andmobi.messages' },
+      { name: 'Only Clock', category: 'tools', desc: 'Alarms, timers and a calm bedside mode. Ad-free.', iconUrl: 'https://play-lh.googleusercontent.com/c-mUjSGiPI0THetffaRbJ-S4ybWE5z28SJyr3e1T63HVgXzBVnQe5K4K2sfxIRDqjEUpPieDai6h9CnZKfkCg2A=w240-h480', href: 'https://play.google.com/store/apps/details?id=com.andmobi.clock' },
+      { name: 'Only Notes', category: 'tools', desc: 'Plain-text notes that sync to your brain—not the cloud.', iconUrl: 'https://play-lh.googleusercontent.com/BGJcMxF5hLVRAysg_DrYO61UTyaBCRL4KPyaEsJ9rhY_kZKauNCS83VpAUUziz9fx6waJHntFEWJ_sZUWjWKNw=w240-h480', href: 'https://play.google.com/store/apps/details?id=com.andmobi.notes' },
+      { name: 'Only Calendar', category: 'tools', desc: 'Clean calendar with a simple month & agenda view. Private.', iconUrl: 'https://play-lh.googleusercontent.com/Wy7_ug7bQVxsKuG_yVOQe-K5FBIV4-T2rHd9q2QmLK_-K1jaO8b9Ww1AR9th7ItAL_0ihBz1uzT0eSUw_SlkrQ=w240-h480', href: 'https://play.google.com/store/apps/details?id=com.andmobi.calendar' },
+      { name: 'Only Camera', category: 'media', desc: 'Opens fast, captures instantly. No clutter, no ads.', iconUrl: 'https://play-lh.googleusercontent.com/sUGpcHThl70KDWDKI91D0knw7w2Z2--iz5kkQUIsK-sHJDJlkmhRbXYsepTTgqEPpyqwFgTtiN7rI-eKGe-U=w240-h480', href: 'https://play.google.com/store/apps/details?id=com.andmobi.camera' }
     ];
 
     const grid = document.getElementById('apps');
     const q = document.getElementById('q');
     const clearBtn = document.getElementById('clear');
     const filterBtns = document.querySelectorAll('.filter-btn');
+    const navLinks = document.querySelectorAll('.top-nav a');
+    const scrollTopBtn = document.getElementById('scrollTopBtn');
 
-    function createCard(app) {
+    // Utility: build market deep link from a Play https URL
+    function marketLinkFromPlayUrl(playUrl){
+      try{
+        const u = new URL(playUrl);
+        const id = u.searchParams.get('id');
+        return id ? `market://details?id=${id}` : null;
+      }catch{ return null; }
+    }
+
+    // Open in Play Store app on Android, otherwise go to https
+    function openInPlayWithFallback(playUrl){
+      const isAndroid = /Android/i.test(navigator.userAgent);
+      const marketUrl = marketLinkFromPlayUrl(playUrl);
+
+      if(isAndroid && marketUrl){
+        // Try market scheme, then fall back to https if not handled
+        const timeout = setTimeout(()=>{ window.open(playUrl, '_blank', 'noopener'); }, 700);
+        // Using location.href ensures the intent hits the OS handler
+        window.location.href = marketUrl;
+        // If it works, the page will background/switch; if not, fallback triggers.
+        // Clear timeout on visibility change (user left the page)
+        const onHide = () => { clearTimeout(timeout); document.removeEventListener('visibilitychange', onHide); };
+        document.addEventListener('visibilitychange', onHide);
+      }else{
+        window.open(playUrl, '_blank', 'noopener');
+      }
+    }
+
+    function gplayIcon(){
       return `
-        <article class="card">
-          <div class="icon"><img src="${app.iconUrl}" alt="${app.name} icon" loading="lazy"></div>
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <defs>
+            <linearGradient id="gplay" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#34A853"/>
+              <stop offset="50%" stop-color="#FBBC05"/>
+              <stop offset="100%" stop-color="#4285F4"/>
+            </linearGradient>
+          </defs>
+          <path fill="url(#gplay)" d="M3.24 2.1c-.77.44-1.24 1.25-1.24 2.13v15.54c0 .88.47 1.69 1.24 2.13l11.84-9.9L3.24 2.1Zm14.73 7.94L17.2 9.3 13.3 12l3.9 2.7 0-.01 2.97-1.76c1.13-.67 1.13-2.32 0-2.99l-2.2-1.3Z"/>
+        </svg>`;
+    }
+
+    function createCard(app){
+      return `
+        <article class="card" data-name="${app.name}" data-category="${app.category}">
+          <div class="icon"><img loading="lazy" src="${app.iconUrl}" alt="${app.name} icon"></div>
           <div class="content">
             <h3 class="name">${app.name}</h3>
-            <div class="dev"><span class="pill">${app.category}</span></div>
+            <div class="dev">Only Apps • <span class="pill">${app.category}</span></div>
             <div class="meta">${app.desc}</div>
           </div>
-          <a class="btn store" href="${app.href}" target="_blank" aria-label="Open ${app.name} on Google Play">
-            <svg viewBox="0 0 24 24">
-              <defs>
-                <linearGradient id="gplay" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stop-color="#34A853"/>
-                  <stop offset="50%" stop-color="#FBBC05"/>
-                  <stop offset="100%" stop-color="#4285F4"/>
-                </linearGradient>
-              </defs>
-              <path fill="url(#gplay)" d="M3 2.5l12 9.5-12 9.5..."/>
-            </svg>
+          <a class="btn store" href="${app.href}" data-href="${app.href}" rel="noopener" aria-label="Open ${app.name} on Google Play">
+            ${gplayIcon()}
           </a>
         </article>`;
     }
 
-    function render(list) { grid.innerHTML = list.map(createCard).join(''); }
-    function filterApps() {
-      const term = q.value.toLowerCase();
+    function render(list){ 
+      grid.innerHTML = list.map(createCard).join(''); 
+
+      // Attach click handlers for Play deep links
+      grid.querySelectorAll('.btn.store').forEach(btn=>{
+        btn.addEventListener('click', (e)=>{
+          e.preventDefault();
+          const url = btn.getAttribute('data-href');
+          if(url) openInPlayWithFallback(url);
+        });
+      });
+    }
+
+    function filterApps(){
+      const term = q.value.trim().toLowerCase();
       const activeFilter = document.querySelector('.filter-btn.active')?.dataset.filter || 'all';
       return APPS.filter(app =>
         (activeFilter === 'all' || app.category === activeFilter) &&
-        (app.name.toLowerCase().includes(term) || app.desc.toLowerCase().includes(term))
+        (!term || app.name.toLowerCase().includes(term) || app.desc.toLowerCase().includes(term))
       );
     }
 
+    // Search & filters
     q.addEventListener('input', () => render(filterApps()));
-    clearBtn.addEventListener('click', () => { q.value=''; render(filterApps()); });
-    filterBtns.forEach(btn => btn.addEventListener('click', () => {
-      filterBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active'); render(filterApps());
-    }));
+    q.addEventListener('keydown', e => { if (e.key === 'Escape') { q.value = ''; render(filterApps()); }});
+    clearBtn.addEventListener('click', () => { q.value = ''; q.focus(); render(filterApps()); });
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        render(filterApps());
+      });
+    });
 
-    render(APPS);
-    document.getElementById('y').textContent = new Date().getFullYear();
+    // Scrollspy (highlight nav + update hash)
+    const sections = ['apps','about','contact'].map(id => document.getElementById(id));
+    const io = new IntersectionObserver((entries)=>{
+      const visible = entries.filter(e=>e.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];
+      if(!visible) return;
+      const id = visible.target.id;
+      navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + id));
+      if(location.hash !== '#' + id) history.replaceState(null,'','#'+id);
+    }, { threshold:[0.55,0.75] });
+    sections.forEach(sec => io.observe(sec));
 
-    // scroll-to-top
-    const scrollTopBtn = document.getElementById('scrollTopBtn');
+    // Scroll-to-top FAB
     window.addEventListener('scroll', () => {
       if (window.scrollY > 300) scrollTopBtn.classList.add('show');
       else scrollTopBtn.classList.remove('show');
     });
     scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    // Initial render & year
+    render(APPS);
+    document.getElementById('y').textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
