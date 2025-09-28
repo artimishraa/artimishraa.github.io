@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="auto">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -11,149 +11,51 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    /* ========= Play Store–inspired Design Tokens ========= */
     :root{
-      --bg:#fafafa;
-      --bg-2:#ffffff;
-      --surface:#ffffff;
-      --surface-variant:#f2f4f7;
-      --border:rgba(0,0,0,.08);
-      --text:#1f1f1f;
-      --muted:#5f6368;
-      --brand:#34A853;   /* Play green */
-      --brand-2:#1e8e3e; /* darker green */
-      --accent:#4285F4;  /* Play blue */
-      --radius:20px;
-      --radius-lg:24px;
+      --bg:#fafafa;--surface:#fff;--surface-variant:#f2f4f7;--border:rgba(0,0,0,.08);
+      --text:#1f1f1f;--muted:#5f6368;--brand:#34A853;--accent:#4285F4;
       --elev-1:0 1px 2px rgba(0,0,0,.06),0 1px 3px rgba(0,0,0,.08);
-      --elev-2:0 4px 10px rgba(0,0,0,.10);
-      --max:1120px;
-      --gap:16px;
-      --ring:0 0 0 3px rgba(66,133,244,.28);
+      --elev-2:0 4px 10px rgba(0,0,0,.10);--max:1120px;--ring:0 0 0 3px rgba(66,133,244,.28)
     }
     @media (prefers-color-scheme: dark){
-      :root{
-        --bg:#0b0b10;
-        --bg-2:#0e1017;
-        --surface:#12151c;
-        --surface-variant:#171b24;
-        --border:rgba(255,255,255,.10);
-        --text:#e8eaed;
-        --muted:#b0b4ba;
-        --elev-1:0 1px 2px rgba(0,0,0,.3),0 2px 8px rgba(0,0,0,.35);
-        --elev-2:0 8px 18px rgba(0,0,0,.45);
-      }
+      :root{--bg:#0b0b10;--surface:#12151c;--surface-variant:#171b24;--border:rgba(255,255,255,.1);
+      --text:#e8eaed;--muted:#b0b4ba;--elev-1:0 1px 2px rgba(0,0,0,.3),0 2px 8px rgba(0,0,0,.35);
+      --elev-2:0 8px 18px rgba(0,0,0,.45)}
     }
-
-    /* ========= Base ========= */
-    *,*::before,*::after{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
-      background:var(--bg);
-      color:var(--text);
-      -webkit-font-smoothing:antialiased;
-      text-rendering:optimizeLegibility;
-    }
-    a{color:inherit;text-decoration:none}
-    img{display:block;max-width:100%}
-    button,input{font:inherit;color:inherit}
-
+    body{margin:0;font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--text)}
+    a{text-decoration:none;color:inherit}
     .container{max-width:var(--max);margin:0 auto;padding:24px}
     .section{margin-top:48px}
-
-    /* ========= Header (Play bar) ========= */
-    header{
-      position:sticky;top:0;z-index:10;
-      backdrop-filter:blur(10px);
-      background:color-mix(in lab,var(--surface) 85%,transparent);
-      border-bottom:1px solid var(--border);
-    }
-    .header-inner{display:grid;gap:12px;padding:16px 24px;align-items:center;text-align:center}
-    .brand{font-size:28px;font-weight:800;letter-spacing:-.02em}
-    .tagline{margin:0;font-size:.95rem;color:var(--muted)}
-    .controls{display:grid;gap:12px;justify-items:center;margin-top:6px}
-
-    .search-wrap{width:min(780px,100%);display:grid;grid-template-columns:1fr auto;gap:10px}
-    .search{
-      border-radius:9999px;padding:12px 18px;height:48px;
-      border:1px solid var(--border);background:var(--surface-variant);
-      outline:none;box-shadow:var(--elev-1)
-    }
-    .search:focus{box-shadow:var(--elev-1),var(--ring);background:var(--surface)}
-    .clear-btn{
-      cursor:pointer;background:var(--surface);border:1px solid var(--border);
-      border-radius:9999px;padding:0 16px;height:48px;line-height:48px;
-      transition:transform .15s ease,opacity .15s ease,background .15s ease;opacity:.9;
-      box-shadow:var(--elev-1)
-    }
-    .clear-btn:hover{transform:translateY(-1px);opacity:1}
-    .clear-btn:focus-visible{outline:none;box-shadow:var(--ring)}
-
+    header{position:sticky;top:0;background:color-mix(in lab,var(--surface) 85%,transparent);
+      border-bottom:1px solid var(--border);backdrop-filter:blur(10px);z-index:10}
+    .header-inner{display:grid;gap:12px;padding:16px 24px;text-align:center}
+    .brand{font-size:28px;font-weight:800}
+    .tagline{margin:0;color:var(--muted);font-size:.95rem}
+    .controls{display:grid;gap:12px;justify-items:center}
+    .search-wrap{display:grid;grid-template-columns:1fr auto;gap:10px;width:min(780px,100%)}
+    .search{border-radius:9999px;padding:12px 18px;height:48px;border:1px solid var(--border);
+      background:var(--surface-variant);box-shadow:var(--elev-1)}
+    .clear-btn{border-radius:9999px;padding:0 16px;height:48px;background:var(--surface);
+      border:1px solid var(--border);cursor:pointer;box-shadow:var(--elev-1)}
     .filters{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
-    .filter-btn{
-      border-radius:9999px;padding:8px 14px;height:40px;
-      background:var(--surface-variant);border:1px solid var(--border);
-      cursor:pointer;font-weight:600;color:var(--text);
-      transition:transform .15s ease,box-shadow .15s ease,background .15s ease;
-      box-shadow:var(--elev-1)
-    }
-    .filter-btn:hover{transform:translateY(-1px)}
-    .filter-btn:focus-visible{outline:none;box-shadow:var(--ring)}
-    .filter-btn.active{
-      background:color-mix(in lab,var(--brand) 18%,var(--surface));
-      border-color:color-mix(in lab,var(--brand) 30%,var(--border))
-    }
-
-    /* ========= Grid -> Play list cards ========= */
-    #apps{display:grid;grid-template-columns:1fr;gap:12px;margin-top:16px}
-    @media (min-width:720px){#apps{grid-template-columns:1fr 1fr}}
-    @media (min-width:1040px){#apps{grid-template-columns:1fr 1fr 1fr}}
-
-    .card{
-      display:grid;grid-template-columns:72px 1fr auto;align-items:center;gap:14px;
+    .filter-btn{border-radius:9999px;padding:8px 14px;height:40px;background:var(--surface-variant);
+      border:1px solid var(--border);cursor:pointer;font-weight:600}
+    #apps{display:grid;gap:12px;margin-top:16px}
+    @media(min-width:720px){#apps{grid-template-columns:1fr 1fr}}
+    @media(min-width:1040px){#apps{grid-template-columns:1fr 1fr 1fr}}
+    .card{display:grid;grid-template-columns:72px 1fr auto;gap:14px;align-items:center;
       border-radius:16px;background:var(--surface);border:1px solid var(--border);
-      box-shadow:var(--elev-1);padding:12px 14px;min-height:88px;
-      transition:box-shadow .2s ease,transform .2s ease
-    }
-    .card:hover{transform:translateY(-2px);box-shadow:var(--elev-2)}
-
+      box-shadow:var(--elev-1);padding:12px 14px}
     .icon{width:64px;height:64px;border-radius:18px;overflow:hidden}
-    .icon img{width:100%;height:100%;object-fit:cover}
-
-    .content{display:grid;gap:6px;align-self:stretch}
-    .name{margin:0;font-weight:700;font-size:1.02rem;letter-spacing:-.01em}
+    .content{display:grid;gap:6px}
+    .name{margin:0;font-weight:700;font-size:1.02rem}
     .dev{font-size:.88rem;color:var(--muted)}
-    .meta{display:flex;gap:10px;align-items:center;color:var(--muted);font-size:.86rem}
-    .pill{font-size:.72rem;font-weight:700;letter-spacing:.02em;text-transform:uppercase;padding:4px 8px;border-radius:9999px;border:1px solid var(--border);background:var(--surface-variant)}
-
-    .btn-row{display:grid;gap:8px}
-    .btn.store{
-      display:inline-flex;align-items:center;gap:10px;height:40px;
-      padding:0 14px;border-radius:9999px;font-weight:700;letter-spacing:.01em;
-      background:linear-gradient(180deg,var(--brand),var(--brand-2));color:#fff;
-      border:1px solid color-mix(in lab,var(--brand-2) 80%, black);
-      box-shadow:var(--elev-1);text-decoration:none;justify-content:center;
-      transition:transform .15s ease,box-shadow .15s ease,opacity .15s ease
-    }
-    .btn.store:hover{transform:translateY(-1px);box-shadow:var(--elev-2);opacity:.95}
-    .btn.store:focus-visible{outline:none;box-shadow:var(--ring)}
-    .btn.store svg{width:18px;height:18px;flex:0 0 18px}
-
-    /* ========= Tooltip ========= */
-    .tooltip{
-      position:fixed;z-index:9999;pointer-events:none;background:var(--text);color:#fff;
-      font-size:.75rem;padding:6px 10px;border-radius:8px;font-weight:700;
-      transform:translate(-50%,calc(-100% - 10px)) scale(.96);opacity:0;
-      transition:opacity .2s ease,transform .2s ease;white-space:nowrap;box-shadow:var(--elev-2)
-    }
-    .tooltip.show{opacity:1;transform:translate(-50%,calc(-100% - 10px)) scale(1)}
-
-    /* ========= Footer ========= */
+    .pill{font-size:.72rem;padding:4px 8px;border-radius:9999px;border:1px solid var(--border)}
+    .btn.store{display:inline-flex;align-items:center;justify-content:center;border-radius:8px;padding:0}
+    .btn.store svg{height:48px;width:auto;display:block}
+    @media(max-width:640px){.btn.store svg{height:44px}}
+    @media(max-width:420px){.btn.store svg{height:40px}}
     footer{text-align:center;font-size:.9rem;color:var(--muted);margin:40px 0 24px}
-
-    @media (prefers-reduced-motion: reduce){*{transition:none !important;animation:none !important}}
   </style>
 </head>
 <body>
@@ -163,140 +65,66 @@
       <p class="tagline">Simple • Private • Lightweight</p>
       <div class="controls">
         <div class="search-wrap">
-          <input id="q" class="search" type="search" placeholder="Search apps… (music, gallery, notes)" aria-label="Search apps">
-          <button id="clear" class="clear-btn" type="button" aria-label="Clear search">×</button>
+          <input id="q" class="search" type="search" placeholder="Search apps… (music, gallery, notes)">
+          <button id="clear" class="clear-btn" type="button">×</button>
         </div>
-        <div class="filters" role="tablist" aria-label="Filter apps by category">
-          <button class="filter-btn active" role="tab" aria-selected="true" data-filter="all" data-tooltip="Show all apps">All</button>
-          <button class="filter-btn" role="tab" data-filter="media" data-tooltip="Music, Gallery, Play">Media</button>
-          <button class="filter-btn" role="tab" data-filter="tools" data-tooltip="Files, Calculator, Notes">Tools</button>
-          <button class="filter-btn" role="tab" data-filter="communication" data-tooltip="Phone, Messages, Contacts">Communication</button>
+        <div class="filters">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="media">Media</button>
+          <button class="filter-btn" data-filter="tools">Tools</button>
+          <button class="filter-btn" data-filter="communication">Communication</button>
         </div>
       </div>
     </div>
   </header>
 
   <main class="container">
-    <section id="apps" class="section" aria-live="polite"></section>
-
+    <section id="apps" class="section"></section>
     <section id="about" class="section">
       <h2>About</h2>
-      <p class="desc">Ad-free, privacy-first apps designed with clarity and simplicity, bringing essential tools for everyday life.
-      Built to be lightweight, offline, and respectful of your data.
-      Whether it’s media, tools, or communication, Only Apps helps you stay productive without distraction.</p>
-    </section>
-
-    <section id="contact" class="section">
-      <h2>Contact</h2>
-      <p class="desc">Email: <a href="mailto:onlyapp.contact@gmail.com">onlyapp.contact@gmail.com</a> · Website: <a href="https://onlyessential.github.io" target="_blank" rel="noopener">onlyessential.github.io</a> · Privacy Policy: <a href="privacy.html" target="_blank" rel="noopener">privacy.html</a></p>
+      <p>Ad-free, privacy-first apps designed with clarity and simplicity.</p>
     </section>
   </main>
 
   <footer>
-    <p>© <span id="y"></span> Only Apps · Contact: <a href="mailto:onlyapp.contact@gmail.com">onlyapp.contact@gmail.com</a></p>
+    <p>© <span id="y"></span> Only Apps</p>
   </footer>
 
-  <div id="tooltip" class="tooltip" role="status" aria-live="polite"></div>
-
   <script>
-    // ========= Data =========
-    const APPS = [
-      { name: 'Only Applock', category: 'tools', desc: 'Lock apps with fingerprint, PIN or pattern. Works offline. No ads.', iconUrl: 'https://play-lh.googleusercontent.com/wewWweEHo0pWqS5h0BEbREd73QNM6zoWzFtVxaIq1GHrXrsMfPY_oXCxk4Qul3bQx1JgOZBRGmRBnkTpbc21=w240-h480', href: 'https://play.google.com/store/apps/details?id=com.andmobi.applocker' },
-      { name: 'Only Files', category: 'tools', desc: 'Fast file manager with a clean UI. Private by design.', iconUrl: 'https://play-lh.googleusercontent.com/1CwN7DPl2LtM0eVHxex80giNxKXX-TLw-yNTiwmeGVAPOObyMcRro-Jw2RaNi3MokV-ji38NwPKCKop3WJlXEA=w240-h480', href: 'https://play.google.com/store/apps/details?id=com.andmobi.filemanager' },
-      { name: 'Only Phone', category: 'communication', desc: 'A lightning-fast dialer with favorites and recent calls. Ad-free.', iconUrl: 'https://play-lh.googleusercontent.com/0s4tQv51BtwzXCOTujAKNY3mTx-xE2TfbWmjY9p5nDWcO1XCMNvdLR_7UhZkWERQ0oVRX-Yz7BIK_v5H9kFYLFs=w240-h480', href: 'https://play.google.com/store/apps/details?id=com.andmobi.phone' },
-      { name: 'Only Launcher', category: 'tools', desc: 'Zero-bloat home screen. Super fast with a focus on essentials.', iconUrl: 'https://play-lh.googleusercontent.com/O_8Wx5LeKlAuo5t513zCyQpA_hNkUSBK3V7G4uoa1K-aDailx0tRS4NnpRdIOKdD6ZVI2UJCBXMeI19VTzPvfw=w240-h480', href: 'https://play.google.com/store/apps/details?id=com.andmobi.home' },
-      { name: 'Only Play', category: 'media', desc: 'Smooth offline video player with folders and quick controls.', iconUrl: 'https://play-lh.googleusercontent.com/CWiXjqHcX5Q_E77gQt4Xtn0NCijk-n_NpJrF-GYb69D8ELzYPy9JRcbOyeILnwbuUVSfi7tNiR3Mltis6fU3Ww=w240-h480', href: 'https://play.google.com/store/apps/details?id=com.andmobi.onlyplay' },
-      { name: 'Only Gallery', category: 'media', desc: 'Beautiful, private gallery for photos and videos. 100% offline.', iconUrl: 'https://play-lh.googleusercontent.com/r0Y5mvzS0_FFppsz8knAv3j7GfJNieCV2yCKcmtUNZURVMSW-r_tMU_S9yujiP9lvlKhFSnYc432WY00CeiS=w240-h480', href: 'https://play.google.com/store/apps/details?id=com.andmobi.gallery' },
-      { name: 'Only Keyboard', category: 'tools', desc: 'Fast, distraction-free typing. No network access, no tracking.', iconUrl: 'https://play-lh.googleusercontent.com/KF9fU6UXofoGpU-J9Uw4rgR7sWorBwCvXjOc3XsfmEwE7CZ8O9q4RyS2tKoUVyA_-I_9jKrOBr5B6HTTGdsUDg=w240-h480', href: 'https://play.google.com/store/apps/details?id=com.andmobi.keyboard' },
-      { name: 'Only Music', category: 'media', desc: 'Offline music player with folders and quick playlists. No ads.', iconUrl: 'https://play-lh.googleusercontent.com/gbBlOU6QuDFeQJNygW6gnSHNDMZ2S9CjYPq1Kc3vijhEtD9U3v-2Tlo1d2kEGoVkjhL2rkbn5cfXMlATczkOyg=w240-h480', href: 'https://play.google.com/store/apps/details?id=com.andmobi.music' },
-      { name: 'Only Voice Recorder', category: 'tools', desc: 'One-tap high-quality recordings that stay local on your device.', iconUrl: 'https://play-lh.googleusercontent.com/CpeXdE5zBQ83HVEsfW5gjoZTrXLP5DL3ProDR_DnfqKuSw_iP5SHb2wO_AJVy8MpXCcPPrREyTL-LEboVZc6=w240-h480', href: 'https://play.google.com/store/apps/details?id=com.andmobi.voicerecorder' },
-      { name: 'Only Calculator', category: 'tools', desc: 'Clean, reliable calculator with large buttons. Ad-free.', iconUrl: 'https://play-lh.googleusercontent.com/9E7D3Ijctr44Tfd0akLcELdLgPTEzMJKt9aTYVbrFDJUqRzxIiHdmr08VaQoUXHwqe-Rio6_wYFY81kaK50Gzw=w240-h480', href: 'https://play.google.com/store/apps/details?id=com.andmobi.math' },
-      { name: 'Only Paint', category: 'tools', desc: 'Lightweight sketchpad for quick doodles. Save to gallery.', iconUrl: 'https://play-lh.googleusercontent.com/hTbZyMIoBlCyw49PrzhplRt7NEMHpP6q7ED9zSaHNq8cxgTwkH1eqfhHzTV9I73ohAdjdDzwPVG40cnTTjlEiQ=w240-h480', href: 'https://play.google.com/store/apps/details?id=com.andmobi.paint' },
-      { name: 'Only Contacts', category: 'communication', desc: 'Simple contacts manager—fast, local, and private.', iconUrl: 'https://play-lh.googleusercontent.com/evneDxrQxuyFBuayY4ZxBjHlZ1xWOCzK7mkPRHz_ApJBPzAVSxGI2AuHv1nrQw5VH8olDioq9FI5itAFEbp-=w240-h480', href: 'https://play.google.com/store/apps/details?id=com.andmobi.contacts' },
-      { name: 'Only Messages', category: 'communication', desc: 'Focused SMS/MMS with just the essentials. No bloat.', iconUrl: 'https://play-lh.googleusercontent.com/FMfVYb1DoIjhqNa9rJEZqqo6Yb3H-UfhJzbHuaHmoSZGsvcMvu8ejT_iDtYq7KD5h-49IOoGYLvgJ4IW8cV03A=w240-h480', href: 'https://play.google.com/store/apps/details?id=com.andmobi.messages' },
-      { name: 'Only Clock', category: 'tools', desc: 'Alarms, timers and a calm bedside mode. Ad-free.', iconUrl: 'https://play-lh.googleusercontent.com/c-mUjSGiPI0THetffaRbJ-S4ybWE5z28SJyr3e1T63HVgXzBVnQe5K4K2sfxIRDqjEUpPieDai6h9CnZKfkCg2A=w240-h480', href: 'https://play.google.com/store/apps/details?id=com.andmobi.clock' },
-      { name: 'Only Notes', category: 'tools', desc: 'Plain-text notes that sync to your brain—not the cloud.', iconUrl: 'https://play-lh.googleusercontent.com/BGJcMxF5hLVRAysg_DrYO61UTyaBCRL4KPyaEsJ9rhY_kZKauNCS83VpAUUziz9fx6waJHntFEWJ_sZUWjWKNw=w240-h480', href: 'https://play.google.com/store/apps/details?id=com.andmobi.notes' },
-      { name: 'Only Calendar', category: 'tools', desc: 'Clean calendar with a simple month & agenda view. Private.', iconUrl: 'https://play-lh.googleusercontent.com/Wy7_ug7bQVxsKuG_yVOQe-K5FBIV4-T2rHd9q2QmLK_-K1jaO8b9Ww1AR9th7ItAL_0ihBz1uzT0eSUw_SlkrQ=w240-h480', href: 'https://play.google.com/store/apps/details?id=com.andmobi.calendar' },
-      { name: 'Only Camera', category: 'media', desc: 'Opens fast, captures instantly. No clutter, no ads.', iconUrl: 'https://play-lh.googleusercontent.com/sUGpcHThl70KDWDKI91D0knw7w2Z2--iz5kkQUIsK-sHJDJlkmhRbXYsepTTgqEPpyqwFgTtiN7rI-eKGe-U=w240-h480', href: 'https://play.google.com/store/apps/details?id=com.andmobi.camera' }
+    const APPS=[
+      {name:'Only Files',category:'tools',desc:'Fast file manager.',iconUrl:'icon.png',href:'#'},
+      {name:'Only Gallery',category:'media',desc:'Private gallery.',iconUrl:'icon.png',href:'#'}
     ];
-
-    // ========= DOM =========
-    const grid = document.getElementById('apps');
-    const q = document.getElementById('q');
-    const clearBtn = document.getElementById('clear');
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    const tooltip = document.getElementById('tooltip');
-
-    // ========= Utils =========
-    const h = (strings, ...values) => strings.map((s,i)=>s+(values[i]??'')).join('');
-
-    function showTooltip(message, targetEl){
-      tooltip.textContent = message;
-      const rect = targetEl.getBoundingClientRect();
-      const x = rect.left + rect.width/2;
-      const y = rect.top + window.scrollY;
-      tooltip.style.left = x + 'px';
-      tooltip.style.top = (y - 8) + 'px';
-      tooltip.classList.add('show');
-      clearTimeout(showTooltip._t);
-      showTooltip._t = setTimeout(()=>tooltip.classList.remove('show'), 1200);
-    }
-
+    const grid=document.getElementById('apps'),q=document.getElementById('q'),
+          clearBtn=document.getElementById('clear'),filterBtns=document.querySelectorAll('.filter-btn');
+    const h=(s,...v)=>s.map((x,i)=>x+(v[i]??'')).join('');
     function createCard(app){
-      return h`
-        <article class="card" data-name="${app.name}" data-category="${app.category}">
-          <div class="icon"><img loading="lazy" src="${app.iconUrl}" alt="${app.name} icon"></div>
-          <div class="content">
-            <h3 class="name">${app.name}</h3>
-            <div class="dev">Only Apps • <span class="pill">${app.category}</span></div>
-            <div class="meta">No ads · Offline</div>
-          </div>
-          <div class="btn-row">
-            <a class="btn store" href="${app.href}" target="_blank" rel="noopener" aria-label="Open ${app.name} on Google Play">
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <defs>
-                  <linearGradient id="gplay" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stop-color="#34A853"/>
-                    <stop offset="50%" stop-color="#FBBC05"/>
-                    <stop offset="100%" stop-color="#4285F4"/>
-                  </linearGradient>
-                </defs>
-                <path fill="url(#gplay)" d="M3 2.5l12 9.5-12 9.5c-.6-.35-1-.99-1-1.73V4.23C2 3.49 2.4 2.85 3 2.5zm14.2 8.9l2.9-1.73c1.1-.66 1.1-2.28 0-2.94L17.2 5 13 9l4.2 2.4zm0 1.2L13 15l4.2 2.4 2.9-1.73c1.1-.66 1.1-2.28 0-2.94l-2.9-1.73z"/>
-              </svg>
-              Install
-            </a>
-          </div>
-        </article>`;
+      return h`<article class="card">
+        <div class="icon"><img src="${app.iconUrl}" alt="${app.name}"></div>
+        <div class="content">
+          <h3 class="name">${app.name}</h3>
+          <div class="dev">Only Apps • <span class="pill">${app.category}</span></div>
+        </div>
+        <div class="btn-row">
+          <a class="btn store" href="${app.href}" target="_blank">
+            <svg viewBox="0 0 646 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Get it on Google Play">
+              <rect x="2" y="2" width="642" height="246" rx="28" fill="#000"/>
+              <g fill="#fff" font-family="Inter,sans-serif">
+                <text x="200" y="95" font-size="42" font-weight="600" opacity=".85">GET IT ON</text>
+                <text x="200" y="172" font-size="92" font-weight="800">Google Play</text>
+              </g>
+              <polygon points="40,40 140,100 40,160" fill="#34A853"/>
+            </svg>
+          </a>
+        </div>
+      </article>`;
     }
-
-    function render(list){ grid.innerHTML = list.map(createCard).join(''); }
-
-    function filterApps(){
-      const term = q.value.trim().toLowerCase();
-      const activeFilter = document.querySelector('.filter-btn.active')?.dataset.filter || 'all';
-      return APPS.filter(app =>
-        (activeFilter === 'all' || app.category === activeFilter) &&
-        (!term || app.name.toLowerCase().includes(term) || app.desc.toLowerCase().includes(term))
-      );
-    }
-
-    // ========= Events =========
-    q.addEventListener('input', () => render(filterApps()));
-    q.addEventListener('keydown', (e)=>{ if(e.key==='Escape'){ q.value=''; render(filterApps()); }});
-    clearBtn.addEventListener('click', () => { q.value=''; q.focus(); render(filterApps()); });
-
-    filterBtns.forEach(btn=>{
-      btn.addEventListener('click', ()=>{
-        filterBtns.forEach(b=>{ b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
-        btn.classList.add('active'); btn.setAttribute('aria-selected','true');
-        render(filterApps());
-        if(btn.dataset.tooltip) showTooltip(btn.dataset.tooltip, btn);
-      });
-    });
-
-    // Initial render & year
-    render(APPS);
-    document.getElementById('y').textContent = new Date().getFullYear();
+    function render(list){grid.innerHTML=list.map(createCard).join('')}
+    function filterApps(){const term=q.value.toLowerCase();const active=document.querySelector('.filter-btn.active').dataset.filter;
+      return APPS.filter(a=>(active==='all'||a.category===active)&&(!term||a.name.toLowerCase().includes(term)||a.desc.toLowerCase().includes(term)))}
+    q.addEventListener('input',()=>render(filterApps()));clearBtn.addEventListener('click',()=>{q.value='';render(filterApps())});
+    filterBtns.forEach(b=>b.addEventListener('click',()=>{filterBtns.forEach(x=>x.classList.remove('active'));b.classList.add('active');render(filterApps())}));
+    render(APPS);document.getElementById('y').textContent=new Date().getFullYear();
   </script>
 </body>
 </html>
