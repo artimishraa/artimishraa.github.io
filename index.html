@@ -90,7 +90,8 @@
       position:absolute;right:16px;bottom:16px;display:inline-flex;align-items:center;
       padding:6px 8px;border-radius:12px;background:var(--surface-variant);border:1px solid var(--border);box-shadow:var(--elev-1)
     }
-    .corner-badge img{width:120px;height:auto;display:block}
+    /* Requested size */
+    .corner-badge img{width:90px;height:auto;display:block}
 
     .status{margin-top:8px;color:var(--muted);font-size:.9rem}
     footer{text-align:center;font-size:.9rem;color:var(--muted);margin:40px 0 24px}
@@ -155,7 +156,7 @@
           <p class="desc">A lightning-fast dialer with favorites and recent calls. Ad-free.</p>
           <div class="meta" aria-hidden="true"><span>No ads</span> · <span>Offline</span></div>
         </div>
-        <a class="corner-badge" href="https://play.google.com/store/apps?id=com.andmobi.phone" target="_blank" rel="noopener" aria-label="Open Only Phone on Google Play">
+        <a class="corner-badge" href="https://play.google.com/store/apps/details?id=com.andmobi.phone" target="_blank" rel="noopener" aria-label="Open Only Phone on Google Play">
           <img src="google-play-badge.svg" alt="Get it on Google Play" onerror="this.onerror=null;this.src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'">
         </a>
       </article>
@@ -168,7 +169,7 @@
           <p class="desc">Zero-bloat home screen. Super fast with a focus on essentials.</p>
           <div class="meta" aria-hidden="true"><span>No ads</span> · <span>Offline</span></div>
         </div>
-        <a class="corner-badge" href="https://play.google.com/store/apps?id=com.andmobi.home" target="_blank" rel="noopener" aria-label="Open Only Launcher on Google Play">
+        <a class="corner-badge" href="https://play.google.com/store/apps/details?id=com.andmobi.home" target="_blank" rel="noopener" aria-label="Open Only Launcher on Google Play">
           <img src="google-play-badge.svg" alt="Get it on Google Play" onerror="this.onerror=null;this.src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'">
         </a>
       </article>
@@ -330,7 +331,11 @@
       </article>
 
       <article class="card" data-name="Only Camera" data-category="media">
-        <div class="icon"><img loading="lazy" src="https://play-lh.googleusercontent.com/sUGpcHThl70KDWDKI91D0knw7w2Z2--iz5kkQUIsK-sHJDJlkmhRbXYsepTTgqEPpyqwFgTtiN7rI-eKGe-Uw=w240-h480" alt="Only Camera icon"></div>
+        <div class="icon">
+          <img loading="lazy"
+               src="https://play-lh.googleusercontent.com/sUGpcHThl70KDWDKI91D0knw7w2Z2--iz5kkQUIsK-sHJDJlkmhRbXYsepTTgqEPpyqwFgTtiN7rI-eKGe-U=w240-h480"
+               alt="Only Camera icon">
+        </div>
         <div class="content">
           <h3 class="name">Only Camera</h3>
           <div class="dev">Only Apps • <span class="chip">media</span></div>
