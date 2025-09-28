@@ -46,14 +46,8 @@
     .container { max-width: 1100px; margin: 0 auto; padding: 24px; }
 
     /* Header */
-    header {
-      position: sticky; top: 0; z-index: 10;
-      backdrop-filter: saturate(140%) blur(10px);
-      background: linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,0));
-    }
-    .hero {
-      display: grid; gap: 14px; justify-items: center; text-align: center; padding: 44px 0 28px;
-    }
+    header { position: sticky; top: 0; z-index: 10; backdrop-filter: blur(10px); }
+    .hero { display: grid; gap: 14px; justify-items: center; text-align: center; padding: 44px 0 28px; }
     .brand {
       font-weight: 800; font-size: clamp(28px, 3.4vw, 42px);
       background: linear-gradient(90deg, var(--brand), var(--brand-2));
@@ -70,14 +64,8 @@
       transition: border-color 0.2s ease, box-shadow 0.2s ease;
     }
     .search::placeholder { color: var(--muted); }
-    .search:focus {
-      border-color: var(--brand-2);
-      box-shadow: 0 0 0 3px rgba(255,176,58,0.25); /* warm glow */
-    }
-    .search-icon {
-      position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
-      width: 18px; height: 18px; pointer-events: none; opacity: .7; color: var(--muted);
-    }
+    .search:focus { border-color: var(--brand-2); box-shadow: 0 0 0 3px rgba(255,176,58,0.25); }
+    .search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 18px; height: 18px; color: var(--muted); }
 
     /* Grid */
     #apps { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
@@ -86,62 +74,32 @@
     .card {
       position: relative; overflow: hidden; border-radius: var(--radius);
       background: var(--card); border: 1px solid var(--card-border); box-shadow: var(--shadow);
-      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
-      /* fade-in animation */
       opacity: 0; transform: translateY(12px);
       animation: fadeInUp 0.5s ease forwards;
+      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
     }
-    .card:hover {
-      transform: translateY(-3px);
-      border-color: rgba(255,176,58,.55);
-      box-shadow: 0 16px 40px rgba(0,0,0,.45);
-    }
-    /* Staggered delays for first 20 cards */
-    .card:nth-child(1){animation-delay:.05s}.card:nth-child(2){animation-delay:.1s}
-    .card:nth-child(3){animation-delay:.15s}.card:nth-child(4){animation-delay:.2s}
-    .card:nth-child(5){animation-delay:.25s}.card:nth-child(6){animation-delay:.3s}
-    .card:nth-child(7){animation-delay:.35s}.card:nth-child(8){animation-delay:.4s}
-    .card:nth-child(9){animation-delay:.45s}.card:nth-child(10){animation-delay:.5s}
-    .card:nth-child(11){animation-delay:.55s}.card:nth-child(12){animation-delay:.6s}
-    .card:nth-child(13){animation-delay:.65s}.card:nth-child(14){animation-delay:.7s}
-    .card:nth-child(15){animation-delay:.75s}.card:nth-child(16){animation-delay:.8s}
-    .card:nth-child(17){animation-delay:.85s}.card:nth-child(18){animation-delay:.9s}
-    .card:nth-child(19){animation-delay:.95s}.card:nth-child(20){animation-delay:1s}
+    .card:hover { transform: translateY(-3px); border-color: rgba(255,176,58,.55); box-shadow: 0 16px 40px rgba(0,0,0,.45); }
+    .card:nth-child(n){animation-delay: calc(.05s * var(--i));}
+    @keyframes fadeInUp { from{opacity:0;transform:translateY(12px);} to{opacity:1;transform:translateY(0);} }
 
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(12px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    .inner { display: grid; gap: 14px; padding: 18px; height: 100%; }
+    .inner { display: grid; gap: 14px; padding: 18px; }
     .top { display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: center; }
-    .icon {
-      width: 64px; height: 64px; border-radius: 14px; overflow: hidden;
-      display: flex; align-items: center; justify-content: center;
-      background: #fff;
-    }
-    .icon img {
-      width: 100%; height: 100%; object-fit: cover;
-      border-radius: 14px;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .card:hover .icon img {
-      transform: scale(1.1);
-      box-shadow: 0 4px 12px rgba(255,176,58,0.35); /* friendly warm glow */
-    }
+    .icon { width: 64px; height: 64px; border-radius: 14px; overflow: hidden; background: #fff; }
+    .icon img { width: 100%; height: 100%; object-fit: cover; border-radius: 14px; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .card:hover .icon img { transform: scale(1.1); box-shadow: 0 4px 12px rgba(255,176,58,0.35); }
     .name { margin: 0; font-size: 1.02rem; font-weight: 700; }
     .desc { margin: 0; color: var(--muted); font-size: .95rem; line-height: 1.35rem; }
 
-    .actions { display: flex; gap: 10px; margin-top: 6px; }
-    .btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 9px 14px; border-radius: 9999px;
-      background: linear-gradient(135deg, #fff, #f3f3f7);
-      border: 1px solid rgba(10,10,20,0.08);
-      color: #0b0b10; font-weight: 700; text-decoration: none;
-      transition: transform .15s ease, box-shadow .2s ease;
+    .actions { margin-top: 6px; }
+    .btn img { height: 40px; }
+
+    /* Theme-aware Play badge */
+    .play-badge-dark { display: none; }
+    .play-badge-light { display: inline; }
+    @media (prefers-color-scheme: dark) {
+      .play-badge-dark { display: inline; }
+      .play-badge-light { display: none; }
     }
-    .btn:hover { transform: translateY(-1px); box-shadow: 0 10px 24px rgba(0,0,0,.25); }
 
     footer { text-align: center; color: var(--muted); padding: 36px 0 24px; font-size: .98rem; }
     footer a { color: var(--brand-2); text-decoration: none; }
@@ -153,9 +111,7 @@
       <div class="brand">OnlyEssential</div>
       <p class="tagline">Simple • Private • Lightweight</p>
       <div class="search-wrap">
-        <svg class="search-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-          <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79L20 21.5 21.5 20l-6-6zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-        </svg>
+        <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79L20 21.5 21.5 20l-6-6z"/></svg>
         <input id="q" class="search" type="search" placeholder="Search apps… (music, gallery, notes)" autocomplete="off" />
       </div>
     </div>
@@ -165,17 +121,13 @@
     <section id="apps" aria-live="polite"></section>
 
     <section id="about" style="margin-top:40px">
-      <h2>About OnlyEssential</h2>
-      <p class="desc">OnlyEssential – Ad-free, privacy-first apps designed with clarity and simplicity, bringing essential tools for everyday life.</p>
+      <h2>About</h2>
+      <p class="desc">Ad-free, privacy-first apps designed with clarity and simplicity, bringing essential tools for everyday life.</p>
     </section>
 
     <section id="contact" style="margin-top:28px">
       <h2>Contact</h2>
-      <p class="desc">
-        Email: <a href="mailto:onlyapp.contact@gmail.com">onlyapp.contact@gmail.com</a> ·
-        Website: <a href="https://onlyessential.github.io" target="_blank" rel="noopener">onlyessential.github.io</a> ·
-        Privacy Policy: <a href="https://artimishraa.github.io" target="_blank" rel="noopener">artimishraa.github.io</a>
-      </p>
+      <p class="desc">Email: <a href="mailto:onlyapp.contact@gmail.com">onlyapp.contact@gmail.com</a> · Website: <a href="https://onlyessential.github.io" target="_blank" rel="noopener">onlyessential.github.io</a> · Privacy Policy: <a href="https://artimishraa.github.io" target="_blank" rel="noopener">artimishraa.github.io</a></p>
     </section>
   </main>
 
@@ -185,48 +137,50 @@
 
   <script>
     const APPS = [
-      { name: 'Only Applock', iconUrl: 'https://play-lh.googleusercontent.com/wewWweEHo0pWqS5h0BEbREd73QNM6zoWzFtVxaIq1GHrXrsMfPY_oXCxk4Qul3bQx1JgOZBRGmRBnkTpbc21=w240-h480', desc: 'Lock apps with fingerprint, PIN or pattern. Works offline. No ads.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.applocker' },
-      { name: 'Only Files', iconUrl: 'https://play-lh.googleusercontent.com/1CwN7DPl2LtM0eVHxex80giNxKXX-TLw-yNTiwmeGVAPOObyMcRro-Jw2RaNi3MokV-ji38NwPKCKop3WJlXEA=w240-h480', desc: 'Fast file manager with a clean UI. Private by design—no analytics.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.filemanager' },
-      { name: 'Only Phone', iconUrl: 'https://play-lh.googleusercontent.com/0s4tQv51BtwzXCOTujAKNY3mTx-xE2TfbWmjY9p5nDWcO1XCMNvdLR_7UhZkWERQ0oVRX-Yz7BIK_v5H9kFYLFs=w240-h480', desc: 'Lightning-fast dialer with favorites and recent calls. Ad-free.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.phone' },
-      { name: 'Only Launcher', iconUrl: 'https://play-lh.googleusercontent.com/O_8Wx5LeKlAuo5t513zCyQpA_hNkUSBK3V7G4uoa1K-aDailx0tRS4NnpRdIOKdD6ZVI2UJCBXMeI19VTzPvfw=w240-h480', desc: 'Zero-bloat home screen. Super fast with a focus on essentials.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.home' },
-      { name: 'Only Play', iconUrl: 'https://play-lh.googleusercontent.com/CWiXjqHcX5Q_E77gQt4Xtn0NCijk-n_NpJrF-GYb69D8ELzYPy9JRcbOyeILnwbuUVSfi7tNiR3Mltis6fU3Ww=w240-h480', desc: 'Smooth offline video player with folders and quick controls.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.onlyplay' },
-      { name: 'Only Gallery', iconUrl: 'https://play-lh.googleusercontent.com/r0Y5mvzS0_FFppsz8knAv3j7GfJNieCV2yCKcmtUNZURVMSW-r_tMU_S9yujiP9lvlKhFSnYc432WY00CeiS=w240-h480', desc: 'Beautiful, private gallery for photos and videos. 100% offline.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.gallery' },
-      { name: 'Only Keyboard', iconUrl: 'https://play-lh.googleusercontent.com/KF9fU6UXofoGpU-J9Uw4rgR7sWorBwCvXjOc3XsfmEwE7CZ8O9q4RyS2tKoUVyA_-I_9jKrOBr5B6HTTGdsUDg=w240-h480', desc: 'Fast, distraction-free typing. No network access, no tracking.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.keyboard' },
-      { name: 'Only Music', iconUrl: 'https://play-lh.googleusercontent.com/gbBlOU6QuDFeQJNygW6gnSHNDMZ2S9CjYPq1Kc3vijhEtD9U3v-2Tlo1d2kEGoVkjhL2rkbn5cfXMlATczkOyg=w240-h480', desc: 'Offline music player with folders and quick playlists. No ads.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.music' },
+      { name: 'Only Applock',   iconUrl: 'https://play-lh.googleusercontent.com/wewWweEHo0pWqS5h0BEbREd73QNM6zoWzFtVxaIq1GHrXrsMfPY_oXCxk4Qul3bQx1JgOZBRGmRBnkTpbc21=w240-h480', desc: 'Lock apps with fingerprint, PIN or pattern. Works offline. No ads.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.applocker' },
+      { name: 'Only Files',     iconUrl: 'https://play-lh.googleusercontent.com/1CwN7DPl2LtM0eVHxex80giNxKXX-TLw-yNTiwmeGVAPOObyMcRro-Jw2RaNi3MokV-ji38NwPKCKop3WJlXEA=w240-h480', desc: 'Fast file manager with a clean UI. Private by design—no analytics.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.filemanager' },
+      { name: 'Only Phone',     iconUrl: 'https://play-lh.googleusercontent.com/0s4tQv51BtwzXCOTujAKNY3mTx-xE2TfbWmjY9p5nDWcO1XCMNvdLR_7UhZkWERQ0oVRX-Yz7BIK_v5H9kFYLFs=w240-h480', desc: 'Lightning-fast dialer with favorites and recent calls. Ad-free.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.phone' },
+      { name: 'Only Launcher',  iconUrl: 'https://play-lh.googleusercontent.com/O_8Wx5LeKlAuo5t513zCyQpA_hNkUSBK3V7G4uoa1K-aDailx0tRS4NnpRdIOKdD6ZVI2UJCBXMeI19VTzPvfw=w240-h480', desc: 'Zero-bloat home screen. Super fast with a focus on essentials.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.home' },
+      { name: 'Only Play',      iconUrl: 'https://play-lh.googleusercontent.com/CWiXjqHcX5Q_E77gQt4Xtn0NCijk-n_NpJrF-GYb69D8ELzYPy9JRcbOyeILnwbuUVSfi7tNiR3Mltis6fU3Ww=w240-h480', desc: 'Smooth offline video player with folders and quick controls.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.onlyplay' },
+      { name: 'Only Gallery',   iconUrl: 'https://play-lh.googleusercontent.com/r0Y5mvzS0_FFppsz8knAv3j7GfJNieCV2yCKcmtUNZURVMSW-r_tMU_S9yujiP9lvlKhFSnYc432WY00CeiS=w240-h480', desc: 'Beautiful, private gallery for photos and videos. 100% offline.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.gallery' },
+      { name: 'Only Keyboard',  iconUrl: 'https://play-lh.googleusercontent.com/KF9fU6UXofoGpU-J9Uw4rgR7sWorBwCvXjOc3XsfmEwE7CZ8O9q4RyS2tKoUVyA_-I_9jKrOBr5B6HTTGdsUDg=w240-h480', desc: 'Fast, distraction-free typing. No network access, no tracking.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.keyboard' },
+      { name: 'Only Music',     iconUrl: 'https://play-lh.googleusercontent.com/gbBlOU6QuDFeQJNygW6gnSHNDMZ2S9CjYPq1Kc3vijhEtD9U3v-2Tlo1d2kEGoVkjhL2rkbn5cfXMlATczkOyg=w240-h480', desc: 'Offline music player with folders and quick playlists. No ads.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.music' },
       { name: 'Only Voice Recorder', iconUrl: 'https://play-lh.googleusercontent.com/CpeXdE5zBQ83HVEsfW5gjoZTrXLP5DL3ProDR_DnfqKuSw_iP5SHb2wO_AJVy8MpXCcPPrREyTL-LEboVZc6=w240-h480', desc: 'One-tap high-quality recordings that stay local on your device.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.voicerecorder' },
       { name: 'Only Calculator', iconUrl: 'https://play-lh.googleusercontent.com/9E7D3Ijctr44Tfd0akLcELdLgPTEzMJKt9aTYVbrFDJUqRzxIiHdmr08VaQoUXHwqe-Rio6_wYFY81kaK50Gzw=w240-h480', desc: 'Clean, reliable calculator with large buttons. Ad-free.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.math' },
-      { name: 'Only Paint', iconUrl: 'https://play-lh.googleusercontent.com/hTbZyMIoBlCyw49PrzhplRt7NEMHpP6q7ED9zSaHNq8cxgTwkH1eqfhHzTV9I73ohAdjdDzwPVG40cnTTjlEiQ=w240-h480', desc: 'Lightweight sketchpad for quick doodles. Save to gallery.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.paint' },
-      { name: 'Only Contacts', iconUrl: 'https://play-lh.googleusercontent.com/evneDxrQxuyFBuayY4ZxBjHlZ1xWOCzK7mkPRHz_ApJBPzAVSxGI2AuHv1nrQw5VH8olDioq9FI5itAFEbp-=w240-h480', desc: 'Simple contacts manager—fast, local, and private.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.contacts' },
-      { name: 'Only Messages', iconUrl: 'https://play-lh.googleusercontent.com/FMfVYb1DoIjhqNa9rJEZqqo6Yb3H-UfhJzbHuaHmoSZGsvcMvu8ejT_iDtYq7KD5h-49IOoGYLvgJ4IW8cV03A=w240-h480', desc: 'Focused SMS/MMS with just the essentials. No bloat.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.messages' },
-      { name: 'Only Clock', iconUrl: 'https://play-lh.googleusercontent.com/c-mUjSGiPI0THetffaRbJ-S4ybWE5z28SJyr3e1T63HVgXzBVnQe5K4K2sfxIRDqjEUpPieDai6h9CnZKfkCg2A=w240-h480', desc: 'Alarms, timers and a calm bedside mode. Ad-free.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.clock' },
-      { name: 'Only Notes', iconUrl: 'https://play-lh.googleusercontent.com/BGJcMxF5hLVRAysg_DrYO61UTyaBCRL4KPyaEsJ9rhY_kZKauNCS83VpAUUziz9fx6waJHntFEWJ_sZUWjWKNw=w240-h480', desc: 'Plain-text notes that stay local. Minimal and private.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.notes' },
-      { name: 'Only Calendar', iconUrl: 'https://play-lh.googleusercontent.com/Wy7_ug7bQVxsKuG_yVOQe-K5FBIV4-T2rHd9q2QmLK_-K1jaO8b9Ww1AR9th7ItAL_0ihBz1uzT0eSUw_SlkrQ=w240-h480', desc: 'Clean calendar with month & agenda views. 100% offline.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.calendar' },
-      { name: 'Only Camera', iconUrl: 'https://play-lh.googleusercontent.com/sUGpcHThl70KDWDKI91D0knw7w2Z2--iz5kkQUIsK-sHJDJlkmhRbXYsepTTgqEPpyqwFgTtiN7rI-eKGe-U=w240-h480', desc: 'Opens fast, captures instantly. No clutter, no ads.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.camera' }
+      { name: 'Only Paint',     iconUrl: 'https://play-lh.googleusercontent.com/hTbZyMIoBlCyw49PrzhplRt7NEMHpP6q7ED9zSaHNq8cxgTwkH1eqfhHzTV9I73ohAdjdDzwPVG40cnTTjlEiQ=w240-h480', desc: 'Lightweight sketchpad for quick doodles. Save to gallery.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.paint' },
+      { name: 'Only Contacts',  iconUrl: 'https://play-lh.googleusercontent.com/evneDxrQxuyFBuayY4ZxBjHlZ1xWOCzK7mkPRHz_ApJBPzAVSxGI2AuHv1nrQw5VH8olDioq9FI5itAFEbp-=w240-h480', desc: 'Simple contacts manager—fast, local, and private.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.contacts' },
+      { name: 'Only Messages',  iconUrl: 'https://play-lh.googleusercontent.com/FMfVYb1DoIjhqNa9rJEZqqo6Yb3H-UfhJzbHuaHmoSZGsvcMvu8ejT_iDtYq7KD5h-49IOoGYLvgJ4IW8cV03A=w240-h480', desc: 'Focused SMS/MMS with just the essentials. No bloat.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.messages' },
+      { name: 'Only Clock',     iconUrl: 'https://play-lh.googleusercontent.com/c-mUjSGiPI0THetffaRbJ-S4ybWE5z28SJyr3e1T63HVgXzBVnQe5K4K2sfxIRDqjEUpPieDai6h9CnZKfkCg2A=w240-h480', desc: 'Alarms, timers and a calm bedside mode. Ad-free.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.clock' },
+      { name: 'Only Notes',     iconUrl: 'https://play-lh.googleusercontent.com/BGJcMxF5hLVRAysg_DrYO61UTyaBCRL4KPyaEsJ9rhY_kZKauNCS83VpAUUziz9fx6waJHntFEWJ_sZUWjWKNw=w240-h480', desc: 'Plain-text notes that stay local. Minimal and private.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.notes' },
+      { name: 'Only Calendar',  iconUrl: 'https://play-lh.googleusercontent.com/Wy7_ug7bQVxsKuG_yVOQe-K5FBIV4-T2rHd9q2QmLK_-K1jaO8b9Ww1AR9th7ItAL_0ihBz1uzT0eSUw_SlkrQ=w240-h480', desc: 'Clean calendar with month & agenda views. 100% offline.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.calendar' },
+      { name: 'Only Camera',    iconUrl: 'https://play-lh.googleusercontent.com/sUGpcHThl70KDWDKI91D0knw7w2Z2--iz5kkQUIsK-sHJDJlkmhRbXYsepTTgqEPpyqwFgTtiN7rI-eKGe-U=w240-h480', desc: 'Opens fast, captures instantly. No clutter, no ads.', href: 'https://play.google.com/store/apps/details?id=com.andmobi.camera' }
     ];
 
     const grid = document.getElementById('apps');
 
-    function createCard({ name, iconUrl, desc, href }) {
+    function createCard(app, i) {
       return `
-        <article class="card">
+        <article class="card" style="--i:${i}">
           <div class="inner">
             <div class="top">
-              <div class="icon"><img src="${iconUrl}" alt="${name} icon" loading="lazy"></div>
-              <h3 class="name">${name}</h3>
+              <div class="icon"><img src="${app.iconUrl}" alt="${app.name} icon" loading="lazy"></div>
+              <h3 class="name">${app.name}</h3>
             </div>
-            <p class="desc">${desc}</p>
+            <p class="desc">${app.desc}</p>
             <div class="actions">
-              <a class="btn" href="${href}" target="_blank" rel="noopener">Get on Google Play</a>
+              <a class="btn" href="${app.href}" target="_blank" rel="noopener">
+                <img class="play-badge-light" src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play">
+                <img class="play-badge-dark" src="https://upload.wikimedia.org/wikipedia/commons/c/cd/Get_it_on_Google_play_badge.svg" alt="Get it on Google Play">
+              </a>
             </div>
           </div>
         </article>`;
     }
 
     function render(list) {
-      grid.innerHTML = list.map(createCard).join('');
+      grid.innerHTML = list.map((app, i) => createCard(app, i+1)).join('');
     }
 
-    // Search
     document.getElementById('q').addEventListener('input', e => {
       const term = e.target.value.trim().toLowerCase();
       const filtered = !term ? APPS : APPS.filter(app =>
@@ -235,7 +189,6 @@
       render(filtered);
     });
 
-    // Init
     render(APPS);
     document.getElementById('y').textContent = new Date().getFullYear();
   </script>
