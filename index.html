@@ -33,8 +33,8 @@
       }
     }
     * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
     body {
-      margin: 0;
       font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
       color: var(--text);
       background: radial-gradient(1200px 800px at 10% -20%, rgba(255,122,24,.18), transparent 50%),
@@ -42,40 +42,108 @@
                   linear-gradient(180deg, var(--bg), var(--bg-2));
       background-attachment: fixed;
     }
+
     .container { max-width: 1100px; margin: 0 auto; padding: 24px; }
-    header { position: sticky; top: 0; backdrop-filter: blur(10px); }
-    .hero { display: grid; gap: 14px; justify-items: center; text-align: center; padding: 44px 0 28px; }
+
+    /* Header */
+    header {
+      position: sticky; top: 0; z-index: 10;
+      backdrop-filter: saturate(140%) blur(10px);
+      background: linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,0));
+    }
+    .hero {
+      display: grid; gap: 14px; justify-items: center; text-align: center; padding: 44px 0 28px;
+    }
     .brand {
       font-weight: 800; font-size: clamp(28px, 3.4vw, 42px);
       background: linear-gradient(90deg, var(--brand), var(--brand-2));
-      -webkit-background-clip: text; color: transparent;
+      -webkit-background-clip: text; background-clip: text; color: transparent;
     }
     .tagline { margin: 0; color: var(--muted); font-size: 1.05rem; }
-    .search-wrap { width: 100%; max-width: 560px; }
+
+    /* Search */
+    .search-wrap { width: 100%; max-width: 560px; position: relative; }
     .search {
       width: 100%; border-radius: 9999px; padding: 12px 16px 12px 44px;
-      border: 1px solid var(--card-border); background: var(--card); color: var(--text);
+      border: 1px solid var(--card-border); background: var(--card);
+      color: var(--text); outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
     }
     .search::placeholder { color: var(--muted); }
-    #apps { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
-    .card {
-      border-radius: var(--radius); background: var(--card); border: 1px solid var(--card-border);
-      box-shadow: var(--shadow); transition: transform .2s ease;
+    .search:focus {
+      border-color: var(--brand-2);
+      box-shadow: 0 0 0 3px rgba(255,176,58,0.25); /* warm glow */
     }
-    .card:hover { transform: translateY(-3px); }
+    .search-icon {
+      position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+      width: 18px; height: 18px; pointer-events: none; opacity: .7; color: var(--muted);
+    }
+
+    /* Grid */
+    #apps { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
+
+    /* Card */
+    .card {
+      position: relative; overflow: hidden; border-radius: var(--radius);
+      background: var(--card); border: 1px solid var(--card-border); box-shadow: var(--shadow);
+      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+      /* fade-in animation */
+      opacity: 0; transform: translateY(12px);
+      animation: fadeInUp 0.5s ease forwards;
+    }
+    .card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(255,176,58,.55);
+      box-shadow: 0 16px 40px rgba(0,0,0,.45);
+    }
+    /* Staggered delays for first 20 cards */
+    .card:nth-child(1){animation-delay:.05s}.card:nth-child(2){animation-delay:.1s}
+    .card:nth-child(3){animation-delay:.15s}.card:nth-child(4){animation-delay:.2s}
+    .card:nth-child(5){animation-delay:.25s}.card:nth-child(6){animation-delay:.3s}
+    .card:nth-child(7){animation-delay:.35s}.card:nth-child(8){animation-delay:.4s}
+    .card:nth-child(9){animation-delay:.45s}.card:nth-child(10){animation-delay:.5s}
+    .card:nth-child(11){animation-delay:.55s}.card:nth-child(12){animation-delay:.6s}
+    .card:nth-child(13){animation-delay:.65s}.card:nth-child(14){animation-delay:.7s}
+    .card:nth-child(15){animation-delay:.75s}.card:nth-child(16){animation-delay:.8s}
+    .card:nth-child(17){animation-delay:.85s}.card:nth-child(18){animation-delay:.9s}
+    .card:nth-child(19){animation-delay:.95s}.card:nth-child(20){animation-delay:1s}
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
     .inner { display: grid; gap: 14px; padding: 18px; height: 100%; }
     .top { display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: center; }
-    .icon { width: 64px; height: 64px; border-radius: 14px; overflow: hidden; }
-    .icon img { width: 100%; height: 100%; object-fit: cover; }
+    .icon {
+      width: 64px; height: 64px; border-radius: 14px; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+      background: #fff;
+    }
+    .icon img {
+      width: 100%; height: 100%; object-fit: cover;
+      border-radius: 14px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover .icon img {
+      transform: scale(1.1);
+      box-shadow: 0 4px 12px rgba(255,176,58,0.35); /* friendly warm glow */
+    }
     .name { margin: 0; font-size: 1.02rem; font-weight: 700; }
     .desc { margin: 0; color: var(--muted); font-size: .95rem; line-height: 1.35rem; }
-    .actions { margin-top: 6px; }
+
+    .actions { display: flex; gap: 10px; margin-top: 6px; }
     .btn {
-      display: inline-flex; align-items: center; gap: 8px; padding: 9px 14px;
-      border-radius: 9999px; text-decoration: none; font-weight: 700;
-      background: linear-gradient(135deg, #fff, #f3f3f7); color: #0b0b10;
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 9px 14px; border-radius: 9999px;
+      background: linear-gradient(135deg, #fff, #f3f3f7);
+      border: 1px solid rgba(10,10,20,0.08);
+      color: #0b0b10; font-weight: 700; text-decoration: none;
+      transition: transform .15s ease, box-shadow .2s ease;
     }
-    footer { text-align: center; color: var(--muted); padding: 36px 0 24px; font-size: .95rem; }
+    .btn:hover { transform: translateY(-1px); box-shadow: 0 10px 24px rgba(0,0,0,.25); }
+
+    footer { text-align: center; color: var(--muted); padding: 36px 0 24px; font-size: .98rem; }
     footer a { color: var(--brand-2); text-decoration: none; }
   </style>
 </head>
@@ -85,24 +153,29 @@
       <div class="brand">OnlyEssential</div>
       <p class="tagline">Simple • Private • Lightweight</p>
       <div class="search-wrap">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79L20 21.5 21.5 20l-6-6zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+        </svg>
         <input id="q" class="search" type="search" placeholder="Search apps… (music, gallery, notes)" autocomplete="off" />
       </div>
     </div>
   </header>
 
   <main class="container">
-    <section id="apps"></section>
+    <section id="apps" aria-live="polite"></section>
 
     <section id="about" style="margin-top:40px">
       <h2>About OnlyEssential</h2>
-      <p>OnlyEssential – Ad-free, privacy-first apps designed with clarity and simplicity, bringing essential tools for everyday life.</p>
+      <p class="desc">OnlyEssential – Ad-free, privacy-first apps designed with clarity and simplicity, bringing essential tools for everyday life.</p>
     </section>
 
     <section id="contact" style="margin-top:28px">
       <h2>Contact</h2>
-      <p>Email: <a href="mailto:onlyapp.contact@gmail.com">onlyapp.contact@gmail.com</a> · 
-         Website: <a href="https://onlyessential.github.io" target="_blank">onlyessential.github.io</a> · 
-         Privacy Policy: <a href="https://artimishraa.github.io" target="_blank">artimishraa.github.io</a></p>
+      <p class="desc">
+        Email: <a href="mailto:onlyapp.contact@gmail.com">onlyapp.contact@gmail.com</a> ·
+        Website: <a href="https://onlyessential.github.io" target="_blank" rel="noopener">onlyessential.github.io</a> ·
+        Privacy Policy: <a href="https://artimishraa.github.io" target="_blank" rel="noopener">artimishraa.github.io</a>
+      </p>
     </section>
   </main>
 
@@ -132,12 +205,13 @@
     ];
 
     const grid = document.getElementById('apps');
+
     function createCard({ name, iconUrl, desc, href }) {
       return `
         <article class="card">
           <div class="inner">
             <div class="top">
-              <div class="icon"><img src="${iconUrl}" alt="${name} icon"></div>
+              <div class="icon"><img src="${iconUrl}" alt="${name} icon" loading="lazy"></div>
               <h3 class="name">${name}</h3>
             </div>
             <p class="desc">${desc}</p>
@@ -147,12 +221,21 @@
           </div>
         </article>`;
     }
-    function render(list) { grid.innerHTML = list.map(createCard).join(''); }
+
+    function render(list) {
+      grid.innerHTML = list.map(createCard).join('');
+    }
+
+    // Search
     document.getElementById('q').addEventListener('input', e => {
-      const term = e.target.value.toLowerCase();
-      const filtered = !term ? APPS : APPS.filter(app => app.name.toLowerCase().includes(term) || app.desc.toLowerCase().includes(term));
+      const term = e.target.value.trim().toLowerCase();
+      const filtered = !term ? APPS : APPS.filter(app =>
+        app.name.toLowerCase().includes(term) || app.desc.toLowerCase().includes(term)
+      );
       render(filtered);
     });
+
+    // Init
     render(APPS);
     document.getElementById('y').textContent = new Date().getFullYear();
   </script>
