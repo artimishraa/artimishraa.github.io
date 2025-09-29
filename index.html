@@ -397,29 +397,44 @@
         btn.addEventListener('keydown', function(e){ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); btn.click(); }});
       });
 
-      // Daily featured app rotation (3 apps)
+      // Featured apps: 4 fixed + 3 rotating daily
       var parent = document.getElementById('apps');
       function seededRandFactory(seed){
         var s = seed >>> 0;
         return function(){ s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296; };
       }
+      function byName(name){
+        var n = (name||'').toLowerCase();
+        return cards.find(function(c){ return (c.getAttribute('data-name')||'').toLowerCase() === n; });
+      }
+
+      // 4 permanently-featured apps
+      var fixedNames = ['Only Gallery','Only Music','Only Launcher','Only Play'];
+      var fixedCards = fixedNames.map(byName).filter(Boolean);
+
+      // rotating picks from remaining apps (3 per day)
+      var pool = cards.filter(function(c){ return fixedCards.indexOf(c) === -1; });
       var d = new Date();
       var seed = d.getFullYear()*10000 + (d.getMonth()+1)*100 + d.getDate();
       var rand = seededRandFactory(seed);
-      var idxs = cards.map(function(_,i){return i;});
-      // shuffle
-      for(var i=idxs.length-1;i>0;i--){ var j = Math.floor(rand()*(i+1)); var t=idxs[i]; idxs[i]=idxs[j]; idxs[j]=t; }
-      var featuredIdxs = idxs.slice(0, Math.min(3, idxs.length));
+      // shuffle pool deterministically
+      for(var i=pool.length-1;i>0;i--){ var j=Math.floor(rand()*(i+1)); var t=pool[i]; pool[i]=pool[j]; pool[j]=t; }
+      var rotating = pool.slice(0, Math.min(3, pool.length));
 
-      // clear & apply
+      // clear previous badges/classes
       cards.forEach(function(card){ card.classList.remove('featured'); var b = card.querySelector('.badge'); if(b) b.remove(); });
-      var featuredCards = featuredIdxs.map(function(i){ return cards[i]; });
+
+      var featuredCards = fixedCards.concat(rotating);
       featuredCards.forEach(function(card){
         card.classList.add('featured');
-        var badgeEl = document.createElement('div'); badgeEl.className='badge'; badgeEl.textContent='★ Featured'; card.appendChild(badgeEl);
+        var badgeEl = document.createElement('div');
+        badgeEl.className = 'badge';
+        badgeEl.textContent = '★ Featured';
+        card.appendChild(badgeEl);
       });
-      // Bring featured to top in All view
-      for(var k=featuredCards.length-1;k>=0;k--){ parent.insertBefore(featuredCards[k], parent.firstChild); }
+
+      // bring featured to top in the specified order (fixed first, then rotating)
+      for(var k=featuredCards.length-1; k>=0; k--){ parent.insertBefore(featuredCards[k], parent.firstChild); }
 
       setActiveFilter('all');
       applyFilters();
