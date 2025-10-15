@@ -1,376 +1,262 @@
-import React, { useMemo, useState, useEffect } from "react";
-import { ExternalLink, Search, Sparkles } from "lucide-react";
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>OnlyApps by Zero</title>
+    <!-- Tailwind (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      @keyframes shimmer { 100% { transform: translateX(100%); } }
+      :root { --brand:#F64C17; }
+    </style>
+  </head>
+  <body class="bg-zinc-50 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100">
+    <div id="root"></div>
 
-// -----------------------------------------------------------------------------
-// Brand & Config
-// -----------------------------------------------------------------------------
-const BRAND = {
-  name: "OnlyApps by Zero",
-  accent: "#F64C17",
-  playDev: "https://play.google.com/store/apps/dev?id=6324446257194202838",
-  privacy: "https://artimishraa.github.io/",
-  contact: "onlyapp.contact@gmail.com",
-};
+    <!-- React + ReactDOM (CDN) -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <!-- Babel for in-browser JSX transform (works fine on GH Pages) -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-// -----------------------------------------------------------------------------
-// Image loading config (proxy + multi‑fallback for strict CDNs)
-// -----------------------------------------------------------------------------
-const USE_PROXY = true; // keep on for reliability
-const weserv = (url) =>
-  `https://images.weserv.nl/?url=${encodeURIComponent(url.replace(/^https?:\/\//, ""))}&w=160&h=160&fit=cover&we`;
-const wsrv = (url) =>
-  `https://wsrv.nl/?url=${encodeURIComponent(url.replace(/^https?:\/\//, ""))}&w=160&h=160&fit=cover&we`;
-const allorigins = (url) =>
-  `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
+    <script type="text/babel">
+      const { useMemo, useState, useEffect } = React;
 
-function buildIconSources(url) {
-  const direct = url;
-  const s1 = wsrv(url);
-  const s2 = weserv(url);
-  const s3 = allorigins(url);
-  return Array.from(new Set([direct, ...(USE_PROXY ? [s1, s2, s3] : [])])).filter(Boolean);
-}
+      // Brand & config
+      const BRAND = {
+        name: "OnlyApps by Zero",
+        accent: "#F64C17",
+        playDev: "https://play.google.com/store/apps/dev?id=6324446257194202838",
+        privacy: "https://artimishraa.github.io/",
+        contact: "onlyapp.contact@gmail.com",
+      };
 
-// -----------------------------------------------------------------------------
-// Catalog (17 apps) — WITH icons
-// -----------------------------------------------------------------------------
-const APPS = [
-  {
-    name: "Only Gallery",
-    pkg: "com.andmobi.gallery",
-    href: "https://play.google.com/store/apps/details?id=com.andmobi.gallery",
-    blurb:
-      "Private, ad-free photo & video gallery with smooth browsing and zero trackers.",
-    tags: ["Photos", "Privacy"],
-    icon:
-      "https://play-lh.googleusercontent.com/6dbGdQxk3nGk1xWbqV_0dMndp2TOrG8gRwr4RcVuQv5wBGWrco-VN0ODQyCSKEMH7g=w240-h480-rw",
-  },
-  {
-    name: "Only Files",
-    pkg: "com.andmobi.filemanager",
-    href: "https://play.google.com/store/apps/details?id=com.andmobi.filemanager",
-    blurb:
-      "Lightweight file manager with fast search, clean UI, and local-only operations.",
-    tags: ["Files", "Tools"],
-    icon:
-      "https://play-lh.googleusercontent.com/QEtbN5xgC_zamYdZQOx7iBYVZcK3IV_cJbDe7BdMvgMRlBwXphVw7THVxRIV2V_7Hg=w240-h480-rw",
-  },
-  {
-    name: "Only Applock",
-    pkg: "com.andmobi.applocker",
-    href: "https://play.google.com/store/apps/details?id=com.andmobi.applocker",
-    blurb:
-      "Lock apps with PIN, pattern, or fingerprint. Optional fake cover & intruder selfie.",
-    tags: ["Security"],
-    icon:
-      "https://play-lh.googleusercontent.com/F5snZMNPNh6n5_KmhwVQGQ83Azfx8fg4n_zTkwMbdNssSL2WQ0ToQtfimJgMiqY7Ig=w240-h480-rw",
-  },
-  {
-    name: "Only Music",
-    pkg: "com.andmobi.music",
-    href: "https://play.google.com/store/apps/details?id=com.andmobi.music",
-    blurb:
-      "Offline, ad-free MP3 player with EQ, playlists, sleep timer, and Material UI.",
-    tags: ["Audio"],
-    icon:
-      "https://play-lh.googleusercontent.com/3fdJG_x5JQZXAGViUoHvYNUVCxQTEB0vYgfFbhFntoS6zYlK5h_LZXKyg4MfxZthNbs=w240-h480-rw",
-  },
-  {
-    name: "Only Recorder",
-    pkg: "com.andmobi.voicerecorder",
-    href: "https://play.google.com/store/apps/details?id=com.andmobi.voicerecorder",
-    blurb:
-      "Clean voice recorder for quick, reliable audio capture — simple and private.",
-    tags: ["Audio", "Utility"],
-    icon:
-      "https://play-lh.googleusercontent.com/lsy83C9oHY1eoDyVqQ6gQzDWVQbFZ9iDGPXQ4nICvPywb9PymcJqkJXl7Zb9-Hb7B6o=w240-h480-rw",
-  },
-  {
-    name: "Only Calculator",
-    pkg: "com.andmobi.math",
-    href: "https://play.google.com/store/apps/details?id=com.andmobi.math",
-    blurb: "Minimal calculator that’s fast, accurate, and distraction-free.",
-    tags: ["Utility"],
-    icon:
-      "https://play-lh.googleusercontent.com/7s0gUj12R1Sn6xMnZg7Bz81bO0WZrFe7G7aFaW7KfL0Pjz_pZt4D_4xRCuQePZr1OA=w240-h480-rw",
-  },
-  {
-    name: "Only Paint",
-    pkg: "com.andmobi.paint",
-    href: "https://play.google.com/store/apps/details?id=com.andmobi.paint",
-    blurb: "Simple drawing app for quick sketches, notes, and markups.",
-    tags: ["Creativity"],
-    icon:
-      "https://play-lh.googleusercontent.com/0TNUHYdw4pA1LkmN2nM6QfPfzC4vX6pB8QnCw9FjIvb6yxgcOHpEhSGAon6LKzEPNhI=w240-h480-rw",
-  },
-  {
-    name: "Only Contacts",
-    pkg: "com.andmobi.contacts",
-    href: "https://play.google.com/store/apps/details?id=com.andmobi.contacts",
-    blurb:
-      "Lightweight, privacy-first contacts with smart search and grouping.",
-    tags: ["Communication"],
-    icon:
-      "https://play-lh.googleusercontent.com/_X9UryB7D5nhDqC03s7iygCOgxARv8fS1ZKzHg84nlbMn3qHktz83_2P1Ol53cKyqg=w240-h480-rw",
-  },
-  {
-    name: "Only Messages",
-    pkg: "com.andmobi.messages",
-    href: "https://play.google.com/store/apps/details?id=com.andmobi.messages",
-    blurb:
-      "SMS/MMS that’s private, fast, and ad-free — with backup, blocklist, and themes.",
-    tags: ["Communication"],
-    icon:
-      "https://play-lh.googleusercontent.com/NE2CN09hwD5VHL6YcKfEQWkHrTRmklzgh0mXk2Eim1fJ44Mge8Kc1apGy4p2mFjY4eg=w240-h480-rw",
-  },
-  {
-    name: "Only Phone",
-    pkg: "com.andmobi.phone",
-    href: "https://play.google.com/store/apps/details?id=com.andmobi.phone",
-    blurb: "Privacy-first dialer. Smooth calls, custom themes, and zero tracking.",
-    tags: ["Communication"],
-    icon:
-      "https://play-lh.googleusercontent.com/cULvzUoOhkcmZ7MT3ULxboRhwVqOv1fA7ExDHo9Q4qYqHbhvjKTbg7jAV3SP8eRhrQ=w240-h480-rw",
-  },
-  {
-    name: "Only Keyboard",
-    pkg: "com.andmobi.keyboard",
-    href: "https://play.google.com/store/apps/details?id=com.andmobi.keyboard",
-    blurb:
-      "Fast, offline keyboard with rich personalization and multi-language support.",
-    tags: ["Input"],
-    icon:
-      "https://play-lh.googleusercontent.com/zhn8A1k1_PKy3ch_NbSu7FkO3I2a4AF3ZqSe2bP6A5msYtAwdZWUozq1_l_jZCHyaQ=w240-h480-rw",
-  },
-  {
-    name: "Only Clock",
-    pkg: "com.andmobi.clock",
-    href: "https://play.google.com/store/apps/details?id=com.andmobi.clock",
-    blurb: "Alarms, timer, and stopwatch with customizable widgets — no ads.",
-    tags: ["Time"],
-    icon:
-      "https://play-lh.googleusercontent.com/ENeqfJ3DKzD4vU4qP6k2TDBZ9MprIG8RchPkCgVJgYbnxU5mFdLO8AAch2z6pCWQ7F0=w240-h480-rw",
-  },
-  {
-    name: "Only Notes",
-    pkg: "com.andmobi.notes",
-    href: "https://play.google.com/store/apps/details?id=com.andmobi.notes",
-    blurb:
-      "Effortless note-taking and to-dos with a clean, colorful interface.",
-    tags: ["Productivity"],
-    icon:
-      "https://play-lh.googleusercontent.com/q67oNNKx6TuhZJzSwUhE0CqY4h2F6y6AI1Gg0UUPHkHZ-LGxPzSO0yJoFfPfD6s6aMo=w240-h480-rw",
-  },
-  {
-    name: "Only Calendar",
-    pkg: "com.andmobi.calendar",
-    href: "https://play.google.com/store/apps/details?id=com.andmobi.calendar",
-    blurb:
-      "Open-source, ad-free calendar with sync, widgets, reminders, and rich repeats.",
-    tags: ["Productivity"],
-    icon:
-      "https://play-lh.googleusercontent.com/BG7S3J9P6M3wZ_AzFeF1W8B_F7d6OHTyVhPv-B6RbtIdnMZC2AAam8nWxWdu5M-Z8vQ=w240-h480-rw",
-  },
-  {
-    name: "Only Launcher",
-    pkg: "com.andmobi.home",
-    href: "https://play.google.com/store/apps/details?id=com.andmobi.home",
-    blurb:
-      "Fast, minimal launcher with smooth animations, icon pack support, and gestures.",
-    tags: ["Home"],
-    icon:
-      "https://play-lh.googleusercontent.com/jcgf5wHYso3A9hP-AtjvUsvHhJ5VgyvUS2dD5Nv-ow5cKbbRStTKZWqMprZ7G6npDg=w240-h480-rw",
-  },
-  {
-    name: "Only Camera",
-    pkg: "com.andmobi.camera",
-    href: "https://play.google.com/store/apps/details?id=com.andmobi.camera",
-    blurb:
-      "Private camera — photo/video capture with on-device storage and useful controls.",
-    tags: ["Camera"],
-    icon:
-      "https://play-lh.googleusercontent.com/lChfzyXDrGq9Vklxw2m4lE0wQx03sdzCq7uw9lL06Dd9frYxRx7BL3PHHkeMI05aAw=w240-h480-rw",
-  },
-  {
-    name: "Only Play",
-    pkg: "com.andmobi.onlyplay",
-    href: "https://play.google.com/store/apps/details?id=com.andmobi.onlyplay",
-    blurb: "Local video player for your files — clean, fast, and ad-free.",
-    tags: ["Video"],
-    icon:
-      "https://play-lh.googleusercontent.com/o8QZAIe1Tv1ExKR5xVyrK6dFHRtCHH2qbnmIUmxK4Y_ETofivj2zRWhnKT1KAAoU8X0=w240-h480-rw",
-  },
-];
+      // Image proxy helpers (to survive strict CDNs)
+      const USE_PROXY = true;
+      const wsrv = (url) =>
+        `https://wsrv.nl/?url=${encodeURIComponent(url.replace(/^https?:\/\//,""))}&w=160&h=160&fit=cover&we`;
+      const weserv = (url) =>
+        `https://images.weserv.nl/?url=${encodeURIComponent(url.replace(/^https?:\/\//,""))}&w=160&h=160&fit=cover&we`;
+      const allorigins = (url) =>
+        `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
+      const buildIconSources = (url) => {
+        const direct = url;
+        const s1 = wsrv(url);
+        const s2 = weserv(url);
+        const s3 = allorigins(url);
+        return Array.from(new Set([direct, ...(USE_PROXY ? [s1,s2,s3] : [])])).filter(Boolean);
+      };
 
-// -----------------------------------------------------------------------------
-// Shimmer (skeleton) for icon loading state
-// -----------------------------------------------------------------------------
-function Shimmer() {
-  return (
-    <div className="h-16 w-16 rounded-2xl bg-zinc-200/70 dark:bg-zinc-700/60 relative overflow-hidden">
-      <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.25s_infinite] bg-gradient-to-r from-transparent via-white/50 to-transparent dark:via-white/10" />
-      <style>{`@keyframes shimmer { 100% { transform: translateX(100%); } }`}</style>
-    </div>
-  );
-}
+      // Catalog (17 apps)
+      const APPS = [
+        { name:"Only Gallery", pkg:"com.andmobi.gallery", href:"https://play.google.com/store/apps/details?id=com.andmobi.gallery", blurb:"Private, ad-free photo & video gallery with smooth browsing and zero trackers.", tags:["Photos","Privacy"], icon:"https://play-lh.googleusercontent.com/6dbGdQxk3nGk1xWbqV_0dMndp2TOrG8gRwr4RcVuQv5wBGWrco-VN0ODQyCSKEMH7g=w240-h480-rw" },
+        { name:"Only Files", pkg:"com.andmobi.filemanager", href:"https://play.google.com/store/apps/details?id=com.andmobi.filemanager", blurb:"Lightweight file manager with fast search, clean UI, and local-only operations.", tags:["Files","Tools"], icon:"https://play-lh.googleusercontent.com/QEtbN5xgC_zamYdZQOx7iBYVZcK3IV_cJbDe7BdMvgMRlBwXphVw7THVxRIV2V_7Hg=w240-h480-rw" },
+        { name:"Only Applock", pkg:"com.andmobi.applocker", href:"https://play.google.com/store/apps/details?id=com.andmobi.applocker", blurb:"Lock apps with PIN, pattern, or fingerprint. Optional fake cover & intruder selfie.", tags:["Security"], icon:"https://play-lh.googleusercontent.com/F5snZMNPNh6n5_KmhwVQGQ83Azfx8fg4n_zTkwMbdNssSL2WQ0ToQtfimJgMiqY7Ig=w240-h480-rw" },
+        { name:"Only Music", pkg:"com.andmobi.music", href:"https://play.google.com/store/apps/details?id=com.andmobi.music", blurb:"Offline, ad-free MP3 player with EQ, playlists, sleep timer, and Material UI.", tags:["Audio"], icon:"https://play-lh.googleusercontent.com/3fdJG_x5JQZXAGViUoHvYNUVCxQTEB0vYgfFbhFntoS6zYlK5h_LZXKyg4MfxZthNbs=w240-h480-rw" },
+        { name:"Only Recorder", pkg:"com.andmobi.voicerecorder", href:"https://play.google.com/store/apps/details?id=com.andmobi.voicerecorder", blurb:"Clean voice recorder for quick, reliable audio capture — simple and private.", tags:["Audio","Utility"], icon:"https://play-lh.googleusercontent.com/lsy83C9oHY1eoDyVqQ6gQzDWVQbFZ9iDGPXQ4nICvPywb9PymcJqkJXl7Zb9-Hb7B6o=w240-h480-rw" },
+        { name:"Only Calculator", pkg:"com.andmobi.math", href:"https://play.google.com/store/apps/details?id=com.andmobi.math", blurb:"Minimal calculator that’s fast, accurate, and distraction-free.", tags:["Utility"], icon:"https://play-lh.googleusercontent.com/7s0gUj12R1Sn6xMnZg7Bz81bO0WZrFe7G7aFaW7KfL0Pjz_pZt4D_4xRCuQePZr1OA=w240-h480-rw" },
+        { name:"Only Paint", pkg:"com.andmobi.paint", href:"https://play.google.com/store/apps/details?id=com.andmobi.paint", blurb:"Simple drawing app for quick sketches, notes, and markups.", tags:["Creativity"], icon:"https://play-lh.googleusercontent.com/0TNUHYdw4pA1LkmN2nM6QfPfzC4vX6pB8QnCw9FjIvb6yxgcOHpEhSGAon6LKzEPNhI=w240-h480-rw" },
+        { name:"Only Contacts", pkg:"com.andmobi.contacts", href:"https://play.google.com/store/apps/details?id=com.andmobi.contacts", blurb:"Lightweight, privacy-first contacts with smart search and grouping.", tags:["Communication"], icon:"https://play-lh.googleusercontent.com/_X9UryB7D5nhDqC03s7iygCOgxARv8fS1ZKzHg84nlbMn3qHktz83_2P1Ol53cKyqg=w240-h480-rw" },
+        { name:"Only Messages", pkg:"com.andmobi.messages", href:"https://play.google.com/store/apps/details?id=com.andmobi.messages", blurb:"SMS/MMS that’s private, fast, and ad-free — with backup, blocklist, and themes.", tags:["Communication"], icon:"https://play-lh.googleusercontent.com/NE2CN09hwD5VHL6YcKfEQWkHrTRmklzgh0mXk2Eim1fJ44Mge8Kc1apGy4p2mFjY4eg=w240-h480-rw" },
+        { name:"Only Phone", pkg:"com.andmobi.phone", href:"https://play.google.com/store/apps/details?id=com.andmobi.phone", blurb:"Privacy-first dialer. Smooth calls, custom themes, and zero tracking.", tags:["Communication"], icon:"https://play-lh.googleusercontent.com/cULvzUoOhkcmZ7MT3ULxboRhwVqOv1fA7ExDHo9Q4qYqHbhvjKTbg7jAV3SP8eRhrQ=w240-h480-rw" },
+        { name:"Only Keyboard", pkg:"com.andmobi.keyboard", href:"https://play.google.com/store/apps/details?id=com.andmobi.keyboard", blurb:"Fast, offline keyboard with rich personalization and multi-language support.", tags:["Input"], icon:"https://play-lh.googleusercontent.com/zhn8A1k1_PKy3ch_NbSu7FkO3I2a4AF3ZqSe2bP6A5msYtAwdZWUozq1_l_jZCHyaQ=w240-h480-rw" },
+        { name:"Only Clock", pkg:"com.andmobi.clock", href:"https://play.google.com/store/apps/details?id=com.andmobi.clock", blurb:"Alarms, timer, and stopwatch with customizable widgets — no ads.", tags:["Time"], icon:"https://play-lh.googleusercontent.com/ENeqfJ3DKzD4vU4qP6k2TDBZ9MprIG8RchPkCgVJgYbnxU5mFdLO8AAch2z6pCWQ7F0=w240-h480-rw" },
+        { name:"Only Notes", pkg:"com.andmobi.notes", href:"https://play.google.com/store/apps/details?id=com.andmobi.notes", blurb:"Effortless note-taking and to-dos with a clean, colorful interface.", tags:["Productivity"], icon:"https://play-lh.googleusercontent.com/q67oNNKx6TuhZJzSwUhE0CqY4h2F6y6AI1Gg0UUPHkHZ-LGxPzSO0yJoFfPfD6s6aMo=w240-h480-rw" },
+        { name:"Only Calendar", pkg:"com.andmobi.calendar", href:"https://play.google.com/store/apps/details?id=com.andmobi.calendar", blurb:"Open-source, ad-free calendar with sync, widgets, reminders, and rich repeats.", tags:["Productivity"], icon:"https://play-lh.googleusercontent.com/BG7S3J9P6M3wZ_AzFeF1W8B_F7d6OHTyVhPv-B6RbtIdnMZC2AAam8nWxWdu5M-Z8vQ=w240-h480-rw" },
+        { name:"Only Launcher", pkg:"com.andmobi.home", href:"https://play.google.com/store/apps/details?id=com.andmobi.home", blurb:"Fast, minimal launcher with smooth animations, icon pack support, and gestures.", tags:["Home"], icon:"https://play-lh.googleusercontent.com/jcgf5wHYso3A9hP-AtjvUsvHhJ5VgyvUS2dD5Nv-ow5cKbbRStTKZWqMprZ7G6npDg=w240-h480-rw" },
+        { name:"Only Camera", pkg:"com.andmobi.camera", href:"https://play.google.com/store/apps/details?id=com.andmobi.camera", blurb:"Private camera — photo/video capture with on-device storage and useful controls.", tags:["Camera"], icon:"https://play-lh.googleusercontent.com/lChfzyXDrGq9Vklxw2m4lE0wQx03sdzCq7uw9lL06Dd9frYxRx7BL3PHHkeMI05aAw=w240-h480-rw" },
+        { name:"Only Play", pkg:"com.andmobi.onlyplay", href:"https://play.google.com/store/apps/details?id=com.andmobi.onlyplay", blurb:"Local video player for your files — clean, fast, and ad-free.", tags:["Video"], icon:"https://play-lh.googleusercontent.com/o8QZAIe1Tv1ExKR5xVyrK6dFHRtCHH2qbnmIUmxK4Y_ETofivj2zRWhnKT1KAAoU8X0=w240-h480-rw" },
+      ];
 
-// -----------------------------------------------------------------------------
-// Components
-// -----------------------------------------------------------------------------
-function AppIcon({ app }) {
-  const [loaded, setLoaded] = useState(false);
-  const [error, setError] = useState(false);
-  const [idx, setIdx] = useState(0);
-  const sources = buildIconSources(app.icon || "");
-  const src = !error && sources[idx] ? sources[idx] : null;
+      const Shimmer = () => (
+        <div className="h-16 w-16 rounded-2xl bg-zinc-200/70 dark:bg-zinc-700/60 relative overflow-hidden">
+          <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.25s_infinite] bg-gradient-to-r from-transparent via-white/50 to-transparent dark:via-white/10"></div>
+        </div>
+      );
 
-  return (
-    <div className="relative inline-block">
-      {!loaded && <Shimmer />}
-      {src ? (
-        <img
-          key={src}
-          src={src}
-          alt={app.name}
-          referrerPolicy="no-referrer"
-          crossOrigin="anonymous"
-          onLoad={() => setLoaded(true)}
-          onError={() => {
-            if (idx < sources.length - 1) setIdx((i) => i + 1);
-            else {
-              setError(true);
-              setLoaded(true);
-            }
-          }}
-          className={`h-16 w-16 rounded-2xl object-cover ring-1 ring-black/5 ${loaded ? "block" : "hidden"}`}
-          loading="lazy"
-          decoding="async"
-        />
-      ) : (
-        loaded && (
-          <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-[var(--brand)] text-white font-bold">
-            {app.name
-              .split(" ")
-              .map((w) => w[0])
-              .join("")
-              .slice(0, 2)
-              .toUpperCase()}
+      const AppIcon = ({ app }) => {
+        const [loaded, setLoaded] = useState(false);
+        const [error, setError] = useState(false);
+        const [idx, setIdx] = useState(0);
+        const sources = buildIconSources(app.icon || "");
+        const src = !error && sources[idx] ? sources[idx] : null;
+        return (
+          <div className="relative inline-block">
+            {!loaded && <Shimmer />}
+            {src ? (
+              <img
+                key={src}
+                src={src}
+                alt={app.name}
+                referrerPolicy="no-referrer"
+                crossOrigin="anonymous"
+                onLoad={() => setLoaded(true)}
+                onError={() => {
+                  if (idx < sources.length - 1) setIdx((i) => i + 1);
+                  else { setError(true); setLoaded(true); }
+                }}
+                className={`h-16 w-16 rounded-2xl object-cover ring-1 ring-black/5 ${loaded ? "block" : "hidden"}`}
+                loading="lazy"
+                decoding="async"
+              />
+            ) : (
+              loaded && (
+                <div className="flex h-16 w-16 items-center justify-center rounded-2xl text-white font-extrabold" style={{background:"var(--brand)"}}>
+                  {(app.name || "?").split(" ").map(w=>w[0]).join("").slice(0,2).toUpperCase()}
+                </div>
+              )
+            )}
           </div>
-        )
-      )}
-    </div>
-  );
-}
+        );
+      };
 
-function AppCard({ app }) {
-  return (
-    <a href={app.href} target="_blank" rel="noreferrer" className="group block">
-      <div className="rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm transition hover:shadow-lg dark:border-zinc-700 dark:bg-zinc-800">
-        <div className="flex items-center gap-4">
-          <AppIcon app={app} />
-          <div className="min-w-0">
-            <h3 className="truncate text-lg font-semibold text-zinc-900 dark:text-zinc-100">{app.name}</h3>
-            <p className="mt-1 line-clamp-2 text-sm text-zinc-600 dark:text-zinc-300">{app.blurb}</p>
-            <div className="mt-2 flex items-center gap-2 text-xs text-zinc-500 dark:text-zinc-400">
-              <span className="truncate">{app.pkg}</span>
-              <ExternalLink className="h-3.5 w-3.5 opacity-70 group-hover:translate-x-0.5 group-hover:opacity-100 transition" />
+      const AppCard = ({ app }) => (
+        <a href={app.href} target="_blank" rel="noreferrer" className="group block">
+          <div className="rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm transition hover:shadow-lg dark:border-zinc-700 dark:bg-zinc-800">
+            <div className="flex items-center gap-4">
+              <AppIcon app={app} />
+              <div className="min-w-0">
+                <div className="flex items-center gap-2">
+                  <h3 className="truncate text-lg font-semibold text-zinc-900 dark:text-zinc-100">{app.name}</h3>
+                  <span className="whitespace-nowrap rounded-full border border-[var(--brand)]/30 bg-[var(--brand)]/10 px-2 py-0.5 text-xs text-[var(--brand)]">
+                    {app.tags?.[0] ?? "App"}
+                  </span>
+                </div>
+                <p className="mt-1 line-clamp-2 text-sm text-zinc-600 dark:text-zinc-300">{app.blurb}</p>
+                <div className="mt-2 flex items-center gap-2 text-xs text-zinc-500 dark:text-zinc-400">
+                  <span className="truncate">{app.pkg}</span>
+                  <!-- small external-link glyph -->
+                  <svg viewBox="0 0 24 24" width="14" height="14" className="opacity-70 group-hover:translate-x-0.5 group-hover:opacity-100 transition"><path fill="currentColor" d="M14 3h7v7h-2V6.4l-9.3 9.3-1.4-1.4L17.6 5H14V3ZM5 5h6v2H7v10h10v-4h2v6H5V5Z"></path></svg>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-    </a>
-  );
-}
+        </a>
+      );
 
-function Filters({ query, setQuery, setTag, tag, count }) {
-  const tags = useMemo(() => {
-    const s = new Set();
-    APPS.forEach((a) => a.tags?.forEach((t) => s.add(t)));
-    return ["All", ...Array.from(s)];
-  }, []);
-
-  return (
-    <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-      <div className="flex items-center gap-2 text-zinc-600 dark:text-zinc-300">
-        <Sparkles className="h-4 w-4" /> <span className="text-sm">{count} apps</span>
-      </div>
-      <div className="flex gap-2">
-        <div className="relative">
-          <Search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-400" />
-          <input
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search apps…"
-            className="w-64 rounded-xl border border-zinc-300 bg-white py-2 pl-9 pr-3 text-sm outline-none shadow-sm focus:ring-4 focus:ring-[var(--brand)]/20 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100"
-          />
-        </div>
-        <select
-          value={tag}
-          onChange={(e) => setTag(e.target.value)}
-          className="rounded-xl border border-zinc-300 bg-white px-3 py-2 text-sm shadow-sm focus:ring-4 focus:ring-[var(--brand)]/20 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100"
-        >
-          {tags.map((t) => (
-            <option key={t}>{t}</option>
-          ))}
-        </select>
-      </div>
-    </div>
-  );
-}
-
-// -----------------------------------------------------------------------------
-// Root Component
-// -----------------------------------------------------------------------------
-export default function Site() {
-  const [query, setQuery] = useState("");
-  const [tag, setTag] = useState("All");
-
-  // Ensure brand color is available for monogram fallbacks
-  useEffect(() => {
-    if (typeof document !== "undefined") {
-      document.documentElement.style.setProperty("--brand", BRAND.accent);
-    }
-  }, []);
-
-  const filtered = useMemo(() => {
-    return APPS.filter((a) => {
-      const q = query.toLowerCase();
-      const matchesQ = !q || a.name.toLowerCase().includes(q) || a.pkg.toLowerCase().includes(q);
-      const matchesT = tag === "All" || a.tags?.includes(tag);
-      return matchesQ && matchesT;
-    });
-  }, [query, tag]);
-
-  return (
-
-    <main className="min-h-screen bg-zinc-50 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100">
-      <section className="mx-auto max-w-6xl px-6 py-10">
-        <Filters query={query} setQuery={setQuery} tag={tag} setTag={setTag} count={filtered.length} />
-        <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {filtered.length === 0 ? (
-            <div className="col-span-full rounded-xl border border-dashed border-zinc-300 p-8 text-center text-sm text-zinc-500 dark:border-zinc-700 dark:text-zinc-400">
-              No apps match your filters.
+      const Filters = ({ query, setQuery, tag, setTag, count, onReset }) => {
+        const tags = useMemo(() => {
+          const s = new Set();
+          APPS.forEach((a) => a.tags?.forEach((t) => s.add(t)));
+          return ["All", ...Array.from(s)];
+        }, []);
+        const filtersActive = (query && query.trim() !== "") || tag !== "All";
+        return (
+          <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+            <div className="flex items-center gap-2 text-zinc-600 dark:text-zinc-300">
+              <!-- sparkle glyph -->
+              <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M11 2l2 5 5 2-5 2-2 5-2-5-5-2 5-2 2-5Zm8 8l1 3 3 1-3 1-1 3-1-3-3-1 3-1 1-3ZM4 13l1 2 2 1-2 1-1 2-1-2-2-1 2-1 1-2Z"/></svg>
+              <span className="text-sm">{count} apps</span>
+              {filtersActive && (
+                <button
+                  onClick={onReset}
+                  className="ml-3 rounded-lg border px-2 py-1 text-xs hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                  title="Reset filters"
+                >
+                  Reset filters
+                </button>
+              )}
             </div>
-          ) : (
-            filtered.map((app) => <AppCard key={app.pkg} app={app} />)
-          )}
-        </div>
-      </section>
-
-      {/* Footer: About / Privacy / Contact */}
-      <footer className="mt-16 border-t border-zinc-200 px-6 py-10 text-center text-sm text-zinc-600 dark:border-zinc-800 dark:text-zinc-400">
-        <div className="max-w-3xl mx-auto space-y-4">
-          <h4 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">About</h4>
-          <p>
-            OnlyApps by Zero is a suite of clean, privacy‑first Android apps built for minimalism and performance. No ads, no trackers, just tools you can trust.
-          </p>
-          <div className="flex justify-center flex-wrap gap-6">
-            <a href={BRAND.playDev} target="_blank" rel="noreferrer" className="underline decoration-dotted">View all apps</a>
-            <a href={`mailto:${BRAND.contact}`} className="underline decoration-dotted">Contact</a>
-            <a href={BRAND.privacy} target="_blank" rel="noreferrer" className="underline decoration-dotted">Privacy Policy</a>
+            <div className="flex gap-2">
+              <div className="relative">
+                <input
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  placeholder="Search apps…"
+                  className="w-64 rounded-xl border border-zinc-300 bg-white py-2 pl-3 pr-3 text-sm outline-none shadow-sm focus:ring-4 focus:ring-[var(--brand)]/20 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100"
+                />
+              </div>
+              <select
+                value={tag}
+                onChange={(e) => setTag(e.target.value)}
+                className="rounded-xl border border-zinc-300 bg-white px-3 py-2 text-sm shadow-sm focus:ring-4 focus:ring-[var(--brand)]/20 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100"
+              >
+                {tags.map((t) => <option key={t}>{t}</option>)}
+              </select>
+            </div>
           </div>
-        </div>
-      </footer>
-    </main>
-  );
-}
+        );
+      };
+
+      const App = () => {
+        const [query, setQuery] = useState("");
+        const [tag, setTag] = useState("All");
+
+        useEffect(() => {
+          document.documentElement.style.setProperty("--brand", BRAND.accent);
+        }, []);
+
+        const filtered = useMemo(() => {
+          const q = query.toLowerCase();
+          return APPS.filter(a => {
+            const matchesQ = !q || a.name.toLowerCase().includes(q) || a.pkg.toLowerCase().includes(q);
+            const matchesT = tag === "All" || a.tags?.includes(tag);
+            return matchesQ && matchesT;
+          });
+        }, [query, tag]);
+
+        const resetFilters = () => {
+          setQuery("");
+          setTag("All");
+        };
+
+        return (
+          <main>
+            <section className="mx-auto max-w-6xl px-6 py-10">
+              <div className="mb-6">
+                <h1 className="text-2xl font-extrabold">OnlyApps by Zero</h1>
+                <p className="text-sm text-zinc-600 dark:text-zinc-300">Fast • Private • Beautifully simple</p>
+              </div>
+
+              <Filters
+                query={query}
+                setQuery={setQuery}
+                tag={tag}
+                setTag={setTag}
+                count={filtered.length}
+                onReset={resetFilters}
+              />
+
+              <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {filtered.length === 0 ? (
+                  <div className="col-span-full rounded-xl border border-dashed border-zinc-300 p-8 text-center text-sm text-zinc-500 dark:border-zinc-700 dark:text-zinc-400">
+                    No apps match your filters.
+                    <button
+                      onClick={resetFilters}
+                      className="ml-3 rounded-lg border px-2 py-1 text-xs hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                    >
+                      Reset filters
+                    </button>
+                  </div>
+                ) : (
+                  filtered.map(app => <AppCard key={app.pkg} app={app} />)
+                )}
+              </div>
+            </section>
+
+            <footer className="mt-16 border-t border-zinc-200 px-6 py-10 text-center text-sm text-zinc-600 dark:border-zinc-800 dark:text-zinc-400">
+              <div className="max-w-3xl mx-auto space-y-4">
+                <h4 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">About</h4>
+                <p>
+                  OnlyApps by Zero is a suite of clean, privacy-first Android apps built for minimalism and performance.
+                  No ads, no trackers — just tools you can trust.
+                </p>
+                <div className="flex justify-center flex-wrap gap-6">
+                  <a href={BRAND.playDev} target="_blank" rel="noreferrer" className="underline decoration-dotted">View all apps</a>
+                  <a href={`mailto:${BRAND.contact}`} className="underline decoration-dotted">Contact</a>
+                  <a href={BRAND.privacy} target="_blank" rel="noreferrer" className="underline decoration-dotted">Privacy Policy</a>
+                </div>
+              </div>
+            </footer>
+          </main>
+        );
+      };
+
+      ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+    </script>
+  </body>
+</html>
