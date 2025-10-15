@@ -4,29 +4,29 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>OnlyApps by Zero</title>
-    <!-- Tailwind (CDN) — warning is OK for GH Pages; for real prod, install via CLI/PostCSS -->
+    <!-- Tailwind CSS (CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- simple favicon to avoid 404 -->
+    <!-- Tiny favicon to avoid 404 -->
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='8' fill='%23F64C17'/%3E%3C/svg%3E">
     <style>
       @keyframes shimmer { 100% { transform: translateX(100%); } }
       :root { --brand:#F64C17; }
+      body { background: #fafafa; }
     </style>
   </head>
   <body class="bg-zinc-50 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100">
-    <noscript style="display:block;padding:1rem;text-align:center;">This site needs JavaScript enabled.</noscript>
     <div id="root"></div>
 
-    <!-- React + ReactDOM (CDN) -->
+    <!-- React + ReactDOM -->
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <!-- Babel for in-browser JSX transform -->
+    <!-- Babel for in-browser JSX -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-    <!-- App -->
     <script type="text/babel" data-presets="env,react">
       const { useMemo, useState, useEffect } = React;
 
+      // Brand & basic links
       const BRAND = {
         name: "OnlyApps by Zero",
         accent: "#F64C17",
@@ -35,35 +35,7 @@
         contact: "onlyapp.contact@gmail.com",
       };
 
-      // Helper that avoids regex: strips protocol using URL()
-      function stripProtocol(u) {
-        try {
-          const parsed = new URL(u);
-          return `${parsed.host}${parsed.pathname}${parsed.search}`;
-        } catch {
-          // if not a full URL, just return as-is
-          return u.replace(/^\/+/, "");
-        }
-      }
-
-      // Image proxy helpers (no regex anywhere)
-      const USE_PROXY = true;
-      const wsrv = (url) =>
-        `https://wsrv.nl/?url=${encodeURIComponent(stripProtocol(url))}&w=160&h=160&fit=cover&we`;
-      const weserv = (url) =>
-        `https://images.weserv.nl/?url=${encodeURIComponent(stripProtocol(url))}&w=160&h=160&fit=cover&we`;
-      const allorigins = (url) =>
-        `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
-
-      const buildIconSources = (url) => {
-        const direct = url;
-        const s1 = wsrv(url);
-        const s2 = weserv(url);
-        const s3 = allorigins(url);
-        return Array.from(new Set([direct, ...(USE_PROXY ? [s1, s2, s3] : [])])).filter(Boolean);
-      };
-
-      // Catalog (17 apps)
+      // App catalog (17) with DIRECT Play Store icons
       const APPS = [
         { name:"Only Gallery", pkg:"com.andmobi.gallery", href:"https://play.google.com/store/apps/details?id=com.andmobi.gallery", blurb:"Private, ad-free photo & video gallery with smooth browsing and zero trackers.", tags:["Photos","Privacy"], icon:"https://play-lh.googleusercontent.com/6dbGdQxk3nGk1xWbqV_0dMndp2TOrG8gRwr4RcVuQv5wBGWrco-VN0ODQyCSKEMH7g=w240-h480-rw" },
         { name:"Only Files", pkg:"com.andmobi.filemanager", href:"https://play.google.com/store/apps/details?id=com.andmobi.filemanager", blurb:"Lightweight file manager with fast search, clean UI, and local-only operations.", tags:["Files","Tools"], icon:"https://play-lh.googleusercontent.com/QEtbN5xgC_zamYdZQOx7iBYVZcK3IV_cJbDe7BdMvgMRlBwXphVw7THVxRIV2V_7Hg=w240-h480-rw" },
@@ -93,24 +65,19 @@
       const AppIcon = ({ app }) => {
         const [loaded, setLoaded] = useState(false);
         const [error, setError] = useState(false);
-        const [idx, setIdx] = useState(0);
-        const sources = buildIconSources(app.icon || "");
-        const src = !error && sources[idx] ? sources[idx] : null;
+        const src = app.icon || null;
+
         return (
           <div className="relative inline-block">
             {!loaded && <Shimmer />}
-            {src ? (
+            {src && !error ? (
               <img
-                key={src}
                 src={src}
                 alt={app.name}
                 referrerPolicy="no-referrer"
                 crossOrigin="anonymous"
                 onLoad={() => setLoaded(true)}
-                onError={() => {
-                  if (idx < sources.length - 1) setIdx((i) => i + 1);
-                  else { setError(true); setLoaded(true); }
-                }}
+                onError={() => { setError(true); setLoaded(true); }}
                 className={`h-16 w-16 rounded-2xl object-cover ring-1 ring-black/5 ${loaded ? "block" : "hidden"}`}
                 loading="lazy"
                 decoding="async"
@@ -141,6 +108,7 @@
                 <p className="mt-1 line-clamp-2 text-sm text-zinc-600 dark:text-zinc-300">{app.blurb}</p>
                 <div className="mt-2 flex items-center gap-2 text-xs text-zinc-500 dark:text-zinc-400">
                   <span className="truncate">{app.pkg}</span>
+                  <!-- inline external-link glyph -->
                   <svg viewBox="0 0 24 24" width="14" height="14" className="opacity-70 group-hover:translate-x-0.5 group-hover:opacity-100 transition"><path fill="currentColor" d="M14 3h7v7h-2V6.4l-9.3 9.3-1.4-1.4L17.6 5H14V3ZM5 5h6v2H7v10h10v-4h2v6H5V5Z"></path></svg>
                 </div>
               </div>
@@ -159,6 +127,7 @@
         return (
           <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
             <div className="flex items-center gap-2 text-zinc-600 dark:text-zinc-300">
+              <!-- sparkle glyph -->
               <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M11 2l2 5 5 2-5 2-2 5-2-5-5-2 5-2 2-5Zm8 8l1 3 3 1-3 1-1 3-1-3-3-1 3-1 1-3ZM4 13l1 2 2 1-2 1-1 2-1-2-2-1 2-1 1-2Z"/></svg>
               <span className="text-sm">{count} apps</span>
               {filtersActive && (
